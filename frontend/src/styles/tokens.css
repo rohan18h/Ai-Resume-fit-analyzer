@@ -1,0 +1,28 @@
+/* Design tokens (Section 13.2): same look as the review presentations. */
+:root {
+  --midnight: #21295c;
+  --primary: #065a82;
+  --teal: #1c7293;
+  --mint: #5fb9c9;
+  --coral: #c65b3c;
+  --success: #2f855a;
+  --warning: #b7791f;
+  --bg: #f3f7fa;
+  --surface: #ffffff;
+  --text: #1a1a2e;
+  --muted: #5b6b79;
+
+  --font-body: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-heading: 'Source Serif 4', Georgia, serif;
+
+  --space-1: 8px;
+  --space-2: 16px;
+  --space-3: 24px;
+  --space-4: 32px;
+  --space-6: 48px;
+
+  --radius: 12px;
+  --shadow: 0 2px 8px rgba(33, 41, 92, 0.08), 0 1px 2px rgba(33, 41, 92, 0.06);
+  --max-width: 1120px;
+  --focus-ring: 0 0 0 3px var(--mint);
+}

@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Generated data (rebuilt by scripts/seed_db.py and eval/evaluate.py)
+backend/data/app.db
+backend/eval/*.joblib
+
+# Node
+node_modules/
+frontend/dist/
+
+# Env files
+.env
+.env.local
+*.local
+
+# OS / editors
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
