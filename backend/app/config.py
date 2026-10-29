@@ -38,6 +38,13 @@ EMBEDDING_MODEL: str = _str("EMBEDDING_MODEL", "sentence-transformers/all-MiniLM
 PRIMARY_METHOD: str = _str("PRIMARY_METHOD", "embeddings")  # "tfidf" or "embeddings"
 TFIDF_CEILING: float = _float("TFIDF_CEILING", 0.60)  # starting value
 EMBED_CEILING: float = _float("EMBED_CEILING", 0.80)  # starting value
+# Embedding chunks (the model reads about 256 word pieces, roughly 190 words). Starting values.
+# Sentence-level chunks (team decision, Step 6): each JD requirement is checked on its own, which makes the coverage
+# score and the "Why this score?" snippets meaningful. The spec's 100-150 words made most JDs a single chunk.
+CHUNK_MAX_WORDS: int = _int("CHUNK_MAX_WORDS", 30)
+CHUNK_MIN_WORDS: int = _int("CHUNK_MIN_WORDS", 5)  # shorter pieces (e.g. a heading) are joined to the next one
+CHUNK_OVERLAP_SENTENCES: int = _int("CHUNK_OVERLAP_SENTENCES", 1)
+EXPLANATION_ITEMS: int = 3  # strongest matches and weakest spots shown in "Why this score?"
 
 EVAL_DIR: Path = BACKEND_DIR / "eval"  # TF-IDF reference corpus: eval/resumes/*.pdf and eval/jds/*.txt
 TFIDF_MODEL_PATH: Path = EVAL_DIR / "tfidf_vectorizer.joblib"

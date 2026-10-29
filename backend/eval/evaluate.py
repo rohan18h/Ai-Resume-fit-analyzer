@@ -32,12 +32,16 @@ sys.path.insert(0, str(BACKEND_DIR))
 from scipy.stats import spearmanr  # noqa: E402
 
 from app import config  # noqa: E402
+from app.services.matcher_embed import embedding_score  # noqa: E402
 from app.services.matcher_tfidf import get_vectorizer, tfidf_score  # noqa: E402
 from app.services.parser import clean_text, clean_text_light, extract_text, strip_name_header  # noqa: E402
 
 LABELS = ("poor", "average", "good")  # confusion matrix order: rows = hand label, columns = predicted
 ORDINAL = {label: index for index, label in enumerate(LABELS)}
-TUNABLE_SETTINGS = ("LABEL_GOOD_MIN", "LABEL_AVG_MIN", "TFIDF_CEILING", "EMBED_CEILING")
+TUNABLE_SETTINGS = (
+    "LABEL_GOOD_MIN", "LABEL_AVG_MIN", "TFIDF_CEILING", "EMBED_CEILING",
+    "CHUNK_MAX_WORDS", "CHUNK_MIN_WORDS", "CHUNK_OVERLAP_SENTENCES",
+)  # fmt: skip
 
 
 @dataclass(frozen=True)
@@ -52,8 +56,12 @@ def _score_tfidf(texts: PairTexts) -> float:
     return tfidf_score(texts.resume_clean, texts.jd_clean, get_vectorizer()).score
 
 
-# Step 6 adds "embeddings" here. Both methods call the same service functions the API uses.
-SCORERS: dict[str, Callable[[PairTexts], float]] = {"tfidf": _score_tfidf}
+def _score_embeddings(texts: PairTexts) -> float:
+    return embedding_score(texts.resume_light, texts.jd_light).score
+
+
+# Both methods call the same service functions the API uses.
+SCORERS: dict[str, Callable[[PairTexts], float]] = {"tfidf": _score_tfidf, "embeddings": _score_embeddings}
 
 
 def label_from_score(score: float) -> str:
@@ -150,6 +158,9 @@ def build_report(pairs: list[dict], rows: list[dict], methods: list[str]) -> dic
         "label_order": list(LABELS),
         "thresholds": {"good_min": config.LABEL_GOOD_MIN, "average_min": config.LABEL_AVG_MIN},
         "ceilings": {"tfidf": config.TFIDF_CEILING, "embeddings": config.EMBED_CEILING},
+        "embedding_model": config.EMBEDDING_MODEL,
+        "chunking": {"max_words": config.CHUNK_MAX_WORDS, "min_words": config.CHUNK_MIN_WORDS,
+                     "overlap_sentences": config.CHUNK_OVERLAP_SENTENCES},
         "tuned_settings": tuned,
         "labeller_disagreements": labeller_disagreements(pairs),
         "methods": metrics,

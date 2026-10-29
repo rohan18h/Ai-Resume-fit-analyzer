@@ -1,18 +1,22 @@
 Android Developer
 
-Build our customer app used by thousands of people every day.
+About us: Example Grocer delivers groceries in under thirty minutes in five cities. Our customer app is used by
+thousands of people every day.
 
 Responsibilities:
 - Develop new features for our Android app.
 - Integrate with REST APIs and handle offline data.
-- Fix bugs and improve performance.
+- Fix bugs and improve app start-up time and battery use.
+- Work with designers and backend engineers on new features.
+- Release updates to the Play Store every two weeks.
 
 Requirements:
 - Strong Kotlin skills.
 - 2+ years of Android development.
 - Experience consuming REST APIs.
-- Firebase experience.
+- Firebase experience, including authentication and push notifications.
+- Comfortable with Git.
 
 Nice to have:
 - Java.
-- Unit testing.
+- Unit testing for Android apps.

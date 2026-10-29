@@ -1,19 +1,23 @@
 DevOps Engineer
 
-Help us run reliable infrastructure for a growing SaaS product.
+About us: Example Cloud Co runs a SaaS product used by 2,000 companies. Our platform team keeps it fast, secure
+and available around the clock.
 
 Responsibilities:
-- Operate Kubernetes clusters and container workloads.
-- Automate infrastructure as code.
-- Build and maintain CI/CD pipelines.
+- Operate Kubernetes clusters and container workloads in production.
+- Automate infrastructure as code for networks, databases and clusters.
+- Build and maintain CI/CD pipelines for more than forty services.
+- Improve monitoring, alerting and on-call runbooks.
+- Help developers ship safely with good defaults and clear documentation.
 
 Requirements:
 - Strong Linux and Bash skills.
 - Production experience with Docker and Kubernetes.
 - Terraform for infrastructure as code.
-- Experience with AWS.
+- Experience with AWS services such as EC2, RDS and IAM.
 - CI/CD with Jenkins or GitHub Actions.
 
 Nice to have:
-- Ansible.
-- Monitoring and alerting experience.
+- Ansible for configuration management.
+- Monitoring and alerting experience with Prometheus or similar tools.
+- Nginx configuration and troubleshooting.

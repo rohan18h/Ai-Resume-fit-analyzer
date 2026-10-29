@@ -1,18 +1,23 @@
 Machine Learning Engineer
 
-We are building machine learning features for our customer support platform.
+About us: Example Support AI helps companies answer customer questions faster. We are building machine learning
+features that sort, search and summarise millions of support tickets.
 
 Responsibilities:
-- Train, evaluate and deploy machine learning models.
-- Work on NLP problems such as text classification and search.
-- Turn experiments into reliable services.
+- Train, evaluate and deploy machine learning models for text problems.
+- Work on NLP problems such as text classification, search and summarisation.
+- Build data pipelines that prepare training data from raw tickets.
+- Turn experiments into reliable services with clear metrics.
+- Monitor models in production and retrain them when quality drops.
 
 Requirements:
 - Strong Python skills.
 - Experience with scikit-learn and PyTorch or TensorFlow.
-- Hands-on NLP experience.
-- Good knowledge of statistics and machine learning fundamentals.
+- Hands-on NLP experience with real text data.
+- Good knowledge of statistics and machine learning fundamentals, such as evaluation metrics and overfitting.
+- Experience with Pandas and NumPy.
 
 Nice to have:
-- Hugging Face transformers.
-- Docker and AWS for deployment.
+- Hugging Face transformers and fine-tuning pretrained models.
+- Docker and AWS for deploying models.
+- Experience with LLMs and prompt engineering.

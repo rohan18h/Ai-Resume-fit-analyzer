@@ -43,7 +43,9 @@ uvicorn app.main:app --reload --port 8000
 
 macOS / Linux: same steps, but activate with `source .venv/bin/activate`.
 
-Installing the CPU-only PyTorch build first keeps the download much smaller (no GPU is needed). The spaCy model
+Installing the CPU-only PyTorch build first keeps the download much smaller (no GPU is needed). The first start
+downloads the embedding model (`all-MiniLM-L6-v2`, about 90 MB) and can take a minute; after that it is cached and
+`/api/health` reports `"model_loaded": true`. The spaCy model
 and NLTK stopwords downloads are one-time steps. `seed_db.py` builds `data/app.db` from `data/skills_seed.json`; run it
 again whenever the seed file changes (it is safe to rerun).
 
@@ -154,6 +156,7 @@ All of these are optional. Defaults are in [backend/app/config.py](backend/app/c
 | `TFIDF_CEILING` | 0.60 | Raw TF-IDF cosine mapped to 100% |
 | `EMBED_CEILING` | 0.80 | Same, for embeddings |
 | `LABEL_GOOD_MIN` / `LABEL_AVG_MIN` | 65 / 40 | Good / Average / Low fit thresholds |
+| `CHUNK_MAX_WORDS` / `CHUNK_MIN_WORDS` / `CHUNK_OVERLAP_SENTENCES` | 30 / 5 / 1 | How texts are split into chunks for embeddings (sentence-level) |
 | `ALLOWED_ORIGINS` | http://localhost:5173 | CORS origins, comma-separated |
 | `DB_PATH` | data/app.db | SQLite file (relative to `backend/`) |
 
@@ -172,7 +175,7 @@ Built step by step following Section 17 of the spec.
 - [x] Step 3 — Skills extraction (aliases, multi-word skills, ambiguous C / R / Go, JD importance)
 - [x] Step 4 — TF-IDF matcher + `POST /api/analyze` v0 (scores for 16 pairs; labels still to be filled in by the team)
 - [x] Step 5 — Evaluation dataset + `evaluate.py` (report.json generated; agreement figures wait for hand labels)
-- [ ] Step 6 — Embedding matcher + explanations
+- [x] Step 6 — Embedding matcher + explanations (both methods in report.json; agreement waits for hand labels)
 - [ ] Step 7 — Gap analysis + roadmap
 - [ ] Step 8 — ATS checks
 - [ ] Step 9 — Analyzer page

@@ -65,6 +65,7 @@ async def analyze(
         processing_ms=processing_ms,
         fit=result.fit,
         skills=result.skills,
+        explanation=result.explanation,
         warnings=result.warnings,
     )
 

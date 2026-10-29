@@ -1,17 +1,23 @@
 Frontend React Developer
 
-Join our product team to build fast and accessible web interfaces.
+About us: Example Media publishes news and video for millions of readers every month. We care about fast pages
+and an experience that works for everyone, on every device.
 
 Responsibilities:
-- Build user interfaces in React with reusable components.
-- Work closely with designers to deliver responsive design.
-- Write unit tests for components.
+- Build user interfaces in React with reusable, well-tested components.
+- Work closely with designers to deliver responsive design across phones, tablets and desktops.
+- Improve page speed and Core Web Vitals on our most visited pages.
+- Make sure new features meet accessibility standards.
+- Write unit tests for components and review code from other developers.
 
 Requirements:
 - Strong JavaScript and TypeScript skills.
-- 2+ years with React and Redux.
-- Solid HTML and CSS, including accessibility.
+- 2+ years of professional experience with React and Redux.
+- Solid HTML and CSS, including responsive layouts and accessibility.
+- Experience working with REST APIs from the frontend.
+- Comfortable using Git and taking part in code review.
 
 Nice to have:
-- Next.js experience.
+- Next.js experience for server-side rendering.
 - Testing with Jest.
+- Experience with Tailwind CSS or another utility-first CSS framework.

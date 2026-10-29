@@ -1,17 +1,22 @@
 Data Analyst
 
-We need a data analyst to help our business teams make decisions with data.
+About us: Example Retail runs 150 stores and an online shop. Our analytics team helps buyers, marketing and store
+managers make decisions with data instead of guesswork.
 
 Responsibilities:
-- Write SQL queries to answer business questions.
-- Build dashboards and reports for managers.
+- Write SQL queries to answer business questions about sales, stock and customers.
+- Build and maintain dashboards and weekly reports for managers.
+- Analyse promotions and A/B tests and explain what worked and why.
+- Clean and combine data from several sources before analysis.
 - Present insights clearly to non-technical teams.
 
 Requirements:
-- Excellent SQL skills.
-- Advanced Excel.
-- Experience with Tableau or Power BI.
-- Good understanding of statistics.
+- Excellent SQL skills, including joins and window functions.
+- Advanced Excel, including pivot tables and lookups.
+- Experience with Tableau or Power BI for data visualization.
+- Good understanding of statistics, such as averages, distributions and significance tests.
+- Clear written and spoken communication.
 
 Good to have:
 - Python with Pandas for data analysis.
+- Experience in retail or e-commerce analytics.

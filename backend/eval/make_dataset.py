@@ -173,153 +173,194 @@ RESUMES: dict[str, dict] = {
 JDS: dict[str, str] = {
     "j01": """Backend Python Developer
 
-We are looking for a backend developer to build and maintain the APIs behind our products.
+About us: Example Payments builds billing software for small businesses across India. Our engineering team of
+twelve owns the APIs that power invoicing, payouts and reporting.
 
 Responsibilities:
-- Design and build REST APIs in Python.
-- Model data in PostgreSQL and keep queries fast.
-- Write automated tests and review teammates' code.
+- Design, build and maintain REST APIs in Python for our billing platform.
+- Model data in PostgreSQL and keep queries fast as traffic grows.
+- Write automated tests and review pull requests from teammates.
+- Package services with Docker and support deployments to the cloud.
+- Work with product managers to turn requirements into small, shippable features.
+- Investigate production issues and improve logging and monitoring.
 
 Requirements:
 - 2+ years of professional experience with Python.
-- Experience with FastAPI or Django.
-- Strong SQL and PostgreSQL skills.
-- Experience with Docker and Git.
+- Experience with FastAPI or Django for building web APIs.
+- Strong SQL skills and hands-on experience with PostgreSQL.
+- Experience with Docker and Git in a team workflow.
+- Good understanding of REST API design and authentication.
 
 Nice to have:
-- AWS experience.
+- AWS experience, especially ECS or Lambda.
 - Redis or another caching layer.
+- Experience with background job queues.
 """,
     "j02": """Frontend React Developer
 
-Join our product team to build fast and accessible web interfaces.
+About us: Example Media publishes news and video for millions of readers every month. We care about fast pages
+and an experience that works for everyone, on every device.
 
 Responsibilities:
-- Build user interfaces in React with reusable components.
-- Work closely with designers to deliver responsive design.
-- Write unit tests for components.
+- Build user interfaces in React with reusable, well-tested components.
+- Work closely with designers to deliver responsive design across phones, tablets and desktops.
+- Improve page speed and Core Web Vitals on our most visited pages.
+- Make sure new features meet accessibility standards.
+- Write unit tests for components and review code from other developers.
 
 Requirements:
 - Strong JavaScript and TypeScript skills.
-- 2+ years with React and Redux.
-- Solid HTML and CSS, including accessibility.
+- 2+ years of professional experience with React and Redux.
+- Solid HTML and CSS, including responsive layouts and accessibility.
+- Experience working with REST APIs from the frontend.
+- Comfortable using Git and taking part in code review.
 
 Nice to have:
-- Next.js experience.
+- Next.js experience for server-side rendering.
 - Testing with Jest.
+- Experience with Tailwind CSS or another utility-first CSS framework.
 """,
     "j03": """Data Analyst
 
-We need a data analyst to help our business teams make decisions with data.
+About us: Example Retail runs 150 stores and an online shop. Our analytics team helps buyers, marketing and store
+managers make decisions with data instead of guesswork.
 
 Responsibilities:
-- Write SQL queries to answer business questions.
-- Build dashboards and reports for managers.
+- Write SQL queries to answer business questions about sales, stock and customers.
+- Build and maintain dashboards and weekly reports for managers.
+- Analyse promotions and A/B tests and explain what worked and why.
+- Clean and combine data from several sources before analysis.
 - Present insights clearly to non-technical teams.
 
 Requirements:
-- Excellent SQL skills.
-- Advanced Excel.
-- Experience with Tableau or Power BI.
-- Good understanding of statistics.
+- Excellent SQL skills, including joins and window functions.
+- Advanced Excel, including pivot tables and lookups.
+- Experience with Tableau or Power BI for data visualization.
+- Good understanding of statistics, such as averages, distributions and significance tests.
+- Clear written and spoken communication.
 
 Good to have:
 - Python with Pandas for data analysis.
+- Experience in retail or e-commerce analytics.
 """,
     "j04": """Machine Learning Engineer
 
-We are building machine learning features for our customer support platform.
+About us: Example Support AI helps companies answer customer questions faster. We are building machine learning
+features that sort, search and summarise millions of support tickets.
 
 Responsibilities:
-- Train, evaluate and deploy machine learning models.
-- Work on NLP problems such as text classification and search.
-- Turn experiments into reliable services.
+- Train, evaluate and deploy machine learning models for text problems.
+- Work on NLP problems such as text classification, search and summarisation.
+- Build data pipelines that prepare training data from raw tickets.
+- Turn experiments into reliable services with clear metrics.
+- Monitor models in production and retrain them when quality drops.
 
 Requirements:
 - Strong Python skills.
 - Experience with scikit-learn and PyTorch or TensorFlow.
-- Hands-on NLP experience.
-- Good knowledge of statistics and machine learning fundamentals.
+- Hands-on NLP experience with real text data.
+- Good knowledge of statistics and machine learning fundamentals, such as evaluation metrics and overfitting.
+- Experience with Pandas and NumPy.
 
 Nice to have:
-- Hugging Face transformers.
-- Docker and AWS for deployment.
+- Hugging Face transformers and fine-tuning pretrained models.
+- Docker and AWS for deploying models.
+- Experience with LLMs and prompt engineering.
 """,
     "j05": """DevOps Engineer
 
-Help us run reliable infrastructure for a growing SaaS product.
+About us: Example Cloud Co runs a SaaS product used by 2,000 companies. Our platform team keeps it fast, secure
+and available around the clock.
 
 Responsibilities:
-- Operate Kubernetes clusters and container workloads.
-- Automate infrastructure as code.
-- Build and maintain CI/CD pipelines.
+- Operate Kubernetes clusters and container workloads in production.
+- Automate infrastructure as code for networks, databases and clusters.
+- Build and maintain CI/CD pipelines for more than forty services.
+- Improve monitoring, alerting and on-call runbooks.
+- Help developers ship safely with good defaults and clear documentation.
 
 Requirements:
 - Strong Linux and Bash skills.
 - Production experience with Docker and Kubernetes.
 - Terraform for infrastructure as code.
-- Experience with AWS.
+- Experience with AWS services such as EC2, RDS and IAM.
 - CI/CD with Jenkins or GitHub Actions.
 
 Nice to have:
-- Ansible.
-- Monitoring and alerting experience.
+- Ansible for configuration management.
+- Monitoring and alerting experience with Prometheus or similar tools.
+- Nginx configuration and troubleshooting.
 """,
     "j06": """Java Backend Developer
 
-We are hiring a Java developer to build microservices for our logistics platform.
+About us: Example Logistics moves parcels for online shops across the country. Our platform tracks every shipment
+in real time and handles millions of events a day.
 
 Responsibilities:
-- Build and maintain Spring Boot microservices.
-- Design REST APIs and database schemas.
+- Build and maintain Spring Boot microservices for shipment tracking.
+- Design REST APIs and database schemas that scale.
 - Write unit tests and take part in code review.
+- Work in an agile team with two-week sprints.
+- Improve the performance and reliability of existing services.
 
 Requirements:
-- 3+ years of Java.
+- 3+ years of professional Java experience.
 - Strong Spring Boot and microservices experience.
 - Good SQL skills with MySQL or PostgreSQL.
 - Unit testing with JUnit.
+- Understanding of REST API design.
 
 Nice to have:
 - Docker and Kubernetes.
+- Experience with Jira and Scrum.
+- Knowledge of design patterns and system design.
 """,
     "j07": """QA Automation Engineer
 
-We want a QA engineer to grow our automated test coverage.
+About us: Example Insurance sells policies online and through partners. We release every two weeks and want each
+release to be safe without long manual test cycles.
 
 Responsibilities:
-- Design automated UI and API tests.
-- Run regression suites before every release.
-- Report and track defects.
+- Design and maintain automated UI and API tests.
+- Run regression suites before every release and report the results.
+- Report, track and verify defects with developers.
+- Review requirements early to find gaps before development starts.
+- Help the team improve test coverage over time.
 
 Requirements:
 - Experience with Selenium for test automation.
 - Programming skills in Python or Java.
 - API testing with Postman.
-- Good understanding of manual testing practices.
+- Good understanding of manual testing practices and writing test cases.
+- Basic SQL to check data in the database.
 
 Nice to have:
 - Jenkins or other CI/CD tools.
-- Jira.
+- Jira for defect tracking.
+- Experience with PyTest or JUnit.
 """,
     "j08": """Android Developer
 
-Build our customer app used by thousands of people every day.
+About us: Example Grocer delivers groceries in under thirty minutes in five cities. Our customer app is used by
+thousands of people every day.
 
 Responsibilities:
 - Develop new features for our Android app.
 - Integrate with REST APIs and handle offline data.
-- Fix bugs and improve performance.
+- Fix bugs and improve app start-up time and battery use.
+- Work with designers and backend engineers on new features.
+- Release updates to the Play Store every two weeks.
 
 Requirements:
 - Strong Kotlin skills.
 - 2+ years of Android development.
 - Experience consuming REST APIs.
-- Firebase experience.
+- Firebase experience, including authentication and push notifications.
+- Comfortable with Git.
 
 Nice to have:
 - Java.
-- Unit testing.
+- Unit testing for Android apps.
 """,
 }
 
@@ -345,7 +386,7 @@ PAIRS: list[tuple[str, str, str, str]] = [
 
 
 def write_resume(path: Path, resume: dict) -> None:
-    canvas = Canvas(str(path), pagesize=A4)
+    canvas = Canvas(str(path), pagesize=A4, invariant=True)  # same bytes on every run
     canvas.setTitle(path.name)
     y = HEIGHT - 60
     canvas.setFont("Helvetica-Bold", 18)

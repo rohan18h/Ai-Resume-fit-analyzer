@@ -84,9 +84,10 @@ def test_unlabelled_dataset_gives_scores_but_no_metrics(tmp_path: Path) -> None:
     pairs = json.loads((EVAL / "pairs.json").read_text(encoding="utf-8"))
     assert report["pairs"] == len(pairs) >= 10
     assert report["thresholds"] == {"good_min": 65.0, "average_min": 40.0}
-    assert all(0 <= row["tfidf_score"] <= 100 for row in report["rows"])
+    assert set(report["methods"]) == {"tfidf", "embeddings"}  # Step 6: report shows both methods
+    assert all(0 <= row["tfidf_score"] <= 100 and 0 <= row["embeddings_score"] <= 100 for row in report["rows"])
     if report["labelled_pairs"] == 0:
-        assert report["methods"]["tfidf"] is None
+        assert report["methods"] == {"tfidf": None, "embeddings": None}
         assert report["objective_3"] == {"target_percent": 70.0, "agreement_percent": None, "met": None}
 
 
@@ -108,8 +109,11 @@ def test_report_with_placeholder_labels(tmp_path: Path) -> None:
     assert 0 <= tfidf["agreement_percent"] <= 100
     assert sum(map(sum, tfidf["confusion"])) == len(pairs)
     assert report["labeller_disagreements"] == {"double_labelled": 1, "disagreed": 1}
-    assert report["objective_3"]["met"] is None  # embeddings are not evaluated until Step 6
-    assert {"id", "label", "tfidf_score", "tfidf_pred"} <= set(report["rows"][0])
+    embeddings = report["methods"]["embeddings"]
+    assert report["objective_3"]["agreement_percent"] == embeddings["agreement_percent"]
+    assert report["objective_3"]["met"] == (embeddings["agreement_percent"] >= 70)
+    assert {"id", "label", "tfidf_score", "tfidf_pred", "embeddings_score", "embeddings_pred"} <= set(report["rows"][0])
+    assert report["chunking"]["max_words"] == config.CHUNK_MAX_WORDS
     assert "Results use the default thresholds" in " ".join(report["notes"])
 
 

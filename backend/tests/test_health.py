@@ -9,7 +9,7 @@ def test_health_ok() -> None:
     with TestClient(app) as client:
         response = client.get("/api/health")
     assert response.status_code == 200
-    assert response.json() == {"status": "ok", "model_loaded": False, "version": "1.0.0"}
+    assert response.json() == {"status": "ok", "model_loaded": True, "version": "1.0.0"}  # model loaded at startup
 
 
 def test_unknown_route_uses_error_format() -> None:

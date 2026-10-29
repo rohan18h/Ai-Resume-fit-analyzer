@@ -1,18 +1,24 @@
 Backend Python Developer
 
-We are looking for a backend developer to build and maintain the APIs behind our products.
+About us: Example Payments builds billing software for small businesses across India. Our engineering team of
+twelve owns the APIs that power invoicing, payouts and reporting.
 
 Responsibilities:
-- Design and build REST APIs in Python.
-- Model data in PostgreSQL and keep queries fast.
-- Write automated tests and review teammates' code.
+- Design, build and maintain REST APIs in Python for our billing platform.
+- Model data in PostgreSQL and keep queries fast as traffic grows.
+- Write automated tests and review pull requests from teammates.
+- Package services with Docker and support deployments to the cloud.
+- Work with product managers to turn requirements into small, shippable features.
+- Investigate production issues and improve logging and monitoring.
 
 Requirements:
 - 2+ years of professional experience with Python.
-- Experience with FastAPI or Django.
-- Strong SQL and PostgreSQL skills.
-- Experience with Docker and Git.
+- Experience with FastAPI or Django for building web APIs.
+- Strong SQL skills and hands-on experience with PostgreSQL.
+- Experience with Docker and Git in a team workflow.
+- Good understanding of REST API design and authentication.
 
 Nice to have:
-- AWS experience.
+- AWS experience, especially ECS or Lambda.
 - Redis or another caching layer.
+- Experience with background job queues.

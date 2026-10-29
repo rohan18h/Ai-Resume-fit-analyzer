@@ -1,18 +1,23 @@
 QA Automation Engineer
 
-We want a QA engineer to grow our automated test coverage.
+About us: Example Insurance sells policies online and through partners. We release every two weeks and want each
+release to be safe without long manual test cycles.
 
 Responsibilities:
-- Design automated UI and API tests.
-- Run regression suites before every release.
-- Report and track defects.
+- Design and maintain automated UI and API tests.
+- Run regression suites before every release and report the results.
+- Report, track and verify defects with developers.
+- Review requirements early to find gaps before development starts.
+- Help the team improve test coverage over time.
 
 Requirements:
 - Experience with Selenium for test automation.
 - Programming skills in Python or Java.
 - API testing with Postman.
-- Good understanding of manual testing practices.
+- Good understanding of manual testing practices and writing test cases.
+- Basic SQL to check data in the database.
 
 Nice to have:
 - Jenkins or other CI/CD tools.
-- Jira.
+- Jira for defect tracking.
+- Experience with PyTest or JUnit.

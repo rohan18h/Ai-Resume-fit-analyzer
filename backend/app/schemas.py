@@ -30,11 +30,31 @@ class SkillsResult(BaseModel):
     job_description: list[JdSkillOut]
 
 
+class StrongMatch(BaseModel):
+    jd_snippet: str
+    resume_snippet: str
+    similarity: float
+
+
+class WeakSpot(BaseModel):
+    jd_snippet: str
+    best_resume_snippet: str
+    similarity: float
+
+
+class Explanation(BaseModel):
+    """'Why this score?': JD parts best and least covered by the resume (from the embedding matcher)."""
+
+    strong_matches: list[StrongMatch]
+    weak_spots: list[WeakSpot]
+
+
 class AnalyzeResponse(BaseModel):
     request_id: str
     processing_ms: int
     fit: FitResult
     skills: SkillsResult
+    explanation: Explanation | None = None  # None when embeddings were not computed
     warnings: list[str] = []
 
 

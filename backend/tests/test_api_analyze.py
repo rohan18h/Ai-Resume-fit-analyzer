@@ -48,19 +48,41 @@ def test_happy_path_matches_schema(client: TestClient) -> None:
     assert response.status_code == 200, response.text
     body = AnalyzeResponse.model_validate(response.json())
     assert len(body.request_id) == 32 and body.processing_ms >= 0
-    assert body.fit.primary_method == "tfidf"
-    assert 0 <= body.fit.score <= 100 and body.fit.score == body.fit.tfidf_score
+    assert body.fit.primary_method == "embeddings"  # config.PRIMARY_METHOD
+    assert 0 <= body.fit.tfidf_score <= 100 and 0 <= body.fit.embedding_score <= 100
+    assert body.fit.score == body.fit.embedding_score
     assert body.fit.label in {"Good fit", "Average fit", "Low fit"}
     assert {"python", "fastapi", "postgresql", "docker"} <= set(body.skills.resume)
     jd_skills = {s.name: s.importance for s in body.skills.job_description}
     assert jd_skills["python"] == "high" and jd_skills["aws"] == "low"
+    assert body.explanation is not None and body.explanation.strong_matches
+    assert not any("embedding" in w.lower() for w in body.warnings)
 
 
-def test_method_tfidf_has_no_embedding_warning(client: TestClient) -> None:
-    both = post(client).json()["warnings"]
-    tfidf_only = post(client, method="tfidf").json()["warnings"]
-    assert any("embedding" in w.lower() for w in both)
-    assert not any("embedding" in w.lower() for w in tfidf_only)
+@pytest.mark.parametrize(
+    "method, primary, has_tfidf, has_embeddings",
+    [("tfidf", "tfidf", True, False), ("embeddings", "embeddings", False, True), ("both", "embeddings", True, True)],
+)
+def test_method_selects_matchers(client: TestClient, method: str, primary: str, has_tfidf: bool,
+                                 has_embeddings: bool) -> None:
+    body = post(client, method=method).json()
+    assert body["fit"]["primary_method"] == primary
+    assert (body["fit"]["tfidf_score"] is not None) == has_tfidf
+    assert (body["fit"]["embedding_score"] is not None) == has_embeddings
+    assert (body["explanation"] is not None) == has_embeddings
+
+
+def test_falls_back_to_tfidf_when_model_missing(client: TestClient, monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.setattr(pipeline.matcher_embed, "is_model_loaded", lambda: False)
+    body = post(client, method="embeddings").json()
+    assert body["fit"]["primary_method"] == "tfidf" and body["fit"]["embedding_score"] is None
+    assert any("not loaded" in w for w in body["warnings"])
+
+
+def test_primary_method_follows_config(client: TestClient, monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.setattr(config, "PRIMARY_METHOD", "tfidf")
+    fit = post(client).json()["fit"]
+    assert fit["primary_method"] == "tfidf" and fit["score"] == fit["tfidf_score"]
 
 
 def test_short_jd_warning(client: TestClient) -> None:

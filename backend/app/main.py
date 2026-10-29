@@ -16,6 +16,7 @@ from starlette.formparsers import MultiPartParser
 from app import config
 from app.errors import ApiError
 from app.routers import analyze, evaluation, health
+from app.services.matcher_embed import try_load_model
 from app.services.matcher_tfidf import get_vectorizer
 from app.services.skills import get_extractor
 
@@ -31,8 +32,8 @@ _FORM_OVERHEAD_BYTES = 64 * 1024 + config.MAX_JD_CHARS * 4
 
 @asynccontextmanager
 async def lifespan(app: FastAPI) -> AsyncIterator[None]:
-    """Load models once at startup. The embedding model is added in Step 6."""
-    app.state.model_loaded = False
+    """Load models once at startup, never per request (Section 11)."""
+    app.state.model_loaded = try_load_model()  # sentence-embedding model on the CPU
     try:
         get_extractor()  # skills list + spaCy matcher, cached for every request
     except RuntimeError as exc:
