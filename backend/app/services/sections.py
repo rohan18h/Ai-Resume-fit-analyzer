@@ -75,19 +75,50 @@ def heading_kind(line: str, patterns: dict[str, re.Pattern[str]]) -> str | None:
     return None
 
 
+_INLINE_LABEL = re.compile(r"^\s*([A-Za-z][A-Za-z &/]{1,40}?)\s*:\s*\S")
+_EVIDENCE_SECTIONS = frozenset({"experience", "projects"})
+
+
+def resume_heading(line: str) -> str | None:
+    """The section a resume line starts: a heading on its own line ("WORK EXPERIENCE", "Skills:")."""
+    return heading_kind(line, _RESUME_PATTERNS)
+
+
+def inline_label(line: str) -> str | None:
+    """The section named by a label in front of content: "Skills: Python, SQL" -> "skills"."""
+    match = _INLINE_LABEL.match(line)
+    return heading_kind(match.group(1), _RESUME_PATTERNS) if match else None
+
+
+def resume_heading_kinds(lines: list[str]) -> set[str]:
+    """Every section the resume names, by a heading line or an inline label. Used by the ATS headings check, so
+    the ATS check and the fit score agree on which sections a resume has."""
+    kinds = set()
+    for line in lines:
+        kind = resume_heading(line) or inline_label(line)
+        if kind:
+            kinds.add(kind)
+    return kinds
+
+
 def resume_sections(text: str) -> list[Line]:
-    """Every non-heading resume line with the section it belongs to."""
+    """Every non-heading resume line with the section it belongs to.
+
+    An inline label ("Skills: Python, SQL") puts that one line in its section. Inside Experience or Projects it
+    doesn't, because "Tech stack: Python, Docker" under a project still describes that project.
+    """
     section = "header"
     lines = []
     for raw in text.splitlines():
         line = raw.strip()
         if not line:
             continue
-        kind = heading_kind(line, _RESUME_PATTERNS)
+        kind = resume_heading(line)
         if kind:
             section = kind
             continue
-        lines.append(Line(line, section))
+        label = inline_label(line)
+        lines.append(Line(line, label if label and section not in _EVIDENCE_SECTIONS else section))
     return lines
 
 

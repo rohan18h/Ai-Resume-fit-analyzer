@@ -78,10 +78,11 @@ class AtsCheckOut(BaseModel):
     status: Literal["pass", "warn", "fail"]
     detail: str
     fix: str | None
+    credit: float  # 0-1 this check adds to the score (pass 1, fail 0, warn: the measured share that is right)
 
 
 class AtsResultOut(BaseModel):
-    score: int  # round(100 * (passed + 0.5 * warned) / total)
+    score: int  # round(100 * sum(check credits) / total)
     passed: int
     total: int
     checks: list[AtsCheckOut]

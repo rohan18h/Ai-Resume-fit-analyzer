@@ -4,7 +4,9 @@ Main function:
     check_ats(pdf_bytes, parsed) -> AtsResult
 
 Ten checks, each pass / warn / fail with a detail line and, for warn and fail, a short actionable fix.
-score = round(100 * (passed + 0.5 * warned) / total).
+Each check also earns a credit from 0 to 1: pass 1, fail 0, and for warn the share that is right where that can be
+measured (3 of 5 standard headings = 0.6; two columns on 1 of 2 pages = 0.75), otherwise 0.5.
+score = round(100 * sum(credits) / total). Only the resume is checked: the job description never changes it.
 
 The PDF is read from memory only, like the parser.
 """
@@ -12,6 +14,7 @@ The PDF is read from memory only, like the parser.
 from __future__ import annotations
 
 import io
+import logging
 import re
 import unicodedata
 from collections.abc import Callable
@@ -20,6 +23,9 @@ from dataclasses import dataclass
 import pdfplumber
 
 from app.services.parser import ParsedResume, find_column_split, group_rows
+from app.services.sections import resume_heading_kinds
+
+logger = logging.getLogger("resume_fit")
 
 MIN_CHARS_PER_PAGE = 100  # a page with less selectable text is probably an image
 MAX_PAGES = 2
@@ -29,13 +35,11 @@ MAX_SYMBOL_RATIO = 0.01  # decorative symbols per non-space character
 STANDARD_BULLETS = {"•", "-", "*", "–", "·"}  # •  -  *  –  ·
 ICON_FONTS = re.compile(r"wingdings|webdings|dingbats|symbol|fontawesome|icon", re.IGNORECASE)
 
+# The standard sections, found with the same heading rules as the fit score (sections.py).
 SECTIONS: dict[str, str] = {
-    "Experience": r"experience|work history|employment|internships?",
-    "Education": r"education|academics?",
-    "Skills": r"skills|technologies|tech stack|competencies",
-    "Projects": r"projects?",
-    "Summary/Objective": r"summary|objective|profile|about me",
-}
+    "experience": "Experience", "education": "Education", "skills": "Skills", "projects": "Projects",
+    "summary": "Summary/Objective",
+}  # fmt: skip
 
 _EMAIL = re.compile(r"[\w.+-]+@[\w-]+(?:\.[\w-]+)+")
 _PHONE_CANDIDATE = re.compile(r"\+?\(?\d[\d\s().-]{7,}\d")
@@ -48,6 +52,11 @@ class AtsCheck:
     status: str  # "pass" | "warn" | "fail"
     detail: str
     fix: str | None = None
+    credit: float | None = None  # 0-1 towards the score; None = from the status (pass 1, warn 0.5, fail 0)
+
+    def __post_init__(self) -> None:
+        if self.credit is None:
+            object.__setattr__(self, "credit", {"pass": 1.0, "warn": 0.5}.get(self.status, 0.0))
 
 
 @dataclass(frozen=True)
@@ -74,9 +83,14 @@ def check_ats(pdf_bytes: bytes, parsed: ParsedResume) -> AtsResult:
     pages = _read_pages(pdf_bytes)
     checks = [check(pages, parsed) for check in CHECKS]
     passed = sum(c.status == "pass" for c in checks)
-    warned = sum(c.status == "warn" for c in checks)
+    score = round(100 * sum(c.credit for c in checks) / len(checks))
+    # Diagnostics only: counts, statuses and credits, never resume text.
+    logger.debug(
+        "check_ats pages=%d lines=%d fonts=%d credits=%s score=%d",
+        len(pages), len(parsed.lines), len(parsed.fonts), {c.id: round(c.credit, 2) for c in checks}, score,
+    )
     return AtsResult(
-        score=round(100 * (passed + 0.5 * warned) / len(checks)),
+        score=score,
         passed=passed,
         total=len(checks),
         checks=checks,
@@ -112,6 +126,11 @@ def _pass(id_: str, title: str, detail: str) -> AtsCheck:
     return AtsCheck(id_, title, "pass", detail)
 
 
+def _page_share_credit(affected: list[int], pages: list[_Page]) -> float:
+    """Warn credit for a layout problem on some pages: 0.5 when every page has it, more when fewer do."""
+    return 1 - 0.5 * len(affected) / max(1, len(pages))
+
+
 def _pages_text(numbers: list[int]) -> str:
     return ("page " if len(numbers) == 1 else "pages ") + ", ".join(map(str, numbers))
 
@@ -129,6 +148,7 @@ def text_extractable(pages: list[_Page], parsed: ParsedResume) -> AtsCheck:
             "text_extractable", title, "fail",
             f"Almost no selectable text on {_pages_text(image_pages)}. It is probably a scanned image.",
             "Export the resume from Word or Google Docs as a text PDF instead of scanning it or using images of text.",
+            credit=1 - len(image_pages) / max(1, len(pages)),  # text on the other pages can still be read
         )
     return _pass("text_extractable", title, "Text can be selected on every page.")
 
@@ -142,6 +162,7 @@ def multi_column(pages: list[_Page], parsed: ParsedResume) -> AtsCheck:
             f"Text is laid out in two columns on {_pages_text(columns)}. Some ATS read across the columns and mix up "
             "sections.",
             "Use a single-column layout so ATS software reads your sections in the right order.",
+            credit=_page_share_credit(columns, pages),
         )
     return _pass("multi_column", title, "Text flows in one column.")
 
@@ -154,6 +175,7 @@ def tables(pages: list[_Page], parsed: ParsedResume) -> AtsCheck:
             "tables", title, "warn",
             f"Found a table on {_pages_text(with_tables)}. ATS often read table cells in the wrong order or skip them.",
             "Replace the table with plain lines of text.",
+            credit=_page_share_credit(with_tables, pages),
         )
     return _pass("tables", title, "No tables found.")
 
@@ -166,30 +188,25 @@ def images(pages: list[_Page], parsed: ParsedResume) -> AtsCheck:
             "images", title, "warn",
             f"A large image covers part of {_pages_text(large)}. ATS cannot read text inside images.",
             "Put important information in normal text, not inside images or graphics.",
+            credit=_page_share_credit(large, pages),
         )
     return _pass("images", title, "No large images found.")
 
 
 def section_headings(pages: list[_Page], parsed: ParsedResume) -> AtsCheck:
+    """Each of the 5 standard sections found earns 1/5 of this check; none found is a fail."""
     title = "Standard section headings"
-    headings = [line.text for line in parsed.lines if _is_heading(line.text)]
-    missing = [
-        name for name, pattern in SECTIONS.items()
-        if not any(re.search(rf"\b({pattern})\b", heading, re.IGNORECASE) for heading in headings)
-    ]
+    found = resume_heading_kinds([line.text for line in parsed.lines])
+    missing = [name for kind, name in SECTIONS.items() if kind not in found]
     if missing:
         return AtsCheck(
-            "section_headings", title, "warn",
-            f"Missing standard heading{'s' if len(missing) > 1 else ''}: {', '.join(missing)}.",
+            "section_headings", title, "fail" if len(missing) == len(SECTIONS) else "warn",
+            f"Found {len(SECTIONS) - len(missing)} of {len(SECTIONS)} standard headings. "
+            f"Missing: {', '.join(missing)}.",
             f"Add clear headings such as {', '.join(missing)} so ATS can find each section.",
+            credit=1 - len(missing) / len(SECTIONS),
         )
     return _pass("section_headings", title, "Found Experience, Education, Skills, Projects and Summary headings.")
-
-
-def _is_heading(text: str) -> bool:
-    """A short line ('WORK EXPERIENCE', 'Skills:') or a line that starts with a label ('Skills: Python, SQL')."""
-    stripped = text.strip()
-    return len(stripped.split()) <= 4 or bool(re.match(r"^[A-Za-z &/]{3,30}:", stripped))
 
 
 def contact_info(pages: list[_Page], parsed: ParsedResume) -> AtsCheck:
@@ -205,6 +222,7 @@ def contact_info(pages: list[_Page], parsed: ParsedResume) -> AtsCheck:
         "contact_info", title, "fail" if len(missing) == 2 else "warn",
         f"No {' or '.join(missing)} found as text.",
         f"Add your {' and '.join(missing)} as plain text near the top of the resume.",
+        credit=1 - len(missing) / 2,
     )
 
 

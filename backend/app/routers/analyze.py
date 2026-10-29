@@ -57,8 +57,9 @@ async def analyze(
 
     processing_ms = round((perf_counter() - started) * 1000)
     logger.info(
-        "analyze request_id=%s pdf_bytes=%d jd_chars=%d processing_ms=%d stages=%s",
+        "analyze request_id=%s pdf_bytes=%d jd_chars=%d processing_ms=%d stages=%s fit=%s:%.1f ats=%d",
         request_id, len(pdf_bytes), len(job_description), processing_ms, result.timings_ms,
+        result.fit.primary_method, result.fit.score, result.ats.score,
     )
     return AnalyzeResponse(
         request_id=request_id,

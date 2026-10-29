@@ -163,7 +163,13 @@ categories. Each category earns between 0% and 100% of its points, so the total 
 | Experience and project evidence | 25 | The same skills, but only when an Experience or Projects bullet shows them. A skill that is only listed gets nothing here. |
 | Job responsibilities | 20 | Each JD duty against its most similar resume bullet (sentence embeddings, or shared words without the model). |
 | Education and qualifications | 10 | Degree level, years of experience (from dated roles, and only roles involving the skills named) and certifications: met 1, in progress 0.5, not met or not stated 0. |
-| Resume completeness and readability | 10 | The ATS check score. |
+| Resume completeness and readability | 10 | The ATS check score (below). |
+
+**ATS check score** ([backend/app/services/ats.py](backend/app/services/ats.py)) reads only the resume PDF, never
+the job description. So it stays the same when only the JD changes, and moves when the resume's formatting or
+structure changes. Each of the 10 checks earns a credit from 0 to 1: pass 1, fail 0. A warning earns the share that
+is right wherever that can be measured (3 of 5 standard headings = 0.6, email but no phone = 0.5, two columns on 1
+of 2 pages = 0.75), and 0.5 otherwise. The score is `round(100 × sum of credits / 10)`.
 
 If the JD gives a category nothing to measure (for example, no degree or years), that category is left out. Its
 points go to the other job-match categories, and readability always stays at 10. The TF-IDF and embedding scores

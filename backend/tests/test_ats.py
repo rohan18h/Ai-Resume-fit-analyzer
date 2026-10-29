@@ -62,11 +62,14 @@ def test_demo_bad_resume_shows_many_warnings() -> None:
     assert result.score < 70
 
 
-def test_score_counts_warn_as_half() -> None:
-    for name in ("ats_bad_resume.pdf", "image_page.pdf", "decorative.pdf"):
+def test_score_is_the_mean_of_check_credits() -> None:
+    for name in ("ats_good_resume.pdf", "ats_bad_resume.pdf", "image_page.pdf", "decorative.pdf", "header_footer.pdf"):
         result = run(name)
-        warned = sum(c.status == "warn" for c in result.checks)
-        assert result.score == round(100 * (result.passed + 0.5 * warned) / result.total)
+        assert result.score == round(100 * sum(c.credit for c in result.checks) / result.total)
+        for check in result.checks:
+            assert 0 <= check.credit <= 1
+            assert check.credit == 1 if check.status == "pass" else check.credit < 1
+        assert all(c.credit == 0 for c in result.checks if c.status == "fail" and c.id == "contact_info")
 
 
 def test_every_warn_or_fail_has_a_fix() -> None:

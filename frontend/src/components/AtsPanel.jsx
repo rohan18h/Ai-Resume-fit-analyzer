@@ -36,7 +36,12 @@ export default function AtsPanel({ ats }) {
                   <StatusBadge status={check.status} />
                   <span className="ats-check__title">{check.title}</span>
                 </summary>
-                <p className="ats-check__detail">{check.detail}</p>
+                <p className="ats-check__detail">
+                  {check.detail}
+                  {check.credit !== undefined && (
+                    <span className="muted"> Earns {Math.round(check.credit * 100)}% of this check.</span>
+                  )}
+                </p>
                 <p className="ats-check__fix">
                   <strong>Fix:</strong> {check.fix}
                 </p>
