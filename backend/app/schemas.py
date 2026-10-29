@@ -72,12 +72,28 @@ class Explanation(BaseModel):
     weak_spots: list[WeakSpot]
 
 
+class AtsCheckOut(BaseModel):
+    id: str
+    title: str
+    status: Literal["pass", "warn", "fail"]
+    detail: str
+    fix: str | None
+
+
+class AtsResultOut(BaseModel):
+    score: int  # round(100 * (passed + 0.5 * warned) / total)
+    passed: int
+    total: int
+    checks: list[AtsCheckOut]
+
+
 class AnalyzeResponse(BaseModel):
     request_id: str
     processing_ms: int
     fit: FitResult
     skills: SkillsResult
     explanation: Explanation | None = None  # None when embeddings were not computed
+    ats: AtsResultOut
     warnings: list[str] = []
 
 

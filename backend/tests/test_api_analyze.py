@@ -62,6 +62,8 @@ def test_happy_path_matches_schema(client: TestClient) -> None:
     assert sum(c.required for c in body.skills.by_category) == total
     assert body.explanation is not None and body.explanation.strong_matches
     assert not any("embedding" in w.lower() for w in body.warnings)
+    assert body.ats.total == 10 and len(body.ats.checks) == 10 and 0 <= body.ats.score <= 100
+    assert body.ats.passed == sum(c.status == "pass" for c in body.ats.checks)
 
 
 @pytest.mark.parametrize(

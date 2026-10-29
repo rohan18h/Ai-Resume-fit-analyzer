@@ -19,6 +19,13 @@ Unreadable fixtures:
     blank.pdf       a valid PDF with an empty page
     truncated.pdf   starts with %PDF but the rest is cut off
     corrupt.pdf     a text file renamed to .pdf
+
+ATS fixtures (Step 8):
+    ats_good_resume.pdf  passes all 10 checks (embedded Arial, so bullets are real Unicode characters)
+    ats_bad_resume.pdf   two columns, a table, icons and star ratings, many fonts (the demo's "bad resume")
+    image_page.pdf       page 1 is text, page 2 is only an image of text
+    many_fonts.pdf       five font families
+    decorative.pdf       star ratings and icon symbols
 """
 
 from __future__ import annotations
@@ -41,7 +48,7 @@ WINDOWS_FONTS = Path("C:/Windows/Fonts")
 
 
 def new_canvas(name: str) -> Canvas:
-    canvas = Canvas(str(OUT / name), pagesize=A4)
+    canvas = Canvas(str(OUT / name), pagesize=A4, invariant=True)  # same bytes on every run
     canvas.setTitle(name)
     canvas.setAuthor("Resume Fit Analyzer test fixtures")
     return canvas
@@ -418,9 +425,166 @@ def corrupt() -> None:
     (OUT / "corrupt.pdf").write_text("This is a plain text file that was renamed to .pdf.\n" * 10, encoding="utf-8")
 
 
+# ---------------------------------------------------------------------------
+# ATS fixtures
+# ---------------------------------------------------------------------------
+
+
+def register_ttf(name: str, filename: str) -> str:
+    if name not in pdfmetrics.getRegisteredFontNames():
+        pdfmetrics.registerFont(TTFont(name, str(WINDOWS_FONTS / filename)))
+    return name
+
+
+def _text_png(lines: list[str], size: tuple[int, int] = (1240, 1754), font_px: int = 34) -> ImageReader:
+    image = Image.new("L", size, 255)
+    draw = ImageDraw.Draw(image)
+    font = ImageFont.truetype(str(WINDOWS_FONTS / "arial.ttf"), font_px)
+    for index, line in enumerate(lines):
+        draw.text((60, 60 + index * (font_px + 20)), line, fill=0, font=font)
+    buffer = io.BytesIO()
+    image.save(buffer, format="PNG")
+    buffer.seek(0)
+    return ImageReader(buffer)
+
+
+def ats_good_resume() -> None:
+    arial, arial_bold = register_ttf("ArialTTF", "arial.ttf"), register_ttf("ArialBoldTTF", "arialbd.ttf")
+    c = new_canvas("ats_good_resume.pdf")
+    x, y = 56, HEIGHT - 60
+    c.setFont(arial_bold, 18)
+    c.drawString(x, y, "Divya Shetty")
+    y = write_lines(c, x, y - 18, ["divya.shetty@example.com | +91 98200 12345 | Pune"], font=arial, size=9) - 8
+    sections = [
+        ("SUMMARY", ["Software engineer with two years of experience building web APIs and data tools in Python."]),
+        ("SKILLS", ["Python, FastAPI, Django, PostgreSQL, Docker, Git, Linux, REST API, PyTest"]),
+        ("EXPERIENCE", [
+            "Software Engineer, Example Analytics (2023 - present)",
+            "• Built REST APIs in FastAPI that serve reports to 3,000 customers.",
+            "• Moved nightly jobs into Docker containers and cut failures by half.",
+            "• Wrote PyTest suites and reviewed code for a team of five.",
+        ]),
+        ("PROJECTS", [
+            "• Expense tracker: Django and PostgreSQL with user authentication.",
+            "• Log analyser: Python command-line tool that summarises server logs.",
+        ]),
+        ("EDUCATION", ["B.E. Computer Engineering, Example Institute of Technology (2019 - 2023)"]),
+    ]
+    for title, lines in sections:
+        c.setFont(arial_bold, 12)
+        c.drawString(x, y, title)
+        y = write_lines(c, x, y - 18, lines, font=arial, size=10) - 8
+    c.save()
+
+
+def ats_bad_resume() -> None:
+    symbols = register_ttf("SegoeSymbol", "seguisym.ttf")
+    georgia, verdana = register_ttf("GeorgiaTTF", "georgia.ttf"), register_ttf("VerdanaTTF", "verdana.ttf")
+    c = new_canvas("ats_bad_resume.pdf")
+    c.setFont(georgia, 20)
+    c.drawString(50, HEIGHT - 60, "Manish Gupta")
+    c.setFont(symbols, 10)
+    c.drawString(50, HEIGHT - 80, "✉ manish.g@example.com    ☎ call me    ⌂ Mumbai")
+
+    split = WIDTH * 0.38
+    y = HEIGHT - 120
+    c.setFont("Helvetica-Bold", 11)
+    c.drawString(50, y, "MY TOOLBOX")
+    y -= 18
+    for skill, stars in [("Java", 5), ("Spring", 4), ("MySQL", 4), ("Docker", 3), ("AWS", 2)]:
+        c.setFont(verdana, 9.5)
+        c.drawString(50, y, skill)
+        c.setFont(symbols, 9.5)
+        c.drawString(120, y, "★" * stars + "☆" * (5 - stars))
+        y -= 15
+    y -= 10
+    c.setFont("Helvetica-Bold", 11)
+    c.drawString(50, y, "HOBBIES")
+    write_lines(c, 50, y - 18, ["Chess", "Cricket", "Photography", "Travel", "Reading"], font="Times-Roman", size=10)
+
+    y = HEIGHT - 120
+    c.setFont("Helvetica-Bold", 11)
+    c.drawString(split + 20, y, "WHERE I HAVE WORKED")
+    y -= 18
+    for line in ["Java Developer, Example Bank (2022 - present)", "Built Spring services for loan approvals",
+                 "and moved reports to a MySQL warehouse.", "Mentored two interns in my second year."]:
+        c.setFont(symbols, 10)
+        c.drawString(split + 20, y, "➤")
+        c.setFont("Courier", 9.5)
+        c.drawString(split + 34, y, line)
+        y -= 14
+    y -= 16
+    c.setFont("Helvetica-Bold", 11)
+    c.drawString(split + 20, y, "STUDIES")
+    table = Table(
+        [["Degree", "College", "Year"], ["B.E. IT", "Example College", "2022"], ["HSC", "Example School", "2018"]],
+        colWidths=[90, 130, 50],
+    )
+    table.setStyle(TableStyle([("GRID", (0, 0), (-1, -1), 0.5, colors.grey), ("FONTSIZE", (0, 0), (-1, -1), 9)]))
+    _, table_height = table.wrapOn(c, WIDTH, HEIGHT)
+    table.drawOn(c, split + 20, y - table_height - 8)
+    c.save()
+
+
+def image_page() -> None:
+    c = new_canvas("image_page.pdf")
+    y = heading(c, 56, HEIGHT - 70, "EXPERIENCE")
+    write_lines(c, 56, y, [
+        "Operations Analyst, Example Logistics (2021 - present)",
+        "Tracked delivery performance in Excel and SQL and built weekly reports for regional managers.",
+        "Automated the monthly invoice check with Python, saving two days of manual work each month.",
+    ])
+    c.showPage()
+    c.drawImage(_text_png(["EDUCATION", "B.Com, Example College, 2020", "SKILLS", "Excel, SQL, Python, Tableau"]),
+                0, 0, width=WIDTH, height=HEIGHT)
+    c.save()
+
+
+def many_fonts() -> None:
+    fonts = ["Helvetica", "Times-Roman", "Courier", register_ttf("GeorgiaTTF", "georgia.ttf"),
+             register_ttf("VerdanaTTF", "verdana.ttf")]
+    c = new_canvas("many_fonts.pdf")
+    y = HEIGHT - 70
+    lines = [
+        "Lakshmi Iyer, lakshmi.iyer@example.com, +91 98450 67890",
+        "SUMMARY: Product analyst who enjoys turning data into clear decisions.",
+        "SKILLS: SQL, Excel, Tableau, Python, Statistics",
+        "EXPERIENCE: Product Analyst, Example Commerce (2022 - present). Built funnel dashboards.",
+        "EDUCATION: B.Sc. Mathematics, Example University, 2021",
+    ]
+    for font, line in zip(fonts, lines):
+        y = write_lines(c, 56, y, [line], font=font, size=10.5, leading=22)
+    c.save()
+
+
+def decorative() -> None:
+    symbols = register_ttf("SegoeSymbol", "seguisym.ttf")
+    c = new_canvas("decorative.pdf")
+    x, y = 56, HEIGHT - 70
+    c.setFont("Helvetica-Bold", 16)
+    c.drawString(x, y, "Rohan Mehta")
+    y -= 26
+    rows = [
+        ("✉✉ rohan.m@example.com ☎☎ +91 99000 11223", None),
+        ("SKILLS ★★★", None),
+        ("Python", "★★★★☆"), ("SQL", "★★★☆☆"),
+        ("Excel", "★★★★★"), ("Communication", "★★★★☆"),
+        ("✨ EXPERIENCE ✨", None),
+        ("Junior analyst at Example Retail, building weekly sales reports ☺", None),
+    ]
+    for text, stars in rows:
+        c.setFont(symbols, 10)
+        c.drawString(x, y, text)
+        if stars:
+            c.drawString(x + 120, y, stars)
+        y -= 16
+    c.save()
+
+
 def main() -> None:
     for build in (sample_resume_backend, sample_resume_frontend, sidebar_layout, with_table, with_image, six_pages,
-                  header_footer, special_tokens, multi_font, data_analyst_resume, scanned, blank, truncated, corrupt):
+                  header_footer, special_tokens, multi_font, data_analyst_resume, scanned, blank, truncated, corrupt,
+                  ats_good_resume, ats_bad_resume, image_page, many_fonts, decorative):
         build()
     print("Fixtures written to", OUT)
 

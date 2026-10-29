@@ -5,12 +5,15 @@ Input is assumed valid (the router validates it). Nothing is stored; only timing
 
 from __future__ import annotations
 
+from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass, field
 from time import perf_counter
 from typing import Literal
 
 from app import config
 from app.schemas import (
+    AtsCheckOut,
+    AtsResultOut,
     CategoryCount,
     Explanation,
     FitResult,
@@ -22,9 +25,10 @@ from app.schemas import (
     WeakSpot,
 )
 from app.services import matcher_embed
+from app.services.ats import AtsResult, check_ats
 from app.services.gap import analyze_gap
 from app.services.matcher_tfidf import tfidf_score
-from app.services.parser import clean_text, clean_text_light, extract_text, strip_name_header
+from app.services.parser import ParsedResume, clean_text, clean_text_light, extract_text, strip_name_header
 from app.services.skills import extract_skills, rank_jd_skills
 
 Method = Literal["embeddings", "tfidf", "both"]
@@ -35,6 +39,7 @@ class AnalysisResult:
     fit: FitResult
     skills: SkillsResult
     explanation: Explanation | None
+    ats: AtsResultOut
     warnings: list[str]
     timings_ms: dict[str, int] = field(default_factory=dict)
 
@@ -59,8 +64,12 @@ def analyze(pdf_bytes: bytes, jd_text: str, method: Method = "both") -> Analysis
         return now
 
     started = perf_counter()
-    resume_text = strip_name_header(extract_text(pdf_bytes).text)
+    parsed = extract_text(pdf_bytes)
+    resume_text = strip_name_header(parsed.text)
     started = lap("parse", started)
+
+    # ATS only needs the PDF and the parse result, so it runs on its own thread while matching runs here.
+    ats_future = _ATS_POOL.submit(_timed_ats, pdf_bytes, parsed)
 
     resume_skills = extract_skills(resume_text)
     jd_skills = rank_jd_skills(jd_text)
@@ -125,4 +134,19 @@ def analyze(pdf_bytes: bytes, jd_text: str, method: Method = "both") -> Analysis
                 for m in embedding.weak_spots
             ],
         )
-    return AnalysisResult(fit=fit, skills=skills, explanation=explanation, warnings=warnings, timings_ms=timings)
+    ats, timings["ats"] = ats_future.result()
+    ats_out = AtsResultOut(
+        score=ats.score, passed=ats.passed, total=ats.total,
+        checks=[AtsCheckOut(**vars(check)) for check in ats.checks],
+    )
+    return AnalysisResult(fit=fit, skills=skills, explanation=explanation, ats=ats_out, warnings=warnings,
+                          timings_ms=timings)
+
+
+_ATS_POOL = ThreadPoolExecutor(max_workers=4, thread_name_prefix="ats")
+
+
+def _timed_ats(pdf_bytes: bytes, parsed: ParsedResume) -> tuple[AtsResult, int]:
+    started = perf_counter()
+    result = check_ats(pdf_bytes, parsed)
+    return result, round((perf_counter() - started) * 1000)

@@ -100,8 +100,11 @@ def extract_text(pdf_bytes: bytes) -> ParsedResume:
         with pdfplumber.open(io.BytesIO(pdf_bytes)) as pdf:
             page_lines: list[list[TextLine]] = []
             page_heights: list[float] = []
+            fontnames: set[str] = set()
             for number, page in enumerate(pdf.pages, start=1):
-                page_lines.append(_page_lines(page, number))
+                lines_on_page, fonts_on_page = _page_lines(page, number)
+                page_lines.append(lines_on_page)
+                fontnames |= fonts_on_page
                 page_heights.append(float(page.height))
             page_count = len(pdf.pages)
     except (PdfminerException, PDFSyntaxError, PSException, ValueError, KeyError, TypeError) as exc:
@@ -114,7 +117,7 @@ def extract_text(pdf_bytes: bytes) -> ParsedResume:
     if len(text) < config.MIN_EXTRACTED_CHARS:
         raise UnreadablePdf("No readable text found. The PDF may be a scanned image.")
 
-    return ParsedResume(text=text, pages=page_count, lines=lines, fonts=_font_families(lines))
+    return ParsedResume(text=text, pages=page_count, lines=lines, fonts=font_families(fontnames))
 
 
 def count_pages(pdf_bytes: bytes) -> int:
@@ -128,19 +131,20 @@ def count_pages(pdf_bytes: bytes) -> int:
         raise UnreadablePdf("The PDF could not be opened.") from exc
 
 
-def _page_lines(page: pdfplumber.page.Page, number: int) -> list[TextLine]:
-    """Return the lines of one page in reading order (column by column)."""
+def _page_lines(page: pdfplumber.page.Page, number: int) -> tuple[list[TextLine], set[str]]:
+    """Return the lines of one page in reading order (column by column) and every font name used on it."""
     words = page.extract_words(extra_attrs=["fontname", "size"], keep_blank_chars=False)
     if not words:
-        return []
+        return [], set()
+    fontnames = {w["fontname"] for w in words}
 
-    split = _find_column_split(words, float(page.width))
+    split = find_column_split(words, float(page.width))
     if split is None:
         segments = [words]
     else:
         # Everything above the start of the right column is the page header (name, contact line) and is read
         # first, row by row. Lower down, rows that run across the gutter stay whole and are read after the columns.
-        rows = _group_rows(words)
+        rows = group_rows(words)
         right_top = min(
             (w["top"] for row in rows if not _row_spans(row, split) for w in row if w["x0"] >= split),
             default=float("inf"),
@@ -158,8 +162,8 @@ def _page_lines(page: pdfplumber.page.Page, number: int) -> list[TextLine]:
 
     lines: list[TextLine] = []
     for segment in segments:
-        lines.extend(_row_to_line(row, number) for row in _group_rows(segment))
-    return lines
+        lines.extend(_row_to_line(row, number) for row in group_rows(segment))
+    return lines, fontnames
 
 
 def _row_spans(row: list[dict], split: float) -> bool:
@@ -171,7 +175,7 @@ def _row_spans(row: list[dict], split: float) -> bool:
     return left_edge is not None and right_edge is not None and right_edge - left_edge < _GUTTER_MIN_WIDTH * 2
 
 
-def _group_rows(words: list[dict]) -> list[list[dict]]:
+def group_rows(words: list[dict]) -> list[list[dict]]:
     """Group words into rows by their top position, each row sorted left to right."""
     rows: list[list[dict]] = []
     for word in sorted(words, key=lambda w: (w["top"], w["x0"])):
@@ -182,7 +186,7 @@ def _group_rows(words: list[dict]) -> list[list[dict]]:
     return [sorted(row, key=lambda w: w["x0"]) for row in rows]
 
 
-def _find_column_split(words: list[dict], page_width: float) -> float | None:
+def find_column_split(words: list[dict], page_width: float) -> float | None:
     """Find the x position of a column gutter, or None for a single-column page.
 
     A gutter is a vertical band in the middle 60% of the page that almost no row of text crosses,
@@ -190,7 +194,7 @@ def _find_column_split(words: list[dict], page_width: float) -> float | None:
     """
     if len(words) < 20:
         return None
-    rows = _group_rows(words)
+    rows = group_rows(words)
     max_crossing = max(1, int(len(rows) * _GUTTER_MAX_ROW_SHARE))
 
     def crossing(x: int) -> int:
@@ -288,13 +292,13 @@ def _remove_headers_and_footers(
     return cleaned
 
 
-def _font_families(lines: list[TextLine]) -> list[str]:
-    """Distinct font families, e.g. 'ABCDEF+Arial-BoldMT' -> 'Arial'."""
+def font_families(fontnames: set[str] | list[str]) -> list[str]:
+    """Distinct font families, e.g. 'ABCDEF+Arial-BoldMT' -> 'Arial', 'TimesNewRomanPSMT' -> 'TimesNewRoman'."""
     families = set()
-    for line in lines:
-        name = line.fontname.split("+")[-1]
+    for fontname in fontnames:
+        name = fontname.split("+")[-1]
         name = re.split(r"[-,]", name)[0]
-        name = re.sub(r"(MT|PS)$", "", name)
+        name = re.sub(r"(PS)?(MT)?$", "", name)
         if name:
             families.add(name)
     return sorted(families)

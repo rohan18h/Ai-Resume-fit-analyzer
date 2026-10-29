@@ -81,6 +81,9 @@ resumes you can use to try the app:
 - `sample_resume_backend.pdf` (single column, backend developer)
 - `sample_resume_frontend.pdf` (two columns, frontend developer)
 
+For the ATS check, `ats_good_resume.pdf` passes all 10 checks and `ats_bad_resume.pdf` (two columns, a table, icons
+and star ratings) shows the warnings and fixes; use it for step 3 of the demo script.
+
 To rebuild the fixtures (Windows, uses fonts from `C:\Windows\Fonts`): `python tests/fixtures/make_fixtures.py`.
 
 ### API
@@ -177,7 +180,7 @@ Built step by step following Section 17 of the spec.
 - [x] Step 5 — Evaluation dataset + `evaluate.py` (report.json generated; agreement figures wait for hand labels)
 - [x] Step 6 — Embedding matcher + explanations (both methods in report.json; agreement waits for hand labels)
 - [x] Step 7 — Gap analysis + roadmap (missing skills with up to 3 links, coverage %, by-category counts)
-- [ ] Step 8 — ATS checks
+- [x] Step 8 — ATS checks (10 checks, each with a pass and a fail fixture)
 - [ ] Step 9 — Analyzer page
 - [ ] Step 10 — How it works, Evaluation, About pages
 - [ ] Step 11 — Integration, performance, accessibility
