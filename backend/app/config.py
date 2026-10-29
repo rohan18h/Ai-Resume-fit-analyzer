@@ -30,6 +30,9 @@ MAX_PDF_PAGES: int = _int("MAX_PDF_PAGES", 5)
 MIN_JD_CHARS: int = _int("MIN_JD_CHARS", 50)
 MAX_JD_CHARS: int = _int("MAX_JD_CHARS", 10000)
 
+# Parser
+MIN_EXTRACTED_CHARS: int = _int("MIN_EXTRACTED_CHARS", 200)  # below this the PDF is treated as unreadable (starting value)
+
 # Matching
 EMBEDDING_MODEL: str = _str("EMBEDDING_MODEL", "sentence-transformers/all-MiniLM-L6-v2")
 PRIMARY_METHOD: str = _str("PRIMARY_METHOD", "embeddings")  # "tfidf" or "embeddings"
