@@ -35,6 +35,8 @@ MIN_EXTRACTED_CHARS: int = _int("MIN_EXTRACTED_CHARS", 200)  # below this the PD
 
 # Matching
 EMBEDDING_MODEL: str = _str("EMBEDDING_MODEL", "sentence-transformers/all-MiniLM-L6-v2")
+# Load the model on the first request instead of at startup (Section 15 fallback for small free instances).
+LAZY_MODEL_LOAD: bool = _str("LAZY_MODEL_LOAD", "false").lower() in ("1", "true", "yes")
 PRIMARY_METHOD: str = _str("PRIMARY_METHOD", "embeddings")  # "tfidf" or "embeddings"
 TFIDF_CEILING: float = _float("TFIDF_CEILING", 0.60)  # starting value
 EMBED_CEILING: float = _float("EMBED_CEILING", 0.80)  # starting value

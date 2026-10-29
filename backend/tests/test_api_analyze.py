@@ -86,6 +86,16 @@ def test_falls_back_to_tfidf_when_model_missing(client: TestClient, monkeypatch:
     assert any("not loaded" in w for w in body["warnings"])
 
 
+def test_lazy_mode_loads_model_on_first_request(client: TestClient, monkeypatch: pytest.MonkeyPatch) -> None:
+    loaded = {"value": False}
+    monkeypatch.setattr(config, "LAZY_MODEL_LOAD", True)
+    monkeypatch.setattr(pipeline.matcher_embed, "is_model_loaded", lambda: loaded["value"])
+    monkeypatch.setattr(pipeline.matcher_embed, "try_load_model", lambda: loaded.update(value=True) or True)
+    body = post(client, method="embeddings").json()
+    assert loaded["value"] is True
+    assert body["fit"]["embedding_score"] is not None
+
+
 def test_primary_method_follows_config(client: TestClient, monkeypatch: pytest.MonkeyPatch) -> None:
     monkeypatch.setattr(config, "PRIMARY_METHOD", "tfidf")
     fit = post(client).json()["fit"]

@@ -33,7 +33,8 @@ _FORM_OVERHEAD_BYTES = 64 * 1024 + config.MAX_JD_CHARS * 4
 @asynccontextmanager
 async def lifespan(app: FastAPI) -> AsyncIterator[None]:
     """Load models once at startup, never per request (Section 11)."""
-    app.state.model_loaded = try_load_model()  # sentence-embedding model on the CPU
+    if not config.LAZY_MODEL_LOAD:
+        try_load_model()  # sentence-embedding model on the CPU
     try:
         get_extractor()  # skills list + spaCy matcher, cached for every request
     except RuntimeError as exc:

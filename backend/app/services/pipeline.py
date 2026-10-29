@@ -86,6 +86,8 @@ def analyze(pdf_bytes: bytes, jd_text: str, method: Method = "both") -> Analysis
 
     embedding = None
     if method in ("embeddings", "both"):
+        if config.LAZY_MODEL_LOAD and not matcher_embed.is_model_loaded():
+            matcher_embed.try_load_model()  # first request after startup pays the loading time
         if matcher_embed.is_model_loaded():
             embedding = matcher_embed.embedding_score(clean_text_light(resume_text), clean_text_light(jd_text))
             lap("embeddings", started)

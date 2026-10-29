@@ -169,6 +169,55 @@ All of these are optional. Defaults are in [backend/app/config.py](backend/app/c
 | `ALLOWED_ORIGINS` | http://localhost:5173 | CORS origins, comma-separated |
 | `DB_PATH` | data/app.db | SQLite file (relative to `backend/`) |
 | `EVAL_REPORT_PATH` | eval/report.json | Report served by `GET /api/evaluation` (relative to `backend/`) |
+| `LAZY_MODEL_LOAD` | false | `true` loads the embedding model on the first request instead of at startup |
+
+## Deploy (free tier)
+
+The backend goes to Render and the frontend to Vercel, both from the GitHub repository (Section 15).
+
+### 1. Push to GitHub
+
+Create an empty repository on GitHub, then from the project folder:
+
+```powershell
+git remote add origin https://github.com/<your-account>/resume-fit-analyzer.git
+git push -u origin main
+```
+
+The `tests` workflow in `.github/workflows/tests.yml` then runs the backend and frontend tests on every push.
+
+### 2. Backend on Render
+
+1. In Render, choose **New > Blueprint** and pick the repository. Render reads [render.yaml](render.yaml).
+2. When asked for `ALLOWED_ORIGINS`, enter a placeholder for now (for example `http://localhost:5173`); you will
+   change it in step 4.
+3. Wait for the first build. It installs CPU-only PyTorch, downloads the spaCy model, NLTK stopwords and the
+   embedding model, and seeds the database, so it takes several minutes.
+4. Open `https://<your-service>.onrender.com/api/health`. You should see `"model_loaded": true`.
+
+If the service crashes with "out of memory" (the free plan has about 512 MB), set the environment variable
+`LAZY_MODEL_LOAD` to `true` in the Render dashboard and redeploy. If it still does not fit, stop and talk to the
+team: the remaining options (an ONNX-based embedding library, or Hugging Face Spaces) change the tech stack shown on
+the slides.
+
+### 3. Frontend on Vercel
+
+1. In Vercel, choose **Add New > Project**, import the repository and set **Root Directory** to `frontend`.
+   Vercel detects Vite; [frontend/vercel.json](frontend/vercel.json) sets the build and makes page refreshes work on
+   every route.
+2. Add the environment variable `VITE_API_BASE_URL` = `https://<your-service>.onrender.com` (no trailing slash).
+3. Deploy, and note the URL, for example `https://resume-fit-analyzer.vercel.app`.
+
+### 4. Connect them
+
+In Render, set `ALLOWED_ORIGINS` to the Vercel URL (no trailing slash) and save; Render redeploys. Then open the
+Vercel URL on a phone and run one analysis with `backend/tests/fixtures/sample_resume_backend.pdf`.
+
+### Before a demo
+
+Free Render instances sleep after about 15 minutes without traffic. Open `/api/health` on the Render URL a minute
+before the demo so the first analysis is fast. The full demo steps are in
+[docs/demo-script.md](docs/demo-script.md).
 
 ## Privacy
 
@@ -191,4 +240,5 @@ Built step by step following Section 17 of the spec.
 - [x] Step 9 — Analyzer page (all result sections, loading stages, error banners, print view, mobile layout)
 - [x] Step 10 — How it works, Evaluation, About pages (Evaluation renders report.json, labelled or not)
 - [x] Step 11 — Integration, performance, accessibility (see [docs/manual-test-checklist.md](docs/manual-test-checklist.md))
-- [ ] Step 12 — Deploy
+- [ ] Step 12 — Deploy (config, workflow, guide and demo script ready; needs the team's GitHub, Render and Vercel
+  accounts, then the public link must be checked from a phone)

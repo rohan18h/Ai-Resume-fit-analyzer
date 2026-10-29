@@ -1,0 +1,43 @@
+# Render Blueprint for the backend (Section 15). In Render: New > Blueprint > pick this repository.
+# Free plan: about 512 MB RAM, sleeps after inactivity (the first request then takes up to a minute).
+services:
+  - type: web
+    name: resume-fit-analyzer-api
+    runtime: python
+    plan: free
+    rootDir: backend
+    healthCheckPath: /api/health
+    buildCommand: >-
+      pip install --upgrade pip &&
+      pip install torch --index-url https://download.pytorch.org/whl/cpu &&
+      pip install -r requirements.txt &&
+      python -m spacy download en_core_web_sm &&
+      python -c "import nltk; nltk.download('stopwords', download_dir='nltk_data')" &&
+      python scripts/seed_db.py &&
+      python -c "from sentence_transformers import SentenceTransformer; SentenceTransformer('sentence-transformers/all-MiniLM-L6-v2', device='cpu')"
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.10
+      # Files downloaded during the build must live inside the project folder to exist at runtime.
+      - key: NLTK_DATA
+        value: /opt/render/project/src/backend/nltk_data
+      - key: HF_HOME
+        value: /opt/render/project/src/backend/.hf_cache
+      # Keep memory low on the free instance.
+      - key: OMP_NUM_THREADS
+        value: "1"
+      - key: MKL_NUM_THREADS
+        value: "1"
+      - key: TOKENIZERS_PARALLELISM
+        value: "false"
+      - key: MALLOC_ARENA_MAX
+        value: "2"
+      # Set to "true" only if the instance runs out of memory while starting (Section 15 fallback 2).
+      - key: LAZY_MODEL_LOAD
+        value: "false"
+      - key: PRIMARY_METHOD
+        value: embeddings
+      # The Vercel frontend URL, e.g. https://resume-fit-analyzer.vercel.app (no trailing slash).
+      - key: ALLOWED_ORIGINS
+        sync: false
