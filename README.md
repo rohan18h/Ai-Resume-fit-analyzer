@@ -142,6 +142,12 @@ npm run dev
 
 Open http://localhost:5173. The Analyzer page shows "Connected" when it can reach the backend.
 
+Run the frontend unit tests (input checks, formatting, roadmap text, error messages):
+
+```powershell
+npm test
+```
+
 The frontend reads the backend URL from `VITE_API_BASE_URL` (default `http://localhost:8000`). To change it, copy
 `frontend/.env.example` to `frontend/.env.local` and edit it.
 
@@ -181,7 +187,7 @@ Built step by step following Section 17 of the spec.
 - [x] Step 6 — Embedding matcher + explanations (both methods in report.json; agreement waits for hand labels)
 - [x] Step 7 — Gap analysis + roadmap (missing skills with up to 3 links, coverage %, by-category counts)
 - [x] Step 8 — ATS checks (10 checks, each with a pass and a fail fixture)
-- [ ] Step 9 — Analyzer page
+- [x] Step 9 — Analyzer page (all result sections, loading stages, error banners, print view, mobile layout)
 - [ ] Step 10 — How it works, Evaluation, About pages
 - [ ] Step 11 — Integration, performance, accessibility
 - [ ] Step 12 — Deploy
