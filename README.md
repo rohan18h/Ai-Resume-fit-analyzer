@@ -151,6 +151,24 @@ npm test
 The frontend reads the backend URL from `VITE_API_BASE_URL` (default `http://localhost:8000`). To change it, copy
 `frontend/.env.example` to `frontend/.env.local` and edit it.
 
+## How the fit score is calculated
+
+The main score ([backend/app/services/scoring.py](backend/app/services/scoring.py)) adds up points from five
+categories. Each category earns between 0% and 100% of its points, so the total can never pass 100. The response's
+`breakdown` lists every category's points, and they add up to `fit.score`.
+
+| Category | Points | Rule |
+| --- | --- | --- |
+| Required technical skills | 35 | JD skills the resume has anywhere, weighted required 3 / no cue 2 / preferred 1. Exact name or alias = full credit, a skill built on it = 0.75, an alternative = 0.40. Repeats and skills the JD doesn't ask for add nothing. |
+| Experience and project evidence | 25 | The same skills, but only when an Experience or Projects bullet shows them. A skill that is only listed gets nothing here. |
+| Job responsibilities | 20 | Each JD duty against its most similar resume bullet (sentence embeddings, or shared words without the model). |
+| Education and qualifications | 10 | Degree level, years of experience (from dated roles, and only roles involving the skills named) and certifications: met 1, in progress 0.5, not met or not stated 0. |
+| Resume completeness and readability | 10 | The ATS check score. |
+
+If the JD gives a category nothing to measure (for example, no degree or years), that category is left out. Its
+points go to the other job-match categories, and readability always stays at 10. The TF-IDF and embedding scores
+are still computed and shown, for the method comparison and Objectives 2–3.
+
 ## Environment variables (backend)
 
 All of these are optional. Defaults are in [backend/app/config.py](backend/app/config.py).
@@ -161,7 +179,11 @@ All of these are optional. Defaults are in [backend/app/config.py](backend/app/c
 | `MAX_PDF_PAGES` | 5 | Reject longer PDFs |
 | `MIN_JD_CHARS` / `MAX_JD_CHARS` | 50 / 10000 | Job description length limits |
 | `EMBEDDING_MODEL` | sentence-transformers/all-MiniLM-L6-v2 | Embedding model |
-| `PRIMARY_METHOD` | embeddings | Main fit score: `tfidf` or `embeddings` |
+| `PRIMARY_METHOD` | weighted | Main fit score: `weighted` (see below), `tfidf` or `embeddings` |
+| `WEIGHT_SKILLS` / `WEIGHT_EVIDENCE` / `WEIGHT_RESPONSIBILITIES` / `WEIGHT_QUALIFICATIONS` / `WEIGHT_READABILITY` | 35 / 25 / 20 / 10 / 10 | Points per category of the weighted score |
+| `IMPORTANCE_WEIGHT_HIGH` / `_MEDIUM` / `_LOW` | 3 / 2 / 1 | How much a JD skill counts: required / no cue / preferred |
+| `IMPLIED_SKILL_CREDIT` / `RELATED_SKILL_CREDIT` | 0.75 / 0.40 | Partial credit for a skill built on the one asked for (Django → Python) / an alternative (MySQL → PostgreSQL) |
+| `RESP_SIM_FLOOR` / `RESP_SIM_FULL` | 0.30 / 0.65 | Similarity of a JD duty to a resume bullet that earns 0 / full credit |
 | `TFIDF_CEILING` | 0.60 | Raw TF-IDF cosine mapped to 100% |
 | `EMBED_CEILING` | 0.80 | Same, for embeddings |
 | `LABEL_GOOD_MIN` / `LABEL_AVG_MIN` | 65 / 40 | Good / Average / Low fit thresholds |

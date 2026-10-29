@@ -8,7 +8,7 @@ from pydantic import BaseModel
 
 
 class FitResult(BaseModel):
-    primary_method: Literal["tfidf", "embeddings"]
+    primary_method: Literal["weighted", "tfidf", "embeddings"]
     score: float
     label: str
     tfidf_score: float | None
@@ -87,6 +87,60 @@ class AtsResultOut(BaseModel):
     checks: list[AtsCheckOut]
 
 
+class CategoryScoreOut(BaseModel):
+    id: Literal["skills", "evidence", "responsibilities", "qualifications", "readability"]
+    title: str
+    points: float
+    max_points: float  # 0 when the category does not apply to this JD
+    applicable: bool
+    summary: str
+
+
+class SkillAssessmentOut(BaseModel):
+    name: str
+    display_name: str
+    importance: Literal["high", "medium", "low"]
+    requirement: Literal["required", "preferred"]
+    status: Literal["demonstrated", "listed", "related", "missing"]
+    skills_credit: float
+    evidence_credit: float
+    via: str | None
+    evidence: str | None
+
+
+class ResponsibilityMatchOut(BaseModel):
+    requirement: str
+    best_evidence: str | None
+    similarity: float
+    credit: float
+
+
+class QualificationCheckOut(BaseModel):
+    kind: Literal["degree", "experience_years", "certification"]
+    requirement: str
+    importance: Literal["required", "preferred"]
+    status: Literal["met", "in_progress", "not_met", "unverified"]
+    detail: str
+
+
+class ScoreBreakdown(BaseModel):
+    """The weighted fit score explained: fit.score == sum of the category points (Section: weighted model)."""
+
+    score: float
+    categories: list[CategoryScoreOut]
+    matched_required: list[str]
+    partial_required: list[str]  # only a related skill was found
+    missing_required: list[str]
+    matched_preferred: list[str]
+    missing_preferred: list[str]
+    listed_not_demonstrated: list[str]
+    skills: list[SkillAssessmentOut]
+    responsibilities: list[ResponsibilityMatchOut]
+    qualifications: list[QualificationCheckOut]
+    recommendations: list[str]
+    similarity_method: Literal["embeddings", "word overlap"]
+
+
 class AnalyzeResponse(BaseModel):
     request_id: str
     processing_ms: int
@@ -94,6 +148,7 @@ class AnalyzeResponse(BaseModel):
     skills: SkillsResult
     explanation: Explanation | None = None  # None when embeddings were not computed
     ats: AtsResultOut
+    breakdown: ScoreBreakdown | None = None  # the weighted score's categories and evidence
     warnings: list[str] = []
 
 

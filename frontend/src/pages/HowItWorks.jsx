@@ -15,7 +15,7 @@ const STEPS = [
   },
   {
     title: 'Compute match score',
-    text: 'Cosine similarity between the resume and job description vectors gives a percentage fit score.',
+    text: 'The fit score adds up points from five categories: required skills (35), skills shown in experience or projects (25), job duties matched by your bullets (20), degree, years and certifications (10) and ATS formatting (10). TF-IDF and embedding cosine scores are shown alongside for comparison.',
   },
   {
     title: 'Analyze gap & show results',

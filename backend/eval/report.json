@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-29T12:20:57Z",
+  "generated_at": "2026-10-29T14:42:58Z",
   "pairs": 16,
   "labelled_pairs": 0,
   "label_order": [
@@ -25,7 +25,8 @@
   "labeller_disagreements": null,
   "methods": {
     "tfidf": null,
-    "embeddings": null
+    "embeddings": null,
+    "weighted": null
   },
   "objective_3": {
     "target_percent": 70.0,
@@ -44,7 +45,9 @@
       "tfidf_score": 23.4,
       "tfidf_pred": "poor",
       "embeddings_score": 82.1,
-      "embeddings_pred": "good"
+      "embeddings_pred": "good",
+      "weighted_score": 74.4,
+      "weighted_pred": "good"
     },
     {
       "id": "p02",
@@ -52,7 +55,9 @@
       "tfidf_score": 32.8,
       "tfidf_pred": "poor",
       "embeddings_score": 74.5,
-      "embeddings_pred": "good"
+      "embeddings_pred": "good",
+      "weighted_score": 62.4,
+      "weighted_pred": "average"
     },
     {
       "id": "p03",
@@ -60,7 +65,9 @@
       "tfidf_score": 37.3,
       "tfidf_pred": "poor",
       "embeddings_score": 76.4,
-      "embeddings_pred": "good"
+      "embeddings_pred": "good",
+      "weighted_score": 75.2,
+      "weighted_pred": "good"
     },
     {
       "id": "p04",
@@ -68,7 +75,9 @@
       "tfidf_score": 25.9,
       "tfidf_pred": "poor",
       "embeddings_score": 67.9,
-      "embeddings_pred": "good"
+      "embeddings_pred": "good",
+      "weighted_score": 56.2,
+      "weighted_pred": "average"
     },
     {
       "id": "p05",
@@ -76,7 +85,9 @@
       "tfidf_score": 42.8,
       "tfidf_pred": "average",
       "embeddings_score": 76.9,
-      "embeddings_pred": "good"
+      "embeddings_pred": "good",
+      "weighted_score": 81.6,
+      "weighted_pred": "good"
     },
     {
       "id": "p06",
@@ -84,7 +95,9 @@
       "tfidf_score": 48.6,
       "tfidf_pred": "average",
       "embeddings_score": 77.6,
-      "embeddings_pred": "good"
+      "embeddings_pred": "good",
+      "weighted_score": 75.9,
+      "weighted_pred": "good"
     },
     {
       "id": "p07",
@@ -92,7 +105,9 @@
       "tfidf_score": 40.5,
       "tfidf_pred": "average",
       "embeddings_score": 67.5,
-      "embeddings_pred": "good"
+      "embeddings_pred": "good",
+      "weighted_score": 59.3,
+      "weighted_pred": "average"
     },
     {
       "id": "p08",
@@ -100,7 +115,9 @@
       "tfidf_score": 34.9,
       "tfidf_pred": "poor",
       "embeddings_score": 70.0,
-      "embeddings_pred": "good"
+      "embeddings_pred": "good",
+      "weighted_score": 78.9,
+      "weighted_pred": "good"
     },
     {
       "id": "p09",
@@ -108,7 +125,9 @@
       "tfidf_score": 11.4,
       "tfidf_pred": "poor",
       "embeddings_score": 61.7,
-      "embeddings_pred": "average"
+      "embeddings_pred": "average",
+      "weighted_score": 43.7,
+      "weighted_pred": "average"
     },
     {
       "id": "p10",
@@ -116,7 +135,9 @@
       "tfidf_score": 6.9,
       "tfidf_pred": "poor",
       "embeddings_score": 54.5,
-      "embeddings_pred": "average"
+      "embeddings_pred": "average",
+      "weighted_score": 21.1,
+      "weighted_pred": "poor"
     },
     {
       "id": "p11",
@@ -124,7 +145,9 @@
       "tfidf_score": 2.3,
       "tfidf_pred": "poor",
       "embeddings_score": 41.0,
-      "embeddings_pred": "average"
+      "embeddings_pred": "average",
+      "weighted_score": 16.3,
+      "weighted_pred": "poor"
     },
     {
       "id": "p12",
@@ -132,7 +155,9 @@
       "tfidf_score": 9.7,
       "tfidf_pred": "poor",
       "embeddings_score": 54.7,
-      "embeddings_pred": "average"
+      "embeddings_pred": "average",
+      "weighted_score": 36.5,
+      "weighted_pred": "poor"
     },
     {
       "id": "p13",
@@ -140,7 +165,9 @@
       "tfidf_score": 3.9,
       "tfidf_pred": "poor",
       "embeddings_score": 21.9,
-      "embeddings_pred": "poor"
+      "embeddings_pred": "poor",
+      "weighted_score": 10.6,
+      "weighted_pred": "poor"
     },
     {
       "id": "p14",
@@ -148,7 +175,9 @@
       "tfidf_score": 3.8,
       "tfidf_pred": "poor",
       "embeddings_score": 36.6,
-      "embeddings_pred": "poor"
+      "embeddings_pred": "poor",
+      "weighted_score": 12.0,
+      "weighted_pred": "poor"
     },
     {
       "id": "p15",
@@ -156,7 +185,9 @@
       "tfidf_score": 2.0,
       "tfidf_pred": "poor",
       "embeddings_score": 29.4,
-      "embeddings_pred": "poor"
+      "embeddings_pred": "poor",
+      "weighted_score": 9.9,
+      "weighted_pred": "poor"
     },
     {
       "id": "p16",
@@ -164,7 +195,9 @@
       "tfidf_score": 1.3,
       "tfidf_pred": "poor",
       "embeddings_score": 39.1,
-      "embeddings_pred": "poor"
+      "embeddings_pred": "poor",
+      "weighted_score": 9.5,
+      "weighted_pred": "poor"
     }
   ]
 }

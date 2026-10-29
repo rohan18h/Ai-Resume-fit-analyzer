@@ -7,6 +7,7 @@ import Icon from './Icon.jsx';
 import MethodBarChart from './MethodBarChart.jsx';
 import MethodChips from './MethodChips.jsx';
 import RoadmapCard from './RoadmapCard.jsx';
+import ScoreBreakdown from './ScoreBreakdown.jsx';
 import ScoreGauge from './ScoreGauge.jsx';
 import SkillChips from './SkillChips.jsx';
 import { scoreColor } from './charts.js';
@@ -73,7 +74,7 @@ function Roadmap({ missing, jdHasSkills }) {
 
 /** Every result section from Section 13.3, in order. */
 const ResultsView = forwardRef(function ResultsView({ result, onAnalyzeAnother, onEditJd }, headingRef) {
-  const { fit, skills, explanation, ats, warnings } = result;
+  const { fit, skills, explanation, ats, breakdown, warnings } = result;
   const totalSkills = skills.matched.length + skills.missing.length;
 
   return (
@@ -103,6 +104,12 @@ const ResultsView = forwardRef(function ResultsView({ result, onAnalyzeAnother, 
               label={`Fit score ${Math.round(fit.score)} percent, ${fit.label}`}
             />
             <div className="fit__side">
+              {fit.primary_method === 'weighted' && (
+                <p className="small fit__basis">
+                  Weighted score from skills, evidence, job duties, qualifications and formatting. See the score
+                  breakdown.
+                </p>
+              )}
               <MethodChips fit={fit} />
               <p className="muted small">Analyzed in {formatSeconds(result.processing_ms)}</p>
             </div>
@@ -144,6 +151,12 @@ const ResultsView = forwardRef(function ResultsView({ result, onAnalyzeAnother, 
           <MethodBarChart fit={fit} />
         </Section>
       </div>
+
+      {breakdown && (
+        <Section title="Score breakdown" className="result--breakdown">
+          <ScoreBreakdown breakdown={breakdown} />
+        </Section>
+      )}
 
       <Section title="Learning roadmap" className="result--roadmap">
         <Roadmap missing={skills.missing} jdHasSkills={totalSkills > 0} />

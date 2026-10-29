@@ -9,8 +9,11 @@ def test_defaults() -> None:
     assert config.MAX_UPLOAD_MB == 5
     assert config.MAX_PDF_PAGES == 5
     assert (config.MIN_JD_CHARS, config.MAX_JD_CHARS) == (50, 10000)
-    assert config.PRIMARY_METHOD == "embeddings"
+    assert config.PRIMARY_METHOD == "weighted"
     assert (config.TFIDF_CEILING, config.EMBED_CEILING) == (0.60, 0.80)
+    weights = (config.WEIGHT_SKILLS, config.WEIGHT_EVIDENCE, config.WEIGHT_RESPONSIBILITIES,
+               config.WEIGHT_QUALIFICATIONS, config.WEIGHT_READABILITY)
+    assert weights == (35, 25, 20, 10, 10) and sum(weights) == 100
     assert (config.LABEL_GOOD_MIN, config.LABEL_AVG_MIN) == (65, 40)
 
 

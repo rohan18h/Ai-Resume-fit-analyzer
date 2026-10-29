@@ -84,10 +84,12 @@ def test_unlabelled_dataset_gives_scores_but_no_metrics(tmp_path: Path) -> None:
     pairs = json.loads((EVAL / "pairs.json").read_text(encoding="utf-8"))
     assert report["pairs"] == len(pairs) >= 10
     assert report["thresholds"] == {"good_min": 65.0, "average_min": 40.0}
-    assert set(report["methods"]) == {"tfidf", "embeddings"}  # Step 6: report shows both methods
-    assert all(0 <= row["tfidf_score"] <= 100 and 0 <= row["embeddings_score"] <= 100 for row in report["rows"])
+    assert set(report["methods"]) == {"tfidf", "embeddings", "weighted"}  # both methods + the app's main score
+    assert all(
+        0 <= row[f"{method}_score"] <= 100 for row in report["rows"] for method in ("tfidf", "embeddings", "weighted")
+    )
     if report["labelled_pairs"] == 0:
-        assert report["methods"] == {"tfidf": None, "embeddings": None}
+        assert report["methods"] == {"tfidf": None, "embeddings": None, "weighted": None}
         assert report["objective_3"] == {"target_percent": 70.0, "agreement_percent": None, "met": None}
 
 

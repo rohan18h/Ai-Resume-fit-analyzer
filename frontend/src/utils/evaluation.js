@@ -2,6 +2,7 @@
 export const METHODS = [
   { key: 'tfidf', name: 'TF-IDF' },
   { key: 'embeddings', name: 'Embeddings' },
+  { key: 'weighted', name: 'Weighted (main score)' },
 ];
 
 export function summarize(report) {
@@ -12,6 +13,7 @@ export function summarize(report) {
     labelled: report.labelled_pairs ?? report.rows.filter((row) => row.label).length,
     tfidf: metric('tfidf'),
     embeddings: metric('embeddings'),
+    weighted: metric('weighted'),
     target,
     met: report.objective_3?.met ?? null, // null = not evaluated yet
     labelOrder: report.label_order ?? ['poor', 'average', 'good'],

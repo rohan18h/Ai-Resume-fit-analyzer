@@ -1,5 +1,8 @@
 """Offline evaluation (Objectives 2 and 3): score every hand-labelled pair and compare with the labels.
 
+Methods: "tfidf" and "embeddings" (Objectives 2 and 3) and "weighted", the app's main fit score
+(services/scoring.py), so the score users see is checked against the same labels.
+
 Run from backend/:  python eval/evaluate.py
 
 For each method it reports agreement % (predicted label == hand label), a 3x3 confusion matrix, the Spearman
@@ -32,9 +35,12 @@ sys.path.insert(0, str(BACKEND_DIR))
 from scipy.stats import spearmanr  # noqa: E402
 
 from app import config  # noqa: E402
+from app.services.ats import check_ats  # noqa: E402
 from app.services.matcher_embed import embedding_score  # noqa: E402
 from app.services.matcher_tfidf import get_vectorizer, tfidf_score  # noqa: E402
 from app.services.parser import clean_text, clean_text_light, extract_text, strip_name_header  # noqa: E402
+from app.services.scoring import weighted_score  # noqa: E402
+from app.services.skills import extract_skills, rank_jd_skills  # noqa: E402
 
 LABELS = ("poor", "average", "good")  # confusion matrix order: rows = hand label, columns = predicted
 ORDINAL = {label: index for index, label in enumerate(LABELS)}
@@ -50,6 +56,7 @@ class PairTexts:
     jd_clean: str
     resume_light: str  # casing and lines kept, for sentence embeddings (Step 6)
     jd_light: str
+    resume_pdf: bytes  # for the ATS checks in the weighted score
 
 
 def _score_tfidf(texts: PairTexts) -> float:
@@ -60,8 +67,17 @@ def _score_embeddings(texts: PairTexts) -> float:
     return embedding_score(texts.resume_light, texts.jd_light).score
 
 
-# Both methods call the same service functions the API uses.
-SCORERS: dict[str, Callable[[PairTexts], float]] = {"tfidf": _score_tfidf, "embeddings": _score_embeddings}
+def _score_weighted(texts: PairTexts) -> float:
+    ats = check_ats(texts.resume_pdf, extract_text(texts.resume_pdf)).score
+    return weighted_score(
+        texts.resume_light, texts.jd_light, rank_jd_skills(texts.jd_light), extract_skills(texts.resume_light), ats
+    ).score
+
+
+# Every method calls the same service functions the API uses.
+SCORERS: dict[str, Callable[[PairTexts], float]] = {
+    "tfidf": _score_tfidf, "embeddings": _score_embeddings, "weighted": _score_weighted,
+}
 
 
 def label_from_score(score: float) -> str:
@@ -84,9 +100,10 @@ def load_pairs(eval_dir: Path) -> list[dict]:
 
 
 def pair_texts(pair: dict, eval_dir: Path) -> PairTexts:
-    resume = strip_name_header(extract_text((eval_dir / pair["resume_file"]).read_bytes()).text)
+    pdf = (eval_dir / pair["resume_file"]).read_bytes()
+    resume = strip_name_header(extract_text(pdf).text)
     jd = (eval_dir / pair["jd_file"]).read_text(encoding="utf-8")
-    return PairTexts(clean_text(resume), clean_text(jd), clean_text_light(resume), clean_text_light(jd))
+    return PairTexts(clean_text(resume), clean_text(jd), clean_text_light(resume), clean_text_light(jd), pdf)
 
 
 def score_pairs(pairs: list[dict], eval_dir: Path, methods: list[str]) -> list[dict]:

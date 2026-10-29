@@ -40,13 +40,13 @@ WORD_TERMS = frozenset({
 
 CONTEXT_WINDOW = 8  # tokens on each side to look for another skill
 
-_SKILL_LINE = re.compile(
+SKILL_LINE = re.compile(
     r"^\W*(technical\s+|key\s+|core\s+)?(skills?|technologies|tech(nical)?\s+stack|tools?|languages?|"
     r"programming\s+languages|frameworks?|platforms?|expertise)\b",
     re.IGNORECASE,
 )
-_HIGH_CUE = re.compile(r"\b(required|requirements?|must|mandatory|essential)\b", re.IGNORECASE)
-_LOW_CUE = re.compile(r"\b(preferred|nice[\s-]to[\s-]have|bonus|plus|good[\s-]to[\s-]have)\b", re.IGNORECASE)
+HIGH_CUE = re.compile(r"\b(required|requirements?|must|mandatory|essential)\b", re.IGNORECASE)
+LOW_CUE = re.compile(r"\b(preferred|nice[\s-]to[\s-]have|bonus|plus|good[\s-]to[\s-]have)\b", re.IGNORECASE)
 _SENTENCE_END = {".", "!", "?", ";"}
 _ATTACHING = {"-", "&", "'", "’"}
 
@@ -186,7 +186,7 @@ class _Layout:
 
         self._sentence_cues = [_cues(text_of(s)) for s in sentences]
         self._sentence_line = [self.line_of[s[0]] if s else 0 for s in sentences]
-        self._skill_lines = {n for n, line in enumerate(lines) if _SKILL_LINE.match(text_of(line))}
+        self._skill_lines = {n for n, line in enumerate(lines) if SKILL_LINE.match(text_of(line))}
 
         self._line_cues: list[frozenset[str]] = []
         inherited: frozenset[str] = frozenset()
@@ -209,9 +209,9 @@ class _Layout:
 
 def _cues(text: str) -> frozenset[str]:
     found = set()
-    if _HIGH_CUE.search(text):
+    if HIGH_CUE.search(text):
         found.add("high")
-    if _LOW_CUE.search(text):
+    if LOW_CUE.search(text):
         found.add("low")
     return frozenset(found)
 

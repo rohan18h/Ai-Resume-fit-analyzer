@@ -37,7 +37,7 @@ services:
       - key: LAZY_MODEL_LOAD
         value: "false"
       - key: PRIMARY_METHOD
-        value: embeddings
+        value: weighted
       # The Vercel frontend URL, e.g. https://resume-fit-analyzer.vercel.app (no trailing slash).
       - key: ALLOWED_ORIGINS
         sync: false

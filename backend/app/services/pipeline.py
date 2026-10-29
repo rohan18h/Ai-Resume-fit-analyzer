@@ -6,7 +6,7 @@ Input is assumed valid (the router validates it). Nothing is stored; only timing
 from __future__ import annotations
 
 from concurrent.futures import ThreadPoolExecutor
-from dataclasses import dataclass, field
+from dataclasses import asdict, dataclass, field
 from time import perf_counter
 from typing import Literal
 
@@ -20,6 +20,7 @@ from app.schemas import (
     MatchedSkill,
     MissingSkill,
     Resource,
+    ScoreBreakdown,
     SkillsResult,
     StrongMatch,
     WeakSpot,
@@ -29,6 +30,7 @@ from app.services.ats import AtsResult, check_ats
 from app.services.gap import analyze_gap
 from app.services.matcher_tfidf import tfidf_score
 from app.services.parser import ParsedResume, clean_text, clean_text_light, extract_text, strip_name_header
+from app.services.scoring import weighted_score
 from app.services.skills import extract_skills, rank_jd_skills
 
 Method = Literal["embeddings", "tfidf", "both"]
@@ -40,6 +42,7 @@ class AnalysisResult:
     skills: SkillsResult
     explanation: Explanation | None
     ats: AtsResultOut
+    breakdown: ScoreBreakdown
     warnings: list[str]
     timings_ms: dict[str, int] = field(default_factory=dict)
 
@@ -99,10 +102,22 @@ def analyze(pdf_bytes: bytes, jd_text: str, method: Method = "both") -> Analysis
     if len(jd_text.strip()) < config.SHORT_JD_WARNING_CHARS:
         warnings.append("The job description is very short, so the score may be unreliable.")
 
-    scores = {"tfidf": tfidf.score if tfidf else None, "embeddings": embedding.score if embedding else None}
-    primary = config.PRIMARY_METHOD if scores.get(config.PRIMARY_METHOD) is not None else (
-        "embeddings" if embedding else "tfidf"
+    ats, timings["ats"] = ats_future.result()
+    started = perf_counter()
+    weighted = weighted_score(
+        clean_text_light(resume_text), clean_text_light(jd_text), jd_skills, resume_skills, ats.score
     )
+    lap("weighted", started)
+    if not any(c.applicable for c in weighted.categories if c.id != "readability"):
+        warnings.append("The job description has no skills, duties or qualifications we could compare, so only the "
+                        "resume's formatting was scored. Paste the full job posting for a fit score.")
+
+    scores = {
+        "weighted": weighted.score,
+        "tfidf": tfidf.score if tfidf else None,
+        "embeddings": embedding.score if embedding else None,
+    }
+    primary = config.PRIMARY_METHOD if scores.get(config.PRIMARY_METHOD) is not None else "weighted"
     fit = FitResult(
         primary_method=primary,
         score=scores[primary],
@@ -136,13 +151,13 @@ def analyze(pdf_bytes: bytes, jd_text: str, method: Method = "both") -> Analysis
                 for m in embedding.weak_spots
             ],
         )
-    ats, timings["ats"] = ats_future.result()
     ats_out = AtsResultOut(
         score=ats.score, passed=ats.passed, total=ats.total,
         checks=[AtsCheckOut(**vars(check)) for check in ats.checks],
     )
-    return AnalysisResult(fit=fit, skills=skills, explanation=explanation, ats=ats_out, warnings=warnings,
-                          timings_ms=timings)
+    breakdown = ScoreBreakdown.model_validate(asdict(weighted))
+    return AnalysisResult(fit=fit, skills=skills, explanation=explanation, ats=ats_out, breakdown=breakdown,
+                          warnings=warnings, timings_ms=timings)
 
 
 _ATS_POOL = ThreadPoolExecutor(max_workers=4, thread_name_prefix="ats")

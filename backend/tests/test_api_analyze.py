@@ -48,9 +48,15 @@ def test_happy_path_matches_schema(client: TestClient) -> None:
     assert response.status_code == 200, response.text
     body = AnalyzeResponse.model_validate(response.json())
     assert len(body.request_id) == 32 and body.processing_ms >= 0
-    assert body.fit.primary_method == "embeddings"  # config.PRIMARY_METHOD
+    assert body.fit.primary_method == "weighted"  # config.PRIMARY_METHOD
     assert 0 <= body.fit.tfidf_score <= 100 and 0 <= body.fit.embedding_score <= 100
-    assert body.fit.score == body.fit.embedding_score
+    breakdown = body.breakdown
+    assert breakdown is not None and body.fit.score == breakdown.score
+    assert breakdown.score == round(sum(c.points for c in breakdown.categories), 1)  # shown points add up
+    assert sum(c.max_points for c in breakdown.categories) == pytest.approx(100)
+    assert all(0 <= c.points <= c.max_points for c in breakdown.categories)
+    assert breakdown.similarity_method == "embeddings" and breakdown.recommendations
+    assert "AWS" in breakdown.matched_preferred + breakdown.missing_preferred
     assert body.fit.label in {"Good fit", "Average fit", "Low fit"}
     assert {"python", "fastapi", "postgresql", "docker"} <= set(body.skills.resume)
     assert {"python", "fastapi", "postgresql", "docker"} <= {s.name for s in body.skills.matched}
@@ -68,7 +74,7 @@ def test_happy_path_matches_schema(client: TestClient) -> None:
 
 @pytest.mark.parametrize(
     "method, primary, has_tfidf, has_embeddings",
-    [("tfidf", "tfidf", True, False), ("embeddings", "embeddings", False, True), ("both", "embeddings", True, True)],
+    [("tfidf", "weighted", True, False), ("embeddings", "weighted", False, True), ("both", "weighted", True, True)],
 )
 def test_method_selects_matchers(client: TestClient, method: str, primary: str, has_tfidf: bool,
                                  has_embeddings: bool) -> None:
@@ -79,11 +85,20 @@ def test_method_selects_matchers(client: TestClient, method: str, primary: str, 
     assert (body["explanation"] is not None) == has_embeddings
 
 
-def test_falls_back_to_tfidf_when_model_missing(client: TestClient, monkeypatch: pytest.MonkeyPatch) -> None:
+def test_falls_back_when_model_missing(client: TestClient, monkeypatch: pytest.MonkeyPatch) -> None:
     monkeypatch.setattr(pipeline.matcher_embed, "is_model_loaded", lambda: False)
     body = post(client, method="embeddings").json()
-    assert body["fit"]["primary_method"] == "tfidf" and body["fit"]["embedding_score"] is None
+    assert body["fit"]["embedding_score"] is None and body["fit"]["tfidf_score"] is not None
+    assert body["fit"]["primary_method"] == "weighted" and body["breakdown"]["similarity_method"] == "word overlap"
     assert any("not loaded" in w for w in body["warnings"])
+
+
+def test_embeddings_primary_falls_back_to_weighted_without_model(client: TestClient,
+                                                                 monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.setattr(config, "PRIMARY_METHOD", "embeddings")
+    monkeypatch.setattr(pipeline.matcher_embed, "is_model_loaded", lambda: False)
+    fit = post(client, method="embeddings").json()["fit"]
+    assert fit["primary_method"] == "weighted" and fit["embedding_score"] is None
 
 
 def test_lazy_mode_loads_model_on_first_request(client: TestClient, monkeypatch: pytest.MonkeyPatch) -> None:

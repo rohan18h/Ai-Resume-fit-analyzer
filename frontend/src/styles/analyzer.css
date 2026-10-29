@@ -118,6 +118,17 @@
   border: 1px solid #efc4b6;
 }
 
+.chip--partial {
+  background: #fdf3e1;
+  color: #7a4f0f;
+  border: 1px solid #ecd3a6;
+}
+
+.chip__via {
+  font-size: 0.75rem;
+  font-weight: 400;
+}
+
 .chip--method {
   background: #eef4f8;
   color: var(--midnight);
@@ -816,6 +827,73 @@
 .ats-check__fix {
   margin: 0 0 var(--space-1) 100px;
   font-size: 0.9375rem;
+}
+
+.fit__basis {
+  max-width: 32ch;
+  margin: 0;
+  color: var(--muted);
+}
+
+.breakdown__categories,
+.breakdown__duty-list {
+  display: grid;
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.breakdown__row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 4px var(--space-1);
+  margin-bottom: 4px;
+}
+
+.breakdown__name {
+  font-weight: 600;
+  color: var(--midnight);
+}
+
+.breakdown__points {
+  font-variant-numeric: tabular-nums;
+}
+
+.breakdown__category--na .breakdown__points {
+  color: var(--muted);
+}
+
+.breakdown__summary {
+  margin: 4px 0 0;
+}
+
+.breakdown__total {
+  margin: var(--space-2) 0 0;
+  padding-top: var(--space-1);
+  border-top: 1px solid #e3ebf1;
+  font-size: 1.0625rem;
+  text-align: right;
+}
+
+.breakdown__tips {
+  display: grid;
+  gap: var(--space-1);
+  margin: 0;
+  padding-left: 1.25rem;
+}
+
+.breakdown__duties summary {
+  cursor: pointer;
+}
+
+.breakdown__duties[open] summary {
+  margin-bottom: var(--space-2);
+}
+
+.breakdown__duty p {
+  margin: 0;
 }
 
 .explain {
