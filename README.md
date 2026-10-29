@@ -43,6 +43,15 @@ uvicorn app.main:app --reload --port 8000
 
 macOS / Linux: same steps, but activate with `source .venv/bin/activate`.
 
+**After changing backend code, check that the server is running the new code.** On Windows, uvicorn's `--reload`
+restarts its worker with a Ctrl+C console event and waits for it with no timeout. If the event isn't delivered, the
+log says `Reloading...` but never shows `Started server process`, and the **old code keeps answering requests**.
+When in doubt, stop the server (Ctrl+C) and start it again.
+
+Each analysis prints one line, with sizes, timings and the scores returned but never resume content:
+`analyze request_id=… stages={…, 'ats': 24} fit=weighted:9.3 ats=60`. The `ats` stage timing shows that the check
+ran for that request.
+
 Installing the CPU-only PyTorch build first keeps the download much smaller (no GPU is needed). The first start
 downloads the embedding model (`all-MiniLM-L6-v2`, about 90 MB) and can take a minute; after that it is cached and
 `/api/health` reports `"model_loaded": true`. The spaCy model
@@ -205,6 +214,9 @@ content: numbers in bullets, action verbs, word count, keywords. So their totals
 legitimately. To compare scores before and after a change on the same fixed inputs:
 - `python eval/snapshot.py out.json` writes a snapshot;
 - `python eval/snapshot.py --compare eval/snapshots/before.json eval/snapshots/after.json` compares two.
+
+To see why one PDF gets its ATS score, run `python eval/ats_report.py path/to/resume.pdf`. It runs locally, with
+nothing uploaded, and prints every check's status, evidence, points, the denominator and the formula.
 
 ## Environment variables (backend)
 

@@ -21,6 +21,13 @@ from app.services.matcher_tfidf import get_vectorizer
 from app.services.skills import get_extractor
 
 logger = logging.getLogger("resume_fit")
+# Uvicorn sets up only its own loggers, so without a handler and level here the app's INFO lines (one per request:
+# sizes, stage timings and the scores returned, never resume content) were silently dropped.
+if not logger.handlers:
+    _handler = logging.StreamHandler()
+    _handler.setFormatter(logging.Formatter("%(levelname)s:     %(message)s"))
+    logger.addHandler(_handler)
+logger.setLevel(logging.INFO)
 
 # Starlette writes uploads larger than 1 MB to a temporary file on disk. Keep every allowed upload in memory
 # instead (Section 11: process the file in memory, never write it to disk).

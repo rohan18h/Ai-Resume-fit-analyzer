@@ -8,6 +8,7 @@ separate metric: a formatting change that moves the ATS score must not move the 
 from __future__ import annotations
 
 import io
+from pathlib import Path
 import logging
 
 import pytest
@@ -151,3 +152,44 @@ def test_api_returns_the_new_ats_calculation(model: None, caplog: pytest.LogCapt
     assert any(m.startswith("check_ats pages=1 ") and f"score={expected.score}" in m for m in messages)
     assert any(m.startswith("analyze request_id=") and f"ats={expected.score}" in m for m in messages)
     assert not any("Meghana" in m or "FastAPI" in m for m in messages)  # never resume content
+
+
+# ---------------------------------------------------------------------------
+# The documented formula, checked with controlled PDFs (expected values come from the formula, not from a run)
+# ---------------------------------------------------------------------------
+
+
+def _result(pdf: bytes):
+    return check_ats(pdf, extract_text(pdf))
+
+
+def test_same_pdf_gives_the_same_ats_result() -> None:
+    pdf = make_pdf(headings=("Experience", "Skills"))
+    assert _result(pdf) == _result(pdf) == _result(pdf)
+
+
+def test_one_failed_check_loses_exactly_its_share() -> None:
+    """10 applicable checks: a fail costs 100/10 = 10 points, a warning half of that."""
+    clean, email_only, no_contact = (_result(make_pdf(contact=c)) for c in (("email", "phone"), ("email",), ()))
+    assert (clean.total, email_only.total, no_contact.total) == (10, 10, 10)
+    contact = {r.score: next(c for c in r.checks if c.id == "contact_info") for r in (clean, email_only, no_contact)}
+    assert [(score, check.status, check.credit) for score, check in contact.items()] == [
+        (100, "pass", 1.0), (95, "warn", 0.5), (90, "fail", 0.0),
+    ]  # fmt: skip
+
+
+def test_not_checked_is_left_out_of_the_denominator() -> None:
+    """image_page.pdf has no bullet lists: 9 applicable checks, and the score uses 9, not 10."""
+    pdf = (Path(__file__).parent / "fixtures" / "image_page.pdf").read_bytes()
+    result = _result(pdf)
+    bullets = next(c for c in result.checks if c.id == "bullets")
+    applied = [c for c in result.checks if c.status != "na"]
+    assert bullets.status == "na" and bullets.credit is None and result.total == len(applied) == 9
+    points = sum(c.credit for c in applied)
+    assert result.score == round(100 * points / 9) != round(100 * (points + 1) / 10)  # counting it as a pass differs
+
+
+def test_app_logger_records_each_request() -> None:
+    """The per-request line (sizes, timings, scores; no content) used to be dropped: no handler, WARNING level."""
+    logger = logging.getLogger("resume_fit")
+    assert logger.isEnabledFor(logging.INFO) and logger.handlers
