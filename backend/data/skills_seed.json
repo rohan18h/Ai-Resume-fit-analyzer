@@ -1,0 +1,2503 @@
+[
+  {
+    "name": "python",
+    "display_name": "Python",
+    "category": "Programming Languages",
+    "aliases": [
+      "python3"
+    ],
+    "links": [
+      {
+        "title": "The Python Tutorial",
+        "url": "https://docs.python.org/3/tutorial/",
+        "provider": "Python Docs",
+        "resource_type": "docs",
+        "level": "beginner"
+      },
+      {
+        "title": "Scientific Computing with Python",
+        "url": "https://www.freecodecamp.org/learn/scientific-computing-with-python/",
+        "provider": "freeCodeCamp",
+        "resource_type": "course",
+        "level": "beginner"
+      }
+    ]
+  },
+  {
+    "name": "java",
+    "display_name": "Java",
+    "category": "Programming Languages",
+    "aliases": [],
+    "links": [
+      {
+        "title": "Learn Java",
+        "url": "https://dev.java/learn/",
+        "provider": "dev.java",
+        "resource_type": "docs",
+        "level": "beginner"
+      },
+      {
+        "title": "The Java Tutorials",
+        "url": "https://docs.oracle.com/javase/tutorial/",
+        "provider": "Oracle",
+        "resource_type": "tutorial",
+        "level": "beginner"
+      }
+    ]
+  },
+  {
+    "name": "javascript",
+    "display_name": "JavaScript",
+    "category": "Programming Languages",
+    "aliases": [
+      "js",
+      "es6",
+      "ecmascript"
+    ],
+    "links": [
+      {
+        "title": "The Modern JavaScript Tutorial",
+        "url": "https://javascript.info/",
+        "provider": "javascript.info",
+        "resource_type": "tutorial",
+        "level": "beginner"
+      },
+      {
+        "title": "JavaScript Guide",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide",
+        "provider": "MDN",
+        "resource_type": "docs",
+        "level": "beginner"
+      }
+    ]
+  },
+  {
+    "name": "typescript",
+    "display_name": "TypeScript",
+    "category": "Programming Languages",
+    "aliases": [
+      "ts"
+    ],
+    "links": [
+      {
+        "title": "The TypeScript Handbook",
+        "url": "https://www.typescriptlang.org/docs/handbook/intro.html",
+        "provider": "TypeScript Docs",
+        "resource_type": "docs",
+        "level": "beginner"
+      }
+    ]
+  },
+  {
+    "name": "c",
+    "display_name": "C",
+    "category": "Programming Languages",
+    "aliases": [],
+    "links": [
+      {
+        "title": "Learn C",
+        "url": "https://www.learn-c.org/",
+        "provider": "learn-c.org",
+        "resource_type": "tutorial",
+        "level": "beginner"
+      },
+      {
+        "title": "C reference",
+        "url": "https://en.cppreference.com/w/c",
+        "provider": "cppreference",
+        "resource_type": "docs",
+        "level": "intermediate"
+      }
+    ]
+  },
+  {
+    "name": "c++",
+    "display_name": "C++",
+    "category": "Programming Languages",
+    "aliases": [
+      "cpp"
+    ],
+    "links": [
+      {
+        "title": "Learn C++",
+        "url": "https://www.learncpp.com/",
+        "provider": "LearnCpp.com",
+        "resource_type": "tutorial",
+        "level": "beginner"
+      },
+      {
+        "title": "C++ reference",
+        "url": "https://en.cppreference.com/w/cpp",
+        "provider": "cppreference",
+        "resource_type": "docs",
+        "level": "intermediate"
+      }
+    ]
+  },
+  {
+    "name": "c#",
+    "display_name": "C#",
+    "category": "Programming Languages",
+    "aliases": [
+      "csharp",
+      "c sharp"
+    ],
+    "links": [
+      {
+        "title": "A tour of the C# language",
+        "url": "https://learn.microsoft.com/en-us/dotnet/csharp/tour-of-csharp/",
+        "provider": "Microsoft Learn",
+        "resource_type": "docs",
+        "level": "beginner"
+      }
+    ]
+  },
+  {
+    "name": "go",
+    "display_name": "Go",
+    "category": "Programming Languages",
+    "aliases": [
+      "golang"
+    ],
+    "links": [
+      {
+        "title": "A Tour of Go",
+        "url": "https://go.dev/tour/",
+        "provider": "Go",
+        "resource_type": "tutorial",
+        "level": "beginner"
+      },
+      {
+        "title": "Get started with Go",
+        "url": "https://go.dev/doc/tutorial/getting-started",
+        "provider": "Go Docs",
+        "resource_type": "docs",
+        "level": "beginner"
+      }
+    ]
+  },
+  {
+    "name": "rust",
+    "display_name": "Rust",
+    "category": "Programming Languages",
+    "aliases": [],
+    "links": [
+      {
+        "title": "The Rust Programming Language",
+        "url": "https://doc.rust-lang.org/book/",
+        "provider": "Rust Docs",
+        "resource_type": "book",
+        "level": "beginner"
+      }
+    ]
+  },
+  {
+    "name": "kotlin",
+    "display_name": "Kotlin",
+    "category": "Programming Languages",
+    "aliases": [],
+    "links": [
+      {
+        "title": "Get started with Kotlin",
+        "url": "https://kotlinlang.org/docs/getting-started.html",
+        "provider": "Kotlin Docs",
+        "resource_type": "docs",
+        "level": "beginner"
+      }
+    ]
+  },
+  {
+    "name": "swift",
+    "display_name": "Swift",
+    "category": "Programming Languages",
+    "aliases": [],
+    "links": [
+      {
+        "title": "The Swift Programming Language",
+        "url": "https://docs.swift.org/latest/documentation/the-swift-programming-language/",
+        "provider": "Swift.org",
+        "resource_type": "book",
+        "level": "beginner"
+      }
+    ]
+  },
+  {
+    "name": "php",
+    "display_name": "PHP",
+    "category": "Programming Languages",
+    "aliases": [],
+    "links": [
+      {
+        "title": "A simple PHP tutorial",
+        "url": "https://www.php.net/manual/en/tutorial.php",
+        "provider": "PHP Manual",
+        "resource_type": "tutorial",
+        "level": "beginner"
+      }
+    ]
+  },
+  {
+    "name": "ruby",
+    "display_name": "Ruby",
+    "category": "Programming Languages",
+    "aliases": [],
+    "links": [
+      {
+        "title": "Ruby in Twenty Minutes",
+        "url": "https://www.ruby-lang.org/en/documentation/quickstart/",
+        "provider": "ruby-lang.org",
+        "resource_type": "tutorial",
+        "level": "beginner"
+      }
+    ]
+  },
+  {
+    "name": "r",
+    "display_name": "R",
+    "category": "Programming Languages",
+    "aliases": [],
+    "links": [
+      {
+        "title": "An Introduction to R",
+        "url": "https://cran.r-project.org/doc/manuals/r-release/R-intro.html",
+        "provider": "CRAN",
+        "resource_type": "docs",
+        "level": "beginner"
+      },
+      {
+        "title": "R for Data Science (2e)",
+        "url": "https://r4ds.hadley.nz/",
+        "provider": "Hadley Wickham et al.",
+        "resource_type": "book",
+        "level": "beginner"
+      }
+    ]
+  },
+  {
+    "name": "sql",
+    "display_name": "SQL",
+    "category": "Programming Languages",
+    "aliases": [
+      "structured query language"
+    ],
+    "links": [
+      {
+        "title": "SQLBolt interactive lessons",
+        "url": "https://sqlbolt.com/",
+        "provider": "SQLBolt",
+        "resource_type": "tutorial",
+        "level": "beginner"
+      },
+      {
+        "title": "Intro to SQL",
+        "url": "https://www.khanacademy.org/computing/computer-programming/sql",
+        "provider": "Khan Academy",
+        "resource_type": "course",
+        "level": "beginner"
+      }
+    ]
+  },
+  {
+    "name": "bash",
+    "display_name": "Bash",
+    "category": "Programming Languages",
+    "aliases": [
+      "shell scripting",
+      "bash scripting"
+    ],
+    "links": [
+      {
+        "title": "Learning the Shell",
+        "url": "https://linuxcommand.org/lc3_learning_the_shell.php",
+        "provider": "LinuxCommand.org",
+        "resource_type": "tutorial",
+        "level": "beginner"
+      },
+      {
+        "title": "Bash Reference Manual",
+        "url": "https://www.gnu.org/software/bash/manual/bash.html",
+        "provider": "GNU",
+        "resource_type": "docs",
+        "level": "intermediate"
+      }
+    ]
+  },
+  {
+    "name": "matlab",
+    "display_name": "MATLAB",
+    "category": "Programming Languages",
+    "aliases": [],
+    "links": [
+      {
+        "title": "MATLAB Onramp",
+        "url": "https://matlabacademy.mathworks.com/details/matlab-onramp/gettingstarted",
+        "provider": "MathWorks",
+        "resource_type": "course",
+        "level": "beginner"
+      },
+      {
+        "title": "Get started with MATLAB",
+        "url": "https://www.mathworks.com/help/matlab/getting-started-with-matlab.html",
+        "provider": "MathWorks",
+        "resource_type": "docs",
+        "level": "beginner"
+      }
+    ]
+  },
+  {
+    "name": "html",
+    "display_name": "HTML",
+    "category": "Web Frontend",
+    "aliases": [
+      "html5"
+    ],
+    "links": [
+      {
+        "title": "HTML: HyperText Markup Language",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/HTML",
+        "provider": "MDN",
+        "resource_type": "docs",
+        "level": "beginner"
+      },
+      {
+        "title": "Learn HTML",
+        "url": "https://web.dev/learn/html",
+        "provider": "web.dev",
+        "resource_type": "course",
+        "level": "beginner"
+      }
+    ]
+  },
+  {
+    "name": "css",
+    "display_name": "CSS",
+    "category": "Web Frontend",
+    "aliases": [
+      "css3"
+    ],
+    "links": [
+      {
+        "title": "Learn CSS",
+        "url": "https://web.dev/learn/css",
+        "provider": "web.dev",
+        "resource_type": "course",
+        "level": "beginner"
+      },
+      {
+        "title": "CSS reference and guides",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/CSS",
+        "provider": "MDN",
+        "resource_type": "docs",
+        "level": "beginner"
+      }
+    ]
+  },
+  {
+    "name": "react",
+    "display_name": "React",
+    "category": "Web Frontend",
+    "aliases": [
+      "reactjs",
+      "react.js"
+    ],
+    "links": [
+      {
+        "title": "Learn React",
+        "url": "https://react.dev/learn",
+        "provider": "React Docs",
+        "resource_type": "docs",
+        "level": "beginner"
+      }
+    ]
+  },
+  {
+    "name": "next.js",
+    "display_name": "Next.js",
+    "category": "Web Frontend",
+    "aliases": [
+      "nextjs",
+      "next js"
+    ],
+    "links": [
+      {
+        "title": "Learn Next.js",
+        "url": "https://nextjs.org/learn",
+        "provider": "Vercel",
+        "resource_type": "course",
+        "level": "beginner"
+      }
+    ]
+  },
+  {
+    "name": "vue.js",
+    "display_name": "Vue.js",
+    "category": "Web Frontend",
+    "aliases": [
+      "vue",
+      "vuejs"
+    ],
+    "links": [
+      {
+        "title": "Vue.js introduction",
+        "url": "https://vuejs.org/guide/introduction.html",
+        "provider": "Vue Docs",
+        "resource_type": "docs",
+        "level": "beginner"
+      }
+    ]
+  },
+  {
+    "name": "angular",
+    "display_name": "Angular",
+    "category": "Web Frontend",
+    "aliases": [
+      "angularjs"
+    ],
+    "links": [
+      {
+        "title": "Angular tutorials",
+        "url": "https://angular.dev/tutorials",
+        "provider": "Angular Docs",
+        "resource_type": "tutorial",
+        "level": "beginner"
+      }
+    ]
+  },
+  {
+    "name": "redux",
+    "display_name": "Redux",
+    "category": "Web Frontend",
+    "aliases": [
+      "redux toolkit"
+    ],
+    "links": [
+      {
+        "title": "Redux Essentials tutorial",
+        "url": "https://redux.js.org/tutorials/essentials/part-1-overview-concepts",
+        "provider": "Redux Docs",
+        "resource_type": "tutorial",
+        "level": "beginner"
+      }
+    ]
+  },
+  {
+    "name": "tailwind css",
+    "display_name": "Tailwind CSS",
+    "category": "Web Frontend",
+    "aliases": [
+      "tailwind",
+      "tailwindcss"
+    ],
+    "links": [
+      {
+        "title": "Tailwind CSS documentation",
+        "url": "https://tailwindcss.com/docs",
+        "provider": "Tailwind Labs",
+        "resource_type": "docs",
+        "level": "beginner"
+      }
+    ]
+  },
+  {
+    "name": "bootstrap",
+    "display_name": "Bootstrap",
+    "category": "Web Frontend",
+    "aliases": [],
+    "links": [
+      {
+        "title": "Get started with Bootstrap",
+        "url": "https://getbootstrap.com/docs/5.3/getting-started/introduction/",
+        "provider": "Bootstrap Docs",
+        "resource_type": "docs",
+        "level": "beginner"
+      }
+    ]
+  },
+  {
+    "name": "sass",
+    "display_name": "Sass",
+    "category": "Web Frontend",
+    "aliases": [
+      "scss"
+    ],
+    "links": [
+      {
+        "title": "Sass Basics",
+        "url": "https://sass-lang.com/guide/",
+        "provider": "Sass",
+        "resource_type": "docs",
+        "level": "beginner"
+      }
+    ]
+  },
+  {
+    "name": "webpack",
+    "display_name": "Webpack",
+    "category": "Web Frontend",
+    "aliases": [],
+    "links": [
+      {
+        "title": "Webpack getting started",
+        "url": "https://webpack.js.org/guides/getting-started/",
+        "provider": "webpack Docs",
+        "resource_type": "docs",
+        "level": "intermediate"
+      }
+    ]
+  },
+  {
+    "name": "vite",
+    "display_name": "Vite",
+    "category": "Web Frontend",
+    "aliases": [
+      "vitejs"
+    ],
+    "links": [
+      {
+        "title": "Vite guide",
+        "url": "https://vite.dev/guide/",
+        "provider": "Vite Docs",
+        "resource_type": "docs",
+        "level": "beginner"
+      }
+    ]
+  },
+  {
+    "name": "jquery",
+    "display_name": "jQuery",
+    "category": "Web Frontend",
+    "aliases": [],
+    "links": [
+      {
+        "title": "jQuery Learning Center",
+        "url": "https://learn.jquery.com/",
+        "provider": "jQuery",
+        "resource_type": "tutorial",
+        "level": "beginner"
+      }
+    ]
+  },
+  {
+    "name": "responsive design",
+    "display_name": "Responsive Design",
+    "category": "Web Frontend",
+    "aliases": [
+      "responsive web design"
+    ],
+    "links": [
+      {
+        "title": "Learn Responsive Design",
+        "url": "https://web.dev/learn/design",
+        "provider": "web.dev",
+        "resource_type": "course",
+        "level": "beginner"
+      },
+      {
+        "title": "Responsive Web Design certification",
+        "url": "https://www.freecodecamp.org/learn/2022/responsive-web-design/",
+        "provider": "freeCodeCamp",
+        "resource_type": "course",
+        "level": "beginner"
+      }
+    ]
+  },
+  {
+    "name": "accessibility",
+    "display_name": "Accessibility",
+    "category": "Web Frontend",
+    "aliases": [
+      "a11y",
+      "wcag",
+      "web accessibility"
+    ],
+    "links": [
+      {
+        "title": "Learn Accessibility",
+        "url": "https://web.dev/learn/accessibility",
+        "provider": "web.dev",
+        "resource_type": "course",
+        "level": "beginner"
+      },
+      {
+        "title": "Accessibility",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/Accessibility",
+        "provider": "MDN",
+        "resource_type": "docs",
+        "level": "intermediate"
+      }
+    ]
+  },
+  {
+    "name": "node.js",
+    "display_name": "Node.js",
+    "category": "Web Backend & APIs",
+    "aliases": [
+      "nodejs",
+      "node js"
+    ],
+    "links": [
+      {
+        "title": "Learn Node.js",
+        "url": "https://nodejs.org/learn",
+        "provider": "Node.js Docs",
+        "resource_type": "docs",
+        "level": "beginner"
+      }
+    ]
+  },
+  {
+    "name": "express.js",
+    "display_name": "Express.js",
+    "category": "Web Backend & APIs",
+    "aliases": [
+      "expressjs",
+      "express js"
+    ],
+    "links": [
+      {
+        "title": "Express getting started",
+        "url": "https://expressjs.com/en/starter/installing/",
+        "provider": "Express Docs",
+        "resource_type": "docs",
+        "level": "beginner"
+      }
+    ]
+  },
+  {
+    "name": "fastapi",
+    "display_name": "FastAPI",
+    "category": "Web Backend & APIs",
+    "aliases": [],
+    "links": [
+      {
+        "title": "FastAPI tutorial - user guide",
+        "url": "https://fastapi.tiangolo.com/tutorial/",
+        "provider": "FastAPI Docs",
+        "resource_type": "docs",
+        "level": "beginner"
+      }
+    ]
+  },
+  {
+    "name": "flask",
+    "display_name": "Flask",
+    "category": "Web Backend & APIs",
+    "aliases": [],
+    "links": [
+      {
+        "title": "Flask tutorial",
+        "url": "https://flask.palletsprojects.com/en/stable/tutorial/",
+        "provider": "Flask Docs",
+        "resource_type": "tutorial",
+        "level": "beginner"
+      }
+    ]
+  },
+  {
+    "name": "django",
+    "display_name": "Django",
+    "category": "Web Backend & APIs",
+    "aliases": [],
+    "links": [
+      {
+        "title": "Writing your first Django app",
+        "url": "https://docs.djangoproject.com/en/stable/intro/tutorial01/",
+        "provider": "Django Docs",
+        "resource_type": "tutorial",
+        "level": "beginner"
+      }
+    ]
+  },
+  {
+    "name": "spring boot",
+    "display_name": "Spring Boot",
+    "category": "Web Backend & APIs",
+    "aliases": [
+      "springboot",
+      "spring"
+    ],
+    "links": [
+      {
+        "title": "Building an application with Spring Boot",
+        "url": "https://spring.io/guides/gs/spring-boot/",
+        "provider": "Spring",
+        "resource_type": "tutorial",
+        "level": "beginner"
+      }
+    ]
+  },
+  {
+    "name": "asp.net",
+    "display_name": "ASP.NET",
+    "category": "Web Backend & APIs",
+    "aliases": [
+      "asp.net core",
+      "aspnet"
+    ],
+    "links": [
+      {
+        "title": "Create a web API with ASP.NET Core",
+        "url": "https://learn.microsoft.com/en-us/aspnet/core/tutorials/first-web-api",
+        "provider": "Microsoft Learn",
+        "resource_type": "tutorial",
+        "level": "beginner"
+      }
+    ]
+  },
+  {
+    "name": "rest api",
+    "display_name": "REST API",
+    "category": "Web Backend & APIs",
+    "aliases": [
+      "rest",
+      "restful",
+      "restful api",
+      "rest apis",
+      "restful apis"
+    ],
+    "links": [
+      {
+        "title": "REST (glossary)",
+        "url": "https://developer.mozilla.org/en-US/docs/Glossary/REST",
+        "provider": "MDN",
+        "resource_type": "docs",
+        "level": "beginner"
+      },
+      {
+        "title": "Web API design best practices",
+        "url": "https://learn.microsoft.com/en-us/azure/architecture/best-practices/api-design",
+        "provider": "Microsoft Learn",
+        "resource_type": "docs",
+        "level": "intermediate"
+      }
+    ]
+  },
+  {
+    "name": "graphql",
+    "display_name": "GraphQL",
+    "category": "Web Backend & APIs",
+    "aliases": [],
+    "links": [
+      {
+        "title": "Learn GraphQL",
+        "url": "https://graphql.org/learn/",
+        "provider": "GraphQL Foundation",
+        "resource_type": "docs",
+        "level": "beginner"
+      }
+    ]
+  },
+  {
+    "name": "grpc",
+    "display_name": "gRPC",
+    "category": "Web Backend & APIs",
+    "aliases": [],
+    "links": [
+      {
+        "title": "Introduction to gRPC",
+        "url": "https://grpc.io/docs/what-is-grpc/introduction/",
+        "provider": "gRPC Docs",
+        "resource_type": "docs",
+        "level": "intermediate"
+      }
+    ]
+  },
+  {
+    "name": "websockets",
+    "display_name": "WebSockets",
+    "category": "Web Backend & APIs",
+    "aliases": [
+      "websocket"
+    ],
+    "links": [
+      {
+        "title": "The WebSocket API",
+        "url": "https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API",
+        "provider": "MDN",
+        "resource_type": "docs",
+        "level": "intermediate"
+      }
+    ]
+  },
+  {
+    "name": "microservices",
+    "display_name": "Microservices",
+    "category": "Web Backend & APIs",
+    "aliases": [
+      "microservice",
+      "microservice architecture",
+      "microservices architecture"
+    ],
+    "links": [
+      {
+        "title": "Microservices (article)",
+        "url": "https://martinfowler.com/articles/microservices.html",
+        "provider": "Martin Fowler",
+        "resource_type": "docs",
+        "level": "intermediate"
+      },
+      {
+        "title": "Microservice architecture patterns",
+        "url": "https://microservices.io/",
+        "provider": "microservices.io",
+        "resource_type": "docs",
+        "level": "intermediate"
+      }
+    ]
+  },
+  {
+    "name": "authentication",
+    "display_name": "Authentication",
+    "category": "Web Backend & APIs",
+    "aliases": [
+      "user authentication"
+    ],
+    "links": [
+      {
+        "title": "Authentication Cheat Sheet",
+        "url": "https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html",
+        "provider": "OWASP",
+        "resource_type": "docs",
+        "level": "intermediate"
+      }
+    ]
+  },
+  {
+    "name": "jwt",
+    "display_name": "JWT",
+    "category": "Web Backend & APIs",
+    "aliases": [
+      "json web token",
+      "json web tokens"
+    ],
+    "links": [
+      {
+        "title": "Introduction to JSON Web Tokens",
+        "url": "https://www.jwt.io/introduction",
+        "provider": "jwt.io",
+        "resource_type": "docs",
+        "level": "beginner"
+      }
+    ]
+  },
+  {
+    "name": "oauth",
+    "display_name": "OAuth",
+    "category": "Web Backend & APIs",
+    "aliases": [
+      "oauth2",
+      "oauth 2.0"
+    ],
+    "links": [
+      {
+        "title": "OAuth 2.0",
+        "url": "https://oauth.net/2/",
+        "provider": "oauth.net",
+        "resource_type": "docs",
+        "level": "intermediate"
+      }
+    ]
+  },
+  {
+    "name": "mysql",
+    "display_name": "MySQL",
+    "category": "Databases",
+    "aliases": [],
+    "links": [
+      {
+        "title": "MySQL tutorial",
+        "url": "https://dev.mysql.com/doc/refman/8.0/en/tutorial.html",
+        "provider": "MySQL Docs",
+        "resource_type": "tutorial",
+        "level": "beginner"
+      }
+    ]
+  },
+  {
+    "name": "postgresql",
+    "display_name": "PostgreSQL",
+    "category": "Databases",
+    "aliases": [
+      "postgres",
+      "psql"
+    ],
+    "links": [
+      {
+        "title": "PostgreSQL tutorial",
+        "url": "https://www.postgresql.org/docs/current/tutorial.html",
+        "provider": "PostgreSQL Docs",
+        "resource_type": "tutorial",
+        "level": "beginner"
+      }
+    ]
+  },
+  {
+    "name": "sqlite",
+    "display_name": "SQLite",
+    "category": "Databases",
+    "aliases": [
+      "sqlite3"
+    ],
+    "links": [
+      {
+        "title": "SQLite documentation",
+        "url": "https://www.sqlite.org/docs.html",
+        "provider": "SQLite",
+        "resource_type": "docs",
+        "level": "beginner"
+      },
+      {
+        "title": "SQLite Tutorial",
+        "url": "https://www.sqlitetutorial.net/",
+        "provider": "SQLite Tutorial",
+        "resource_type": "tutorial",
+        "level": "beginner"
+      }
+    ]
+  },
+  {
+    "name": "mongodb",
+    "display_name": "MongoDB",
+    "category": "Databases",
+    "aliases": [
+      "mongo"
+    ],
+    "links": [
+      {
+        "title": "MongoDB University",
+        "url": "https://learn.mongodb.com/",
+        "provider": "MongoDB",
+        "resource_type": "course",
+        "level": "beginner"
+      }
+    ]
+  },
+  {
+    "name": "redis",
+    "display_name": "Redis",
+    "category": "Databases",
+    "aliases": [],
+    "links": [
+      {
+        "title": "Redis for developers",
+        "url": "https://redis.io/dev/",
+        "provider": "Redis",
+        "resource_type": "tutorial",
+        "level": "beginner"
+      }
+    ]
+  },
+  {
+    "name": "firebase",
+    "display_name": "Firebase",
+    "category": "Databases",
+    "aliases": [],
+    "links": [
+      {
+        "title": "Firebase documentation",
+        "url": "https://firebase.google.com/docs",
+        "provider": "Google",
+        "resource_type": "docs",
+        "level": "beginner"
+      }
+    ]
+  },
+  {
+    "name": "oracle",
+    "display_name": "Oracle Database",
+    "category": "Databases",
+    "aliases": [
+      "oracle database",
+      "oracle db",
+      "pl/sql",
+      "plsql"
+    ],
+    "links": [
+      {
+        "title": "Oracle Database documentation",
+        "url": "https://docs.oracle.com/en/database/",
+        "provider": "Oracle",
+        "resource_type": "docs",
+        "level": "intermediate"
+      },
+      {
+        "title": "Oracle FreeSQL (formerly Live SQL)",
+        "url": "https://freesql.com/",
+        "provider": "Oracle",
+        "resource_type": "tutorial",
+        "level": "beginner"
+      }
+    ]
+  },
+  {
+    "name": "dynamodb",
+    "display_name": "DynamoDB",
+    "category": "Databases",
+    "aliases": [
+      "amazon dynamodb"
+    ],
+    "links": [
+      {
+        "title": "Getting started with DynamoDB",
+        "url": "https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/GettingStartedDynamoDB.html",
+        "provider": "AWS Docs",
+        "resource_type": "docs",
+        "level": "beginner"
+      }
+    ]
+  },
+  {
+    "name": "elasticsearch",
+    "display_name": "Elasticsearch",
+    "category": "Databases",
+    "aliases": [
+      "elastic search"
+    ],
+    "links": [
+      {
+        "title": "Elasticsearch getting started",
+        "url": "https://www.elastic.co/docs/solutions/search/get-started",
+        "provider": "Elastic Docs",
+        "resource_type": "docs",
+        "level": "beginner"
+      }
+    ]
+  },
+  {
+    "name": "database design",
+    "display_name": "Database Design",
+    "category": "Databases",
+    "aliases": [
+      "data modeling",
+      "data modelling",
+      "schema design"
+    ],
+    "links": [
+      {
+        "title": "Database normalization description",
+        "url": "https://learn.microsoft.com/en-us/previous-versions/troubleshoot/microsoft-365/microsoft-365-apps/access/database-normalization-description",
+        "provider": "Microsoft Learn",
+        "resource_type": "docs",
+        "level": "beginner"
+      },
+      {
+        "title": "Data definition (PostgreSQL)",
+        "url": "https://www.postgresql.org/docs/current/ddl.html",
+        "provider": "PostgreSQL Docs",
+        "resource_type": "docs",
+        "level": "intermediate"
+      }
+    ]
+  },
+  {
+    "name": "normalization",
+    "display_name": "Normalization",
+    "category": "Databases",
+    "aliases": [
+      "normalisation",
+      "database normalization"
+    ],
+    "links": [
+      {
+        "title": "Database normalization description",
+        "url": "https://learn.microsoft.com/en-us/previous-versions/troubleshoot/microsoft-365/microsoft-365-apps/access/database-normalization-description",
+        "provider": "Microsoft Learn",
+        "resource_type": "docs",
+        "level": "beginner"
+      }
+    ]
+  },
+  {
+    "name": "docker",
+    "display_name": "Docker",
+    "category": "Cloud & DevOps",
+    "aliases": [],
+    "links": [
+      {
+        "title": "Docker: Get started",
+        "url": "https://docs.docker.com/get-started/",
+        "provider": "Docker Docs",
+        "resource_type": "docs",
+        "level": "beginner"
+      }
+    ]
+  },
+  {
+    "name": "kubernetes",
+    "display_name": "Kubernetes",
+    "category": "Cloud & DevOps",
+    "aliases": [
+      "k8s"
+    ],
+    "links": [
+      {
+        "title": "Learn Kubernetes basics",
+        "url": "https://kubernetes.io/docs/tutorials/kubernetes-basics/",
+        "provider": "Kubernetes Docs",
+        "resource_type": "tutorial",
+        "level": "beginner"
+      }
+    ]
+  },
+  {
+    "name": "aws",
+    "display_name": "AWS",
+    "category": "Cloud & DevOps",
+    "aliases": [
+      "amazon web services"
+    ],
+    "links": [
+      {
+        "title": "Getting started with AWS",
+        "url": "https://aws.amazon.com/getting-started/",
+        "provider": "AWS",
+        "resource_type": "tutorial",
+        "level": "beginner"
+      }
+    ]
+  },
+  {
+    "name": "azure",
+    "display_name": "Azure",
+    "category": "Cloud & DevOps",
+    "aliases": [
+      "microsoft azure"
+    ],
+    "links": [
+      {
+        "title": "Azure training",
+        "url": "https://learn.microsoft.com/en-us/training/azure/",
+        "provider": "Microsoft Learn",
+        "resource_type": "course",
+        "level": "beginner"
+      }
+    ]
+  },
+  {
+    "name": "google cloud",
+    "display_name": "Google Cloud",
+    "category": "Cloud & DevOps",
+    "aliases": [
+      "gcp",
+      "google cloud platform"
+    ],
+    "links": [
+      {
+        "title": "Get started with Google Cloud",
+        "url": "https://docs.cloud.google.com/docs/get-started",
+        "provider": "Google Cloud Docs",
+        "resource_type": "docs",
+        "level": "beginner"
+      }
+    ]
+  },
+  {
+    "name": "ci/cd",
+    "display_name": "CI/CD",
+    "category": "Cloud & DevOps",
+    "aliases": [
+      "ci cd",
+      "continuous integration",
+      "continuous delivery",
+      "continuous deployment"
+    ],
+    "links": [
+      {
+        "title": "What is CI/CD?",
+        "url": "https://about.gitlab.com/topics/ci-cd/",
+        "provider": "GitLab",
+        "resource_type": "docs",
+        "level": "beginner"
+      },
+      {
+        "title": "GitHub Actions documentation",
+        "url": "https://docs.github.com/en/actions",
+        "provider": "GitHub Docs",
+        "resource_type": "docs",
+        "level": "beginner"
+      }
+    ]
+  },
+  {
+    "name": "github actions",
+    "display_name": "GitHub Actions",
+    "category": "Cloud & DevOps",
+    "aliases": [],
+    "links": [
+      {
+        "title": "Quickstart for GitHub Actions",
+        "url": "https://docs.github.com/en/actions/get-started/quickstart",
+        "provider": "GitHub Docs",
+        "resource_type": "tutorial",
+        "level": "beginner"
+      }
+    ]
+  },
+  {
+    "name": "jenkins",
+    "display_name": "Jenkins",
+    "category": "Cloud & DevOps",
+    "aliases": [],
+    "links": [
+      {
+        "title": "Jenkins tutorials",
+        "url": "https://www.jenkins.io/doc/tutorials/",
+        "provider": "Jenkins",
+        "resource_type": "tutorial",
+        "level": "beginner"
+      }
+    ]
+  },
+  {
+    "name": "terraform",
+    "display_name": "Terraform",
+    "category": "Cloud & DevOps",
+    "aliases": [],
+    "links": [
+      {
+        "title": "Terraform tutorials",
+        "url": "https://developer.hashicorp.com/terraform/tutorials",
+        "provider": "HashiCorp",
+        "resource_type": "tutorial",
+        "level": "beginner"
+      }
+    ]
+  },
+  {
+    "name": "ansible",
+    "display_name": "Ansible",
+    "category": "Cloud & DevOps",
+    "aliases": [],
+    "links": [
+      {
+        "title": "Getting started with Ansible",
+        "url": "https://docs.ansible.com/projects/ansible/latest/getting_started/index.html",
+        "provider": "Ansible Docs",
+        "resource_type": "docs",
+        "level": "beginner"
+      }
+    ]
+  },
+  {
+    "name": "linux",
+    "display_name": "Linux",
+    "category": "Cloud & DevOps",
+    "aliases": [],
+    "links": [
+      {
+        "title": "The Linux command line for beginners",
+        "url": "https://ubuntu.com/tutorials/command-line-for-beginners",
+        "provider": "Ubuntu",
+        "resource_type": "tutorial",
+        "level": "beginner"
+      }
+    ]
+  },
+  {
+    "name": "nginx",
+    "display_name": "Nginx",
+    "category": "Cloud & DevOps",
+    "aliases": [],
+    "links": [
+      {
+        "title": "Beginner's Guide",
+        "url": "https://nginx.org/en/docs/beginners_guide.html",
+        "provider": "nginx.org",
+        "resource_type": "docs",
+        "level": "beginner"
+      }
+    ]
+  },
+  {
+    "name": "serverless",
+    "display_name": "Serverless",
+    "category": "Cloud & DevOps",
+    "aliases": [
+      "serverless computing",
+      "aws lambda"
+    ],
+    "links": [
+      {
+        "title": "What is AWS Lambda?",
+        "url": "https://docs.aws.amazon.com/lambda/latest/dg/welcome.html",
+        "provider": "AWS Docs",
+        "resource_type": "docs",
+        "level": "beginner"
+      }
+    ]
+  },
+  {
+    "name": "monitoring",
+    "display_name": "Monitoring",
+    "category": "Cloud & DevOps",
+    "aliases": [
+      "observability",
+      "application monitoring"
+    ],
+    "links": [
+      {
+        "title": "Monitoring Distributed Systems",
+        "url": "https://sre.google/sre-book/monitoring-distributed-systems/",
+        "provider": "Google SRE Book",
+        "resource_type": "book",
+        "level": "intermediate"
+      },
+      {
+        "title": "Prometheus overview",
+        "url": "https://prometheus.io/docs/introduction/overview/",
+        "provider": "Prometheus Docs",
+        "resource_type": "docs",
+        "level": "beginner"
+      }
+    ]
+  },
+  {
+    "name": "machine learning",
+    "display_name": "Machine Learning",
+    "category": "Data Science & ML",
+    "aliases": [
+      "ml"
+    ],
+    "links": [
+      {
+        "title": "Machine Learning Crash Course",
+        "url": "https://developers.google.com/machine-learning/crash-course",
+        "provider": "Google",
+        "resource_type": "course",
+        "level": "beginner"
+      },
+      {
+        "title": "Intro to Machine Learning",
+        "url": "https://www.kaggle.com/learn/intro-to-machine-learning",
+        "provider": "Kaggle Learn",
+        "resource_type": "course",
+        "level": "beginner"
+      }
+    ]
+  },
+  {
+    "name": "deep learning",
+    "display_name": "Deep Learning",
+    "category": "Data Science & ML",
+    "aliases": [],
+    "links": [
+      {
+        "title": "Practical Deep Learning for Coders",
+        "url": "https://course.fast.ai/",
+        "provider": "fast.ai",
+        "resource_type": "course",
+        "level": "intermediate"
+      },
+      {
+        "title": "Deep Learning (book)",
+        "url": "https://www.deeplearningbook.org/",
+        "provider": "Goodfellow, Bengio, Courville",
+        "resource_type": "book",
+        "level": "advanced"
+      }
+    ]
+  },
+  {
+    "name": "nlp",
+    "display_name": "NLP",
+    "category": "Data Science & ML",
+    "aliases": [
+      "natural language processing"
+    ],
+    "links": [
+      {
+        "title": "Hugging Face LLM Course (NLP)",
+        "url": "https://huggingface.co/learn/llm-course/chapter1/1",
+        "provider": "Hugging Face",
+        "resource_type": "course",
+        "level": "intermediate"
+      },
+      {
+        "title": "CS224N: NLP with Deep Learning",
+        "url": "https://web.stanford.edu/class/cs224n/",
+        "provider": "Stanford",
+        "resource_type": "course",
+        "level": "advanced"
+      }
+    ]
+  },
+  {
+    "name": "computer vision",
+    "display_name": "Computer Vision",
+    "category": "Data Science & ML",
+    "aliases": [],
+    "links": [
+      {
+        "title": "Computer Vision",
+        "url": "https://www.kaggle.com/learn/computer-vision",
+        "provider": "Kaggle Learn",
+        "resource_type": "course",
+        "level": "intermediate"
+      },
+      {
+        "title": "CS231n course notes",
+        "url": "https://cs231n.github.io/",
+        "provider": "Stanford",
+        "resource_type": "course",
+        "level": "advanced"
+      }
+    ]
+  },
+  {
+    "name": "scikit-learn",
+    "display_name": "scikit-learn",
+    "category": "Data Science & ML",
+    "aliases": [
+      "sklearn",
+      "scikit learn"
+    ],
+    "links": [
+      {
+        "title": "scikit-learn user guide",
+        "url": "https://scikit-learn.org/stable/user_guide.html",
+        "provider": "scikit-learn Docs",
+        "resource_type": "docs",
+        "level": "intermediate"
+      }
+    ]
+  },
+  {
+    "name": "tensorflow",
+    "display_name": "TensorFlow",
+    "category": "Data Science & ML",
+    "aliases": [],
+    "links": [
+      {
+        "title": "TensorFlow tutorials",
+        "url": "https://www.tensorflow.org/tutorials",
+        "provider": "TensorFlow",
+        "resource_type": "tutorial",
+        "level": "beginner"
+      }
+    ]
+  },
+  {
+    "name": "pytorch",
+    "display_name": "PyTorch",
+    "category": "Data Science & ML",
+    "aliases": [],
+    "links": [
+      {
+        "title": "Learn the Basics",
+        "url": "https://docs.pytorch.org/tutorials/beginner/basics/intro.html",
+        "provider": "PyTorch Tutorials",
+        "resource_type": "tutorial",
+        "level": "beginner"
+      }
+    ]
+  },
+  {
+    "name": "keras",
+    "display_name": "Keras",
+    "category": "Data Science & ML",
+    "aliases": [],
+    "links": [
+      {
+        "title": "Getting started with Keras",
+        "url": "https://keras.io/getting_started/",
+        "provider": "Keras Docs",
+        "resource_type": "docs",
+        "level": "beginner"
+      }
+    ]
+  },
+  {
+    "name": "pandas",
+    "display_name": "Pandas",
+    "category": "Data Science & ML",
+    "aliases": [],
+    "links": [
+      {
+        "title": "Pandas getting started tutorials",
+        "url": "https://pandas.pydata.org/docs/getting_started/intro_tutorials/index.html",
+        "provider": "pandas Docs",
+        "resource_type": "tutorial",
+        "level": "beginner"
+      },
+      {
+        "title": "Pandas",
+        "url": "https://www.kaggle.com/learn/pandas",
+        "provider": "Kaggle Learn",
+        "resource_type": "course",
+        "level": "beginner"
+      }
+    ]
+  },
+  {
+    "name": "numpy",
+    "display_name": "NumPy",
+    "category": "Data Science & ML",
+    "aliases": [],
+    "links": [
+      {
+        "title": "NumPy: the absolute basics for beginners",
+        "url": "https://numpy.org/doc/stable/user/absolute_beginners.html",
+        "provider": "NumPy Docs",
+        "resource_type": "docs",
+        "level": "beginner"
+      }
+    ]
+  },
+  {
+    "name": "matplotlib",
+    "display_name": "Matplotlib",
+    "category": "Data Science & ML",
+    "aliases": [],
+    "links": [
+      {
+        "title": "Quick start guide",
+        "url": "https://matplotlib.org/stable/users/explain/quick_start.html",
+        "provider": "Matplotlib Docs",
+        "resource_type": "docs",
+        "level": "beginner"
+      }
+    ]
+  },
+  {
+    "name": "data analysis",
+    "display_name": "Data Analysis",
+    "category": "Data Science & ML",
+    "aliases": [
+      "data analytics"
+    ],
+    "links": [
+      {
+        "title": "Data Analysis with Python",
+        "url": "https://www.freecodecamp.org/learn/data-analysis-with-python/",
+        "provider": "freeCodeCamp",
+        "resource_type": "course",
+        "level": "beginner"
+      }
+    ]
+  },
+  {
+    "name": "data visualization",
+    "display_name": "Data Visualization",
+    "category": "Data Science & ML",
+    "aliases": [
+      "data visualisation",
+      "data viz"
+    ],
+    "links": [
+      {
+        "title": "Data Visualization",
+        "url": "https://www.kaggle.com/learn/data-visualization",
+        "provider": "Kaggle Learn",
+        "resource_type": "course",
+        "level": "beginner"
+      }
+    ]
+  },
+  {
+    "name": "statistics",
+    "display_name": "Statistics",
+    "category": "Data Science & ML",
+    "aliases": [
+      "statistical analysis"
+    ],
+    "links": [
+      {
+        "title": "Statistics and probability",
+        "url": "https://www.khanacademy.org/math/statistics-probability",
+        "provider": "Khan Academy",
+        "resource_type": "course",
+        "level": "beginner"
+      },
+      {
+        "title": "Introductory Statistics 2e",
+        "url": "https://openstax.org/details/books/introductory-statistics-2e",
+        "provider": "OpenStax",
+        "resource_type": "book",
+        "level": "beginner"
+      }
+    ]
+  },
+  {
+    "name": "power bi",
+    "display_name": "Power BI",
+    "category": "Data Science & ML",
+    "aliases": [
+      "powerbi"
+    ],
+    "links": [
+      {
+        "title": "Power BI training",
+        "url": "https://learn.microsoft.com/en-us/training/powerplatform/power-bi",
+        "provider": "Microsoft Learn",
+        "resource_type": "course",
+        "level": "beginner"
+      }
+    ]
+  },
+  {
+    "name": "tableau",
+    "display_name": "Tableau",
+    "category": "Data Science & ML",
+    "aliases": [],
+    "links": [
+      {
+        "title": "Free Tableau training videos",
+        "url": "https://www.tableau.com/learn/training",
+        "provider": "Tableau",
+        "resource_type": "video",
+        "level": "beginner"
+      }
+    ]
+  },
+  {
+    "name": "excel",
+    "display_name": "Excel",
+    "category": "Data Science & ML",
+    "aliases": [
+      "microsoft excel",
+      "ms excel",
+      "advanced excel"
+    ],
+    "links": [
+      {
+        "title": "Excel help and learning",
+        "url": "https://support.microsoft.com/en-us/excel/",
+        "provider": "Microsoft Support",
+        "resource_type": "tutorial",
+        "level": "beginner"
+      }
+    ]
+  },
+  {
+    "name": "hugging face",
+    "display_name": "Hugging Face",
+    "category": "Data Science & ML",
+    "aliases": [
+      "huggingface"
+    ],
+    "links": [
+      {
+        "title": "Hugging Face Learn",
+        "url": "https://huggingface.co/learn",
+        "provider": "Hugging Face",
+        "resource_type": "course",
+        "level": "intermediate"
+      }
+    ]
+  },
+  {
+    "name": "opencv",
+    "display_name": "OpenCV",
+    "category": "Data Science & ML",
+    "aliases": [],
+    "links": [
+      {
+        "title": "OpenCV tutorials",
+        "url": "https://docs.opencv.org/4.x/d9/df8/tutorial_root.html",
+        "provider": "OpenCV Docs",
+        "resource_type": "tutorial",
+        "level": "intermediate"
+      }
+    ]
+  },
+  {
+    "name": "llms",
+    "display_name": "LLMs",
+    "category": "Data Science & ML",
+    "aliases": [
+      "llm",
+      "large language models",
+      "large language model"
+    ],
+    "links": [
+      {
+        "title": "LLM Course",
+        "url": "https://huggingface.co/learn/llm-course/chapter1/1",
+        "provider": "Hugging Face",
+        "resource_type": "course",
+        "level": "intermediate"
+      }
+    ]
+  },
+  {
+    "name": "prompt engineering",
+    "display_name": "Prompt Engineering",
+    "category": "Data Science & ML",
+    "aliases": [],
+    "links": [
+      {
+        "title": "Prompt Engineering Guide",
+        "url": "https://www.promptingguide.ai/",
+        "provider": "DAIR.AI",
+        "resource_type": "docs",
+        "level": "beginner"
+      },
+      {
+        "title": "Prompt engineering interactive tutorial",
+        "url": "https://github.com/anthropics/prompt-eng-interactive-tutorial",
+        "provider": "Anthropic",
+        "resource_type": "tutorial",
+        "level": "beginner"
+      }
+    ]
+  },
+  {
+    "name": "spark",
+    "display_name": "Apache Spark",
+    "category": "Data Science & ML",
+    "aliases": [
+      "apache spark",
+      "pyspark"
+    ],
+    "links": [
+      {
+        "title": "Spark quick start",
+        "url": "https://spark.apache.org/docs/latest/quick-start.html",
+        "provider": "Apache Spark Docs",
+        "resource_type": "docs",
+        "level": "intermediate"
+      }
+    ]
+  },
+  {
+    "name": "hadoop",
+    "display_name": "Hadoop",
+    "category": "Data Science & ML",
+    "aliases": [
+      "apache hadoop"
+    ],
+    "links": [
+      {
+        "title": "Hadoop: setting up a single node cluster",
+        "url": "https://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-common/SingleCluster.html",
+        "provider": "Apache Hadoop Docs",
+        "resource_type": "docs",
+        "level": "intermediate"
+      }
+    ]
+  },
+  {
+    "name": "etl",
+    "display_name": "ETL",
+    "category": "Data Science & ML",
+    "aliases": [
+      "extract transform load"
+    ],
+    "links": [
+      {
+        "title": "What is ETL?",
+        "url": "https://aws.amazon.com/what-is/etl/",
+        "provider": "AWS",
+        "resource_type": "docs",
+        "level": "beginner"
+      },
+      {
+        "title": "What is ETL?",
+        "url": "https://www.ibm.com/think/topics/etl",
+        "provider": "IBM",
+        "resource_type": "docs",
+        "level": "beginner"
+      }
+    ]
+  },
+  {
+    "name": "data structures",
+    "display_name": "Data Structures",
+    "category": "Core CS",
+    "aliases": [],
+    "links": [
+      {
+        "title": "Open Data Structures",
+        "url": "https://opendatastructures.org/",
+        "provider": "Pat Morin",
+        "resource_type": "book",
+        "level": "intermediate"
+      },
+      {
+        "title": "VisuAlgo",
+        "url": "https://visualgo.net/en",
+        "provider": "VisuAlgo",
+        "resource_type": "tutorial",
+        "level": "beginner"
+      }
+    ]
+  },
+  {
+    "name": "algorithms",
+    "display_name": "Algorithms",
+    "category": "Core CS",
+    "aliases": [],
+    "links": [
+      {
+        "title": "Introduction to Algorithms (6.006)",
+        "url": "https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-spring-2020/",
+        "provider": "MIT OpenCourseWare",
+        "resource_type": "course",
+        "level": "intermediate"
+      },
+      {
+        "title": "Algorithms for Competitive Programming",
+        "url": "https://cp-algorithms.com/",
+        "provider": "cp-algorithms",
+        "resource_type": "docs",
+        "level": "advanced"
+      }
+    ]
+  },
+  {
+    "name": "oop",
+    "display_name": "OOP",
+    "category": "Core CS",
+    "aliases": [
+      "object oriented programming",
+      "object-oriented programming"
+    ],
+    "links": [
+      {
+        "title": "Object-Oriented Programming Concepts",
+        "url": "https://docs.oracle.com/javase/tutorial/java/concepts/",
+        "provider": "Oracle",
+        "resource_type": "tutorial",
+        "level": "beginner"
+      },
+      {
+        "title": "Classes (Python tutorial)",
+        "url": "https://docs.python.org/3/tutorial/classes.html",
+        "provider": "Python Docs",
+        "resource_type": "docs",
+        "level": "beginner"
+      }
+    ]
+  },
+  {
+    "name": "operating systems",
+    "display_name": "Operating Systems",
+    "category": "Core CS",
+    "aliases": [
+      "operating system"
+    ],
+    "links": [
+      {
+        "title": "Operating Systems: Three Easy Pieces",
+        "url": "https://pages.cs.wisc.edu/~remzi/OSTEP/",
+        "provider": "Remzi and Andrea Arpaci-Dusseau",
+        "resource_type": "book",
+        "level": "intermediate"
+      }
+    ]
+  },
+  {
+    "name": "dbms",
+    "display_name": "DBMS",
+    "category": "Core CS",
+    "aliases": [
+      "database management system",
+      "database management systems"
+    ],
+    "links": [
+      {
+        "title": "CMU 15-445 Database Systems",
+        "url": "https://15445.courses.cs.cmu.edu/",
+        "provider": "Carnegie Mellon University",
+        "resource_type": "course",
+        "level": "advanced"
+      }
+    ]
+  },
+  {
+    "name": "computer networks",
+    "display_name": "Computer Networks",
+    "category": "Core CS",
+    "aliases": [
+      "computer networking"
+    ],
+    "links": [
+      {
+        "title": "Computer Networks: A Systems Approach",
+        "url": "https://book.systemsapproach.org/",
+        "provider": "Peterson and Davie",
+        "resource_type": "book",
+        "level": "intermediate"
+      },
+      {
+        "title": "Kurose and Ross video lectures",
+        "url": "https://gaia.cs.umass.edu/kurose_ross/online_lectures.htm",
+        "provider": "UMass Amherst",
+        "resource_type": "video",
+        "level": "beginner"
+      }
+    ]
+  },
+  {
+    "name": "system design",
+    "display_name": "System Design",
+    "category": "Core CS",
+    "aliases": [],
+    "links": [
+      {
+        "title": "The System Design Primer",
+        "url": "https://github.com/donnemartin/system-design-primer",
+        "provider": "Donne Martin",
+        "resource_type": "tutorial",
+        "level": "intermediate"
+      }
+    ]
+  },
+  {
+    "name": "design patterns",
+    "display_name": "Design Patterns",
+    "category": "Core CS",
+    "aliases": [],
+    "links": [
+      {
+        "title": "Design patterns catalog",
+        "url": "https://refactoring.guru/design-patterns",
+        "provider": "Refactoring.Guru",
+        "resource_type": "tutorial",
+        "level": "intermediate"
+      }
+    ]
+  },
+  {
+    "name": "concurrency",
+    "display_name": "Concurrency",
+    "category": "Core CS",
+    "aliases": [
+      "multithreading",
+      "multi-threading",
+      "parallel programming"
+    ],
+    "links": [
+      {
+        "title": "Concurrency (Java Tutorials)",
+        "url": "https://docs.oracle.com/javase/tutorial/essential/concurrency/",
+        "provider": "Oracle",
+        "resource_type": "tutorial",
+        "level": "intermediate"
+      },
+      {
+        "title": "threading module",
+        "url": "https://docs.python.org/3/library/threading.html",
+        "provider": "Python Docs",
+        "resource_type": "docs",
+        "level": "intermediate"
+      }
+    ]
+  },
+  {
+    "name": "compiler design",
+    "display_name": "Compiler Design",
+    "category": "Core CS",
+    "aliases": [
+      "compilers",
+      "compiler construction"
+    ],
+    "links": [
+      {
+        "title": "Crafting Interpreters",
+        "url": "https://craftinginterpreters.com/",
+        "provider": "Robert Nystrom",
+        "resource_type": "book",
+        "level": "intermediate"
+      }
+    ]
+  },
+  {
+    "name": "git",
+    "display_name": "Git",
+    "category": "Tools & Practices",
+    "aliases": [],
+    "links": [
+      {
+        "title": "Pro Git book",
+        "url": "https://git-scm.com/book/en/v2",
+        "provider": "git-scm.com",
+        "resource_type": "book",
+        "level": "beginner"
+      }
+    ]
+  },
+  {
+    "name": "github",
+    "display_name": "GitHub",
+    "category": "Tools & Practices",
+    "aliases": [],
+    "links": [
+      {
+        "title": "Hello World",
+        "url": "https://docs.github.com/en/get-started/using-github/hello-world",
+        "provider": "GitHub Docs",
+        "resource_type": "tutorial",
+        "level": "beginner"
+      },
+      {
+        "title": "GitHub Skills",
+        "url": "https://skills.github.com/",
+        "provider": "GitHub",
+        "resource_type": "course",
+        "level": "beginner"
+      }
+    ]
+  },
+  {
+    "name": "jira",
+    "display_name": "Jira",
+    "category": "Tools & Practices",
+    "aliases": [],
+    "links": [
+      {
+        "title": "Jira: getting started",
+        "url": "https://www.atlassian.com/software/jira/guides/getting-started/introduction",
+        "provider": "Atlassian",
+        "resource_type": "docs",
+        "level": "beginner"
+      }
+    ]
+  },
+  {
+    "name": "agile",
+    "display_name": "Agile",
+    "category": "Tools & Practices",
+    "aliases": [
+      "agile methodology"
+    ],
+    "links": [
+      {
+        "title": "Agile coach",
+        "url": "https://www.atlassian.com/agile",
+        "provider": "Atlassian",
+        "resource_type": "docs",
+        "level": "beginner"
+      },
+      {
+        "title": "Manifesto for Agile Software Development",
+        "url": "https://agilemanifesto.org/",
+        "provider": "agilemanifesto.org",
+        "resource_type": "docs",
+        "level": "beginner"
+      }
+    ]
+  },
+  {
+    "name": "scrum",
+    "display_name": "Scrum",
+    "category": "Tools & Practices",
+    "aliases": [],
+    "links": [
+      {
+        "title": "The Scrum Guide",
+        "url": "https://scrumguides.org/scrum-guide.html",
+        "provider": "Scrum.org",
+        "resource_type": "docs",
+        "level": "beginner"
+      }
+    ]
+  },
+  {
+    "name": "postman",
+    "display_name": "Postman",
+    "category": "Tools & Practices",
+    "aliases": [],
+    "links": [
+      {
+        "title": "Postman docs overview",
+        "url": "https://learning.postman.com/docs/getting-started/overview/",
+        "provider": "Postman",
+        "resource_type": "docs",
+        "level": "beginner"
+      }
+    ]
+  },
+  {
+    "name": "vs code",
+    "display_name": "VS Code",
+    "category": "Tools & Practices",
+    "aliases": [
+      "vscode",
+      "visual studio code"
+    ],
+    "links": [
+      {
+        "title": "VS Code documentation",
+        "url": "https://code.visualstudio.com/docs",
+        "provider": "Microsoft",
+        "resource_type": "docs",
+        "level": "beginner"
+      }
+    ]
+  },
+  {
+    "name": "unit testing",
+    "display_name": "Unit Testing",
+    "category": "Tools & Practices",
+    "aliases": [
+      "unit tests",
+      "unit test"
+    ],
+    "links": [
+      {
+        "title": "Unit Test",
+        "url": "https://martinfowler.com/bliki/UnitTest.html",
+        "provider": "Martin Fowler",
+        "resource_type": "docs",
+        "level": "beginner"
+      },
+      {
+        "title": "unittest framework",
+        "url": "https://docs.python.org/3/library/unittest.html",
+        "provider": "Python Docs",
+        "resource_type": "docs",
+        "level": "beginner"
+      }
+    ]
+  },
+  {
+    "name": "code review",
+    "display_name": "Code Review",
+    "category": "Tools & Practices",
+    "aliases": [
+      "code reviews"
+    ],
+    "links": [
+      {
+        "title": "Google engineering practices: code review",
+        "url": "https://google.github.io/eng-practices/review/",
+        "provider": "Google",
+        "resource_type": "docs",
+        "level": "beginner"
+      }
+    ]
+  },
+  {
+    "name": "debugging",
+    "display_name": "Debugging",
+    "category": "Tools & Practices",
+    "aliases": [],
+    "links": [
+      {
+        "title": "Debug JavaScript",
+        "url": "https://developer.chrome.com/docs/devtools/javascript",
+        "provider": "Chrome DevTools",
+        "resource_type": "tutorial",
+        "level": "beginner"
+      },
+      {
+        "title": "Debugging in VS Code",
+        "url": "https://code.visualstudio.com/docs/debugtest/debugging",
+        "provider": "Microsoft",
+        "resource_type": "docs",
+        "level": "beginner"
+      }
+    ]
+  },
+  {
+    "name": "technical writing",
+    "display_name": "Technical Writing",
+    "category": "Tools & Practices",
+    "aliases": [],
+    "links": [
+      {
+        "title": "Technical Writing courses",
+        "url": "https://developers.google.com/tech-writing",
+        "provider": "Google",
+        "resource_type": "course",
+        "level": "beginner"
+      }
+    ]
+  },
+  {
+    "name": "selenium",
+    "display_name": "Selenium",
+    "category": "Testing & QA",
+    "aliases": [],
+    "links": [
+      {
+        "title": "Selenium documentation",
+        "url": "https://www.selenium.dev/documentation/",
+        "provider": "Selenium",
+        "resource_type": "docs",
+        "level": "beginner"
+      }
+    ]
+  },
+  {
+    "name": "jest",
+    "display_name": "Jest",
+    "category": "Testing & QA",
+    "aliases": [],
+    "links": [
+      {
+        "title": "Getting started with Jest",
+        "url": "https://jestjs.io/docs/getting-started",
+        "provider": "Jest Docs",
+        "resource_type": "docs",
+        "level": "beginner"
+      }
+    ]
+  },
+  {
+    "name": "pytest",
+    "display_name": "PyTest",
+    "category": "Testing & QA",
+    "aliases": [],
+    "links": [
+      {
+        "title": "Get started with pytest",
+        "url": "https://docs.pytest.org/en/stable/getting-started.html",
+        "provider": "pytest Docs",
+        "resource_type": "docs",
+        "level": "beginner"
+      }
+    ]
+  },
+  {
+    "name": "junit",
+    "display_name": "JUnit",
+    "category": "Testing & QA",
+    "aliases": [
+      "junit5",
+      "junit 5"
+    ],
+    "links": [
+      {
+        "title": "JUnit user guide",
+        "url": "https://junit.org/junit5/docs/current/user-guide/",
+        "provider": "JUnit",
+        "resource_type": "docs",
+        "level": "beginner"
+      }
+    ]
+  },
+  {
+    "name": "cypress",
+    "display_name": "Cypress",
+    "category": "Testing & QA",
+    "aliases": [],
+    "links": [
+      {
+        "title": "Cypress documentation",
+        "url": "https://docs.cypress.io/",
+        "provider": "Cypress",
+        "resource_type": "docs",
+        "level": "beginner"
+      }
+    ]
+  },
+  {
+    "name": "test automation",
+    "display_name": "Test Automation",
+    "category": "Testing & QA",
+    "aliases": [
+      "automation testing",
+      "automated testing"
+    ],
+    "links": [
+      {
+        "title": "The Practical Test Pyramid",
+        "url": "https://martinfowler.com/articles/practical-test-pyramid.html",
+        "provider": "Martin Fowler",
+        "resource_type": "docs",
+        "level": "intermediate"
+      }
+    ]
+  },
+  {
+    "name": "manual testing",
+    "display_name": "Manual Testing",
+    "category": "Testing & QA",
+    "aliases": [],
+    "links": [
+      {
+        "title": "Manual testing tutorial",
+        "url": "https://www.guru99.com/manual-testing.html",
+        "provider": "Guru99",
+        "resource_type": "tutorial",
+        "level": "beginner"
+      }
+    ]
+  },
+  {
+    "name": "android",
+    "display_name": "Android",
+    "category": "Mobile",
+    "aliases": [
+      "android development"
+    ],
+    "links": [
+      {
+        "title": "Android Basics with Compose",
+        "url": "https://developer.android.com/courses/android-basics-compose/course",
+        "provider": "Android Developers",
+        "resource_type": "course",
+        "level": "beginner"
+      }
+    ]
+  },
+  {
+    "name": "ios",
+    "display_name": "iOS",
+    "category": "Mobile",
+    "aliases": [
+      "ios development"
+    ],
+    "links": [
+      {
+        "title": "Develop in Swift tutorials",
+        "url": "https://developer.apple.com/tutorials/app-dev-training",
+        "provider": "Apple Developer",
+        "resource_type": "tutorial",
+        "level": "beginner"
+      },
+      {
+        "title": "SwiftUI tutorials",
+        "url": "https://developer.apple.com/tutorials/swiftui",
+        "provider": "Apple Developer",
+        "resource_type": "tutorial",
+        "level": "beginner"
+      }
+    ]
+  },
+  {
+    "name": "flutter",
+    "display_name": "Flutter",
+    "category": "Mobile",
+    "aliases": [],
+    "links": [
+      {
+        "title": "Flutter documentation",
+        "url": "https://docs.flutter.dev/",
+        "provider": "Flutter Docs",
+        "resource_type": "docs",
+        "level": "beginner"
+      }
+    ]
+  },
+  {
+    "name": "react native",
+    "display_name": "React Native",
+    "category": "Mobile",
+    "aliases": [],
+    "links": [
+      {
+        "title": "Get started with React Native",
+        "url": "https://reactnative.dev/docs/getting-started",
+        "provider": "React Native Docs",
+        "resource_type": "docs",
+        "level": "beginner"
+      }
+    ]
+  },
+  {
+    "name": "cybersecurity",
+    "display_name": "Cybersecurity",
+    "category": "Security",
+    "aliases": [
+      "cyber security",
+      "information security"
+    ],
+    "links": [
+      {
+        "title": "CS50's Introduction to Cybersecurity",
+        "url": "https://cs50.harvard.edu/cybersecurity/",
+        "provider": "Harvard CS50",
+        "resource_type": "course",
+        "level": "beginner"
+      }
+    ]
+  },
+  {
+    "name": "cryptography",
+    "display_name": "Cryptography",
+    "category": "Security",
+    "aliases": [],
+    "links": [
+      {
+        "title": "A Graduate Course in Applied Cryptography",
+        "url": "https://toc.cryptobook.us/",
+        "provider": "Boneh and Shoup",
+        "resource_type": "book",
+        "level": "advanced"
+      },
+      {
+        "title": "The Cryptopals crypto challenges",
+        "url": "https://cryptopals.com/",
+        "provider": "Cryptopals",
+        "resource_type": "tutorial",
+        "level": "intermediate"
+      }
+    ]
+  },
+  {
+    "name": "network security",
+    "display_name": "Network Security",
+    "category": "Security",
+    "aliases": [],
+    "links": [
+      {
+        "title": "What is network security?",
+        "url": "https://www.cisco.com/site/us/en/learn/topics/security/what-is-network-security.html",
+        "provider": "Cisco",
+        "resource_type": "docs",
+        "level": "beginner"
+      },
+      {
+        "title": "What is network security?",
+        "url": "https://www.ibm.com/think/topics/network-security",
+        "provider": "IBM",
+        "resource_type": "docs",
+        "level": "beginner"
+      }
+    ]
+  },
+  {
+    "name": "penetration testing",
+    "display_name": "Penetration Testing",
+    "category": "Security",
+    "aliases": [
+      "pentesting",
+      "pen testing",
+      "ethical hacking"
+    ],
+    "links": [
+      {
+        "title": "Web Security Academy",
+        "url": "https://portswigger.net/web-security",
+        "provider": "PortSwigger",
+        "resource_type": "course",
+        "level": "intermediate"
+      },
+      {
+        "title": "Web Security Testing Guide",
+        "url": "https://owasp.org/projects/web-security-testing-guide",
+        "provider": "OWASP",
+        "resource_type": "docs",
+        "level": "intermediate"
+      }
+    ]
+  },
+  {
+    "name": "owasp",
+    "display_name": "OWASP",
+    "category": "Security",
+    "aliases": [
+      "owasp top 10",
+      "owasp top ten"
+    ],
+    "links": [
+      {
+        "title": "OWASP Top Ten",
+        "url": "https://owasp.org/projects/top-ten",
+        "provider": "OWASP",
+        "resource_type": "docs",
+        "level": "beginner"
+      },
+      {
+        "title": "OWASP Cheat Sheet Series",
+        "url": "https://cheatsheetseries.owasp.org/",
+        "provider": "OWASP",
+        "resource_type": "docs",
+        "level": "intermediate"
+      }
+    ]
+  }
+]

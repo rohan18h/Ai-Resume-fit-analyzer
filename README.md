@@ -37,13 +37,28 @@ pip install torch --index-url https://download.pytorch.org/whl/cpu
 pip install -r requirements.txt
 python -m spacy download en_core_web_sm
 python -c "import nltk; nltk.download('stopwords')"
+python scripts/seed_db.py
 uvicorn app.main:app --reload --port 8000
 ```
 
 macOS / Linux: same steps, but activate with `source .venv/bin/activate`.
 
 Installing the CPU-only PyTorch build first keeps the download much smaller (no GPU is needed). The spaCy model
-and NLTK stopwords downloads are one-time steps.
+and NLTK stopwords downloads are one-time steps. `seed_db.py` builds `data/app.db` from `data/skills_seed.json`; run it
+again whenever the seed file changes (it is safe to rerun).
+
+### Skills and learning links
+
+`backend/data/skills_seed.json` lists every skill the app can detect, with aliases and free learning links. After
+editing it, check that every link still works (needs internet; exits with an error if any link fails):
+
+```powershell
+python scripts/check_links.py
+python scripts/seed_db.py
+```
+
+Run the link check before every release. If a link fails, replace it or remove it. Never add a link you have not
+checked.
 
 Check it works: open http://localhost:8000/api/health. You should see
 `{"status":"ok","model_loaded":false,"version":"1.0.0"}`. Interactive API docs are at http://localhost:8000/docs.
@@ -109,7 +124,7 @@ Built step by step following Section 17 of the spec.
 
 - [x] Step 0 — Repo scaffold (FastAPI + `/api/health`, Vite + routes + header/footer + design tokens)
 - [x] Step 1 — Parser (10 of 10 fixture PDFs extract correctly; scanned PDF raises `unreadable_pdf`)
-- [ ] Step 2 — SQLite schema, skills seed, link checker
+- [x] Step 2 — SQLite schema, skills seed, link checker (133 skills, 176 links, all links pass)
 - [ ] Step 3 — Skills extraction
 - [ ] Step 4 — TF-IDF matcher + `POST /api/analyze` v0
 - [ ] Step 5 — Evaluation dataset + `evaluate.py`
