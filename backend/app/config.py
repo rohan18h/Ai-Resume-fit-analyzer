@@ -48,7 +48,8 @@ EXPLANATION_ITEMS: int = 3  # strongest matches and weakest spots shown in "Why 
 
 EVAL_DIR: Path = BACKEND_DIR / "eval"  # TF-IDF reference corpus: eval/resumes/*.pdf and eval/jds/*.txt
 TFIDF_MODEL_PATH: Path = EVAL_DIR / "tfidf_vectorizer.joblib"
-EVAL_REPORT_PATH: Path = EVAL_DIR / "report.json"  # written by eval/evaluate.py, served by GET /api/evaluation
+# Written by eval/evaluate.py, served by GET /api/evaluation.
+EVAL_REPORT_PATH: Path = BACKEND_DIR / _str("EVAL_REPORT_PATH", "eval/report.json")
 OBJECTIVE_3_TARGET_PERCENT: float = 70.0  # embeddings must agree with hand labels on at least this share of pairs
 
 # Fit labels (starting values)

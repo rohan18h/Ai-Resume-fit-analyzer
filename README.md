@@ -168,6 +168,7 @@ All of these are optional. Defaults are in [backend/app/config.py](backend/app/c
 | `CHUNK_MAX_WORDS` / `CHUNK_MIN_WORDS` / `CHUNK_OVERLAP_SENTENCES` | 30 / 5 / 1 | How texts are split into chunks for embeddings (sentence-level) |
 | `ALLOWED_ORIGINS` | http://localhost:5173 | CORS origins, comma-separated |
 | `DB_PATH` | data/app.db | SQLite file (relative to `backend/`) |
+| `EVAL_REPORT_PATH` | eval/report.json | Report served by `GET /api/evaluation` (relative to `backend/`) |
 
 ## Privacy
 
@@ -188,6 +189,6 @@ Built step by step following Section 17 of the spec.
 - [x] Step 7 — Gap analysis + roadmap (missing skills with up to 3 links, coverage %, by-category counts)
 - [x] Step 8 — ATS checks (10 checks, each with a pass and a fail fixture)
 - [x] Step 9 — Analyzer page (all result sections, loading stages, error banners, print view, mobile layout)
-- [ ] Step 10 — How it works, Evaluation, About pages
+- [x] Step 10 — How it works, Evaluation, About pages (Evaluation renders report.json, labelled or not)
 - [ ] Step 11 — Integration, performance, accessibility
 - [ ] Step 12 — Deploy

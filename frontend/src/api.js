@@ -38,6 +38,12 @@ export async function getHealth() {
   return data;
 }
 
+/** GET /api/evaluation: the offline evaluation report (eval/report.json). */
+export async function getEvaluation() {
+  const { data } = await client.get('/evaluation');
+  return data;
+}
+
 /** POST /api/analyze with the resume PDF and the job description. A sleeping free server can take a minute. */
 export async function analyzeResume(file, jobDescription, { method = 'both', signal } = {}) {
   const form = new FormData();
