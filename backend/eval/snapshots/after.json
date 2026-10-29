@@ -1,0 +1,722 @@
+{
+  "ats_fixtures": {
+    "ats_bad_resume.pdf": {
+      "ats": 60,
+      "checks": {
+        "text_extractable": "pass",
+        "multi_column": "warn",
+        "tables": "warn",
+        "images": "pass",
+        "section_headings": "fail",
+        "contact_info": "warn",
+        "length": "pass",
+        "fonts": "warn",
+        "special_chars": "warn",
+        "bullets": "warn"
+      }
+    },
+    "ats_good_resume.pdf": {
+      "ats": 100,
+      "checks": {
+        "text_extractable": "pass",
+        "multi_column": "pass",
+        "tables": "pass",
+        "images": "pass",
+        "section_headings": "pass",
+        "contact_info": "pass",
+        "length": "pass",
+        "fonts": "pass",
+        "special_chars": "pass",
+        "bullets": "pass"
+      }
+    },
+    "blank.pdf": {
+      "error": "unreadable_pdf"
+    },
+    "corrupt.pdf": {
+      "error": "invalid_file_type"
+    },
+    "data_analyst_resume.pdf": {
+      "ats": 95,
+      "checks": {
+        "text_extractable": "pass",
+        "multi_column": "pass",
+        "tables": "pass",
+        "images": "pass",
+        "section_headings": "warn",
+        "contact_info": "pass",
+        "length": "pass",
+        "fonts": "pass",
+        "special_chars": "pass",
+        "bullets": "pass"
+      }
+    },
+    "decorative.pdf": {
+      "ats": 80,
+      "checks": {
+        "text_extractable": "pass",
+        "multi_column": "pass",
+        "tables": "pass",
+        "images": "pass",
+        "section_headings": "fail",
+        "contact_info": "pass",
+        "length": "pass",
+        "fonts": "pass",
+        "special_chars": "warn",
+        "bullets": "warn"
+      }
+    },
+    "header_footer.pdf": {
+      "ats": 75,
+      "checks": {
+        "text_extractable": "pass",
+        "multi_column": "pass",
+        "tables": "pass",
+        "images": "pass",
+        "section_headings": "warn",
+        "contact_info": "fail",
+        "length": "warn",
+        "fonts": "pass",
+        "special_chars": "pass",
+        "bullets": "warn"
+      }
+    },
+    "image_page.pdf": {
+      "ats": 61,
+      "checks": {
+        "text_extractable": "fail",
+        "multi_column": "pass",
+        "tables": "pass",
+        "images": "warn",
+        "section_headings": "fail",
+        "contact_info": "fail",
+        "length": "pass",
+        "fonts": "pass",
+        "special_chars": "pass",
+        "bullets": "na"
+      }
+    },
+    "many_fonts.pdf": {
+      "ats": 89,
+      "checks": {
+        "text_extractable": "pass",
+        "multi_column": "pass",
+        "tables": "pass",
+        "images": "pass",
+        "section_headings": "warn",
+        "contact_info": "pass",
+        "length": "pass",
+        "fonts": "warn",
+        "special_chars": "pass",
+        "bullets": "na"
+      }
+    },
+    "multi_font.pdf": {
+      "ats": 89,
+      "checks": {
+        "text_extractable": "pass",
+        "multi_column": "pass",
+        "tables": "pass",
+        "images": "pass",
+        "section_headings": "warn",
+        "contact_info": "warn",
+        "length": "pass",
+        "fonts": "pass",
+        "special_chars": "pass",
+        "bullets": "na"
+      }
+    },
+    "sample_resume_backend.pdf": {
+      "ats": 95,
+      "checks": {
+        "text_extractable": "pass",
+        "multi_column": "pass",
+        "tables": "pass",
+        "images": "pass",
+        "section_headings": "pass",
+        "contact_info": "pass",
+        "length": "pass",
+        "fonts": "pass",
+        "special_chars": "pass",
+        "bullets": "warn"
+      }
+    },
+    "sample_resume_frontend.pdf": {
+      "ats": 89,
+      "checks": {
+        "text_extractable": "pass",
+        "multi_column": "warn",
+        "tables": "pass",
+        "images": "pass",
+        "section_headings": "warn",
+        "contact_info": "pass",
+        "length": "pass",
+        "fonts": "pass",
+        "special_chars": "pass",
+        "bullets": "na"
+      }
+    },
+    "scanned.pdf": {
+      "error": "unreadable_pdf"
+    },
+    "sidebar_layout.pdf": {
+      "ats": 89,
+      "checks": {
+        "text_extractable": "pass",
+        "multi_column": "warn",
+        "tables": "pass",
+        "images": "pass",
+        "section_headings": "warn",
+        "contact_info": "pass",
+        "length": "pass",
+        "fonts": "pass",
+        "special_chars": "pass",
+        "bullets": "na"
+      }
+    },
+    "six_pages.pdf": {
+      "ats": 72,
+      "checks": {
+        "text_extractable": "pass",
+        "multi_column": "pass",
+        "tables": "pass",
+        "images": "pass",
+        "section_headings": "fail",
+        "contact_info": "fail",
+        "length": "warn",
+        "fonts": "pass",
+        "special_chars": "pass",
+        "bullets": "na"
+      }
+    },
+    "special_tokens.pdf": {
+      "ats": 80,
+      "checks": {
+        "text_extractable": "pass",
+        "multi_column": "pass",
+        "tables": "pass",
+        "images": "pass",
+        "section_headings": "warn",
+        "contact_info": "fail",
+        "length": "pass",
+        "fonts": "pass",
+        "special_chars": "pass",
+        "bullets": "warn"
+      }
+    },
+    "truncated.pdf": {
+      "error": "unreadable_pdf"
+    },
+    "two_page_resume.pdf": {
+      "ats": 100,
+      "checks": {
+        "text_extractable": "pass",
+        "multi_column": "pass",
+        "tables": "pass",
+        "images": "pass",
+        "section_headings": "pass",
+        "contact_info": "pass",
+        "length": "pass",
+        "fonts": "pass",
+        "special_chars": "pass",
+        "bullets": "pass"
+      }
+    },
+    "with_image.pdf": {
+      "ats": 90,
+      "checks": {
+        "text_extractable": "pass",
+        "multi_column": "pass",
+        "tables": "pass",
+        "images": "pass",
+        "section_headings": "warn",
+        "contact_info": "pass",
+        "length": "pass",
+        "fonts": "pass",
+        "special_chars": "pass",
+        "bullets": "warn"
+      }
+    },
+    "with_table.pdf": {
+      "ats": 80,
+      "checks": {
+        "text_extractable": "pass",
+        "multi_column": "pass",
+        "tables": "warn",
+        "images": "pass",
+        "section_headings": "warn",
+        "contact_info": "warn",
+        "length": "pass",
+        "fonts": "pass",
+        "special_chars": "pass",
+        "bullets": "warn"
+      }
+    }
+  },
+  "pairs": {
+    "p01": {
+      "notes": "Python backend resume vs Python backend JD",
+      "fit": 73.5,
+      "primary_method": "weighted",
+      "tfidf_score": 23.4,
+      "tfidf_cosine": 0.1404,
+      "embedding_score": 82.1,
+      "embedding_coverage": 0.6571,
+      "skill_coverage_percent": 75.0,
+      "ats": 95,
+      "categories": {
+        "skills": [
+          31.7,
+          38.9
+        ],
+        "evidence": [
+          17.7,
+          27.8
+        ],
+        "responsibilities": [
+          13.0,
+          22.2
+        ],
+        "qualifications": [
+          11.1,
+          11.1
+        ]
+      }
+    },
+    "p02": {
+      "notes": "React frontend resume vs React frontend JD",
+      "fit": 62.7,
+      "primary_method": "weighted",
+      "tfidf_score": 32.8,
+      "tfidf_cosine": 0.1968,
+      "embedding_score": 74.5,
+      "embedding_coverage": 0.5963,
+      "skill_coverage_percent": 73.3,
+      "ats": 95,
+      "categories": {
+        "skills": [
+          28.9,
+          38.9
+        ],
+        "evidence": [
+          9.4,
+          27.8
+        ],
+        "responsibilities": [
+          13.3,
+          22.2
+        ],
+        "qualifications": [
+          11.1,
+          11.1
+        ]
+      }
+    },
+    "p03": {
+      "notes": "Data analyst resume vs data analyst JD",
+      "fit": 76.4,
+      "primary_method": "weighted",
+      "tfidf_score": 37.3,
+      "tfidf_cosine": 0.2238,
+      "embedding_score": 76.4,
+      "embedding_coverage": 0.6112,
+      "skill_coverage_percent": 88.9,
+      "ats": 95,
+      "categories": {
+        "skills": [
+          41.7,
+          43.8
+        ],
+        "evidence": [
+          19.7,
+          31.2
+        ],
+        "responsibilities": [
+          15.0,
+          25.0
+        ],
+        "qualifications": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "p04": {
+      "notes": "ML student resume vs ML engineer JD",
+      "fit": 54.2,
+      "primary_method": "weighted",
+      "tfidf_score": 25.9,
+      "tfidf_cosine": 0.1555,
+      "embedding_score": 67.9,
+      "embedding_coverage": 0.5431,
+      "skill_coverage_percent": 57.1,
+      "ats": 100,
+      "categories": {
+        "skills": [
+          31.8,
+          43.8
+        ],
+        "evidence": [
+          10.9,
+          31.2
+        ],
+        "responsibilities": [
+          11.5,
+          25.0
+        ],
+        "qualifications": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "p05": {
+      "notes": "DevOps resume vs DevOps JD",
+      "fit": 80.4,
+      "primary_method": "weighted",
+      "tfidf_score": 42.8,
+      "tfidf_cosine": 0.2569,
+      "embedding_score": 76.9,
+      "embedding_coverage": 0.6151,
+      "skill_coverage_percent": 100.0,
+      "ats": 95,
+      "categories": {
+        "skills": [
+          43.8,
+          43.8
+        ],
+        "evidence": [
+          19.8,
+          31.2
+        ],
+        "responsibilities": [
+          16.8,
+          25.0
+        ],
+        "qualifications": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "p06": {
+      "notes": "Java backend resume vs Java backend JD",
+      "fit": 74.3,
+      "primary_method": "weighted",
+      "tfidf_score": 48.6,
+      "tfidf_cosine": 0.2915,
+      "embedding_score": 77.6,
+      "embedding_coverage": 0.6207,
+      "skill_coverage_percent": 52.9,
+      "ats": 95,
+      "categories": {
+        "skills": [
+          28.1,
+          38.9
+        ],
+        "evidence": [
+          18.7,
+          27.8
+        ],
+        "responsibilities": [
+          16.4,
+          22.2
+        ],
+        "qualifications": [
+          11.1,
+          11.1
+        ]
+      }
+    },
+    "p07": {
+      "notes": "QA resume vs QA automation JD",
+      "fit": 62.9,
+      "primary_method": "weighted",
+      "tfidf_score": 40.5,
+      "tfidf_cosine": 0.2431,
+      "embedding_score": 67.5,
+      "embedding_coverage": 0.5403,
+      "skill_coverage_percent": 66.7,
+      "ats": 95,
+      "categories": {
+        "skills": [
+          33.7,
+          43.8
+        ],
+        "evidence": [
+          12.3,
+          31.2
+        ],
+        "responsibilities": [
+          16.9,
+          25.0
+        ],
+        "qualifications": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "p08": {
+      "notes": "Android resume vs Android JD",
+      "fit": 79.7,
+      "primary_method": "weighted",
+      "tfidf_score": 34.9,
+      "tfidf_cosine": 0.2092,
+      "embedding_score": 70.0,
+      "embedding_coverage": 0.56,
+      "skill_coverage_percent": 87.5,
+      "ats": 95,
+      "categories": {
+        "skills": [
+          41.6,
+          43.8
+        ],
+        "evidence": [
+          24.0,
+          31.2
+        ],
+        "responsibilities": [
+          14.1,
+          25.0
+        ],
+        "qualifications": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "p09": {
+      "notes": "MERN full stack resume vs React frontend JD",
+      "fit": 39.2,
+      "primary_method": "weighted",
+      "tfidf_score": 11.4,
+      "tfidf_cosine": 0.0681,
+      "embedding_score": 61.7,
+      "embedding_coverage": 0.4939,
+      "skill_coverage_percent": 40.0,
+      "ats": 95,
+      "categories": {
+        "skills": [
+          18.9,
+          38.9
+        ],
+        "evidence": [
+          4.5,
+          27.8
+        ],
+        "responsibilities": [
+          4.7,
+          22.2
+        ],
+        "qualifications": [
+          11.1,
+          11.1
+        ]
+      }
+    },
+    "p10": {
+      "notes": "MERN full stack resume vs Python backend JD",
+      "fit": 13.9,
+      "primary_method": "weighted",
+      "tfidf_score": 6.9,
+      "tfidf_cosine": 0.0415,
+      "embedding_score": 54.5,
+      "embedding_coverage": 0.4361,
+      "skill_coverage_percent": 16.7,
+      "ats": 95,
+      "categories": {
+        "skills": [
+          7.5,
+          38.9
+        ],
+        "evidence": [
+          2.7,
+          27.8
+        ],
+        "responsibilities": [
+          3.7,
+          22.2
+        ],
+        "qualifications": [
+          0.0,
+          11.1
+        ]
+      }
+    },
+    "p11": {
+      "notes": "ML student resume vs data analyst JD",
+      "fit": 9.2,
+      "primary_method": "weighted",
+      "tfidf_score": 2.3,
+      "tfidf_cosine": 0.0135,
+      "embedding_score": 41.0,
+      "embedding_coverage": 0.3281,
+      "skill_coverage_percent": 22.2,
+      "ats": 100,
+      "categories": {
+        "skills": [
+          4.2,
+          43.8
+        ],
+        "evidence": [
+          0.0,
+          31.2
+        ],
+        "responsibilities": [
+          5.0,
+          25.0
+        ],
+        "qualifications": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "p12": {
+      "notes": "Java backend resume vs Python backend JD",
+      "fit": 32.8,
+      "primary_method": "weighted",
+      "tfidf_score": 9.7,
+      "tfidf_cosine": 0.0579,
+      "embedding_score": 54.7,
+      "embedding_coverage": 0.4379,
+      "skill_coverage_percent": 25.0,
+      "ats": 95,
+      "categories": {
+        "skills": [
+          15.6,
+          38.9
+        ],
+        "evidence": [
+          5.8,
+          27.8
+        ],
+        "responsibilities": [
+          11.4,
+          22.2
+        ],
+        "qualifications": [
+          0.0,
+          11.1
+        ]
+      }
+    },
+    "p13": {
+      "notes": "Mechanical engineering resume vs Python backend JD",
+      "fit": 0.0,
+      "primary_method": "weighted",
+      "tfidf_score": 3.9,
+      "tfidf_cosine": 0.0232,
+      "embedding_score": 21.9,
+      "embedding_coverage": 0.1755,
+      "skill_coverage_percent": 0.0,
+      "ats": 95,
+      "categories": {
+        "skills": [
+          0.0,
+          38.9
+        ],
+        "evidence": [
+          0.0,
+          27.8
+        ],
+        "responsibilities": [
+          0.0,
+          22.2
+        ],
+        "qualifications": [
+          0.0,
+          11.1
+        ]
+      }
+    },
+    "p14": {
+      "notes": "Mechanical engineering resume vs ML engineer JD",
+      "fit": 3.0,
+      "primary_method": "weighted",
+      "tfidf_score": 3.8,
+      "tfidf_cosine": 0.023,
+      "embedding_score": 36.6,
+      "embedding_coverage": 0.2928,
+      "skill_coverage_percent": 0.0,
+      "ats": 95,
+      "categories": {
+        "skills": [
+          0.0,
+          43.8
+        ],
+        "evidence": [
+          0.0,
+          31.2
+        ],
+        "responsibilities": [
+          3.0,
+          25.0
+        ],
+        "qualifications": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "p15": {
+      "notes": "Data analyst resume vs DevOps JD",
+      "fit": 0.0,
+      "primary_method": "weighted",
+      "tfidf_score": 2.0,
+      "tfidf_cosine": 0.0118,
+      "embedding_score": 29.4,
+      "embedding_coverage": 0.2355,
+      "skill_coverage_percent": 0.0,
+      "ats": 95,
+      "categories": {
+        "skills": [
+          0.0,
+          43.8
+        ],
+        "evidence": [
+          0.0,
+          31.2
+        ],
+        "responsibilities": [
+          0.0,
+          25.0
+        ],
+        "qualifications": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "p16": {
+      "notes": "React frontend resume vs DevOps JD",
+      "fit": 0.0,
+      "primary_method": "weighted",
+      "tfidf_score": 1.3,
+      "tfidf_cosine": 0.0078,
+      "embedding_score": 39.1,
+      "embedding_coverage": 0.3127,
+      "skill_coverage_percent": 0.0,
+      "ats": 95,
+      "categories": {
+        "skills": [
+          0.0,
+          43.8
+        ],
+        "evidence": [
+          0.0,
+          31.2
+        ],
+        "responsibilities": [
+          0.0,
+          25.0
+        ],
+        "qualifications": [
+          0.0,
+          0.0
+        ]
+      }
+    }
+  }
+}

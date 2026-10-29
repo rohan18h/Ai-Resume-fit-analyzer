@@ -57,7 +57,7 @@ def get_model() -> SentenceTransformer:
     """Load the embedding model once (CPU). Raises if it cannot be loaded (e.g. offline on first run)."""
     from sentence_transformers import SentenceTransformer
 
-    return SentenceTransformer(config.EMBEDDING_MODEL, device="cpu")
+    return SentenceTransformer(config.EMBEDDING_MODEL, device="cpu", revision=config.EMBEDDING_REVISION)
 
 
 def try_load_model() -> bool:

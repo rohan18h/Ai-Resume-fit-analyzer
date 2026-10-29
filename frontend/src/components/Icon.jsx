@@ -39,12 +39,13 @@ export default function Icon({ name, size = 18, label, className = '' }) {
   );
 }
 
-/** Icon + word for a pass / warn / fail status, so colour is never the only signal. */
+/** Icon + word for a pass / warn / fail / not-checked status, so colour is never the only signal. */
 export function StatusBadge({ status }) {
   const meta = {
     pass: { icon: 'check', text: 'Pass' },
     warn: { icon: 'warn', text: 'Warning' },
     fail: { icon: 'cross', text: 'Fail' },
+    na: { icon: 'info', text: 'Not checked' },
   }[status];
   return (
     <span className={`status-badge status-badge--${status}`}>

@@ -151,29 +151,60 @@ npm test
 The frontend reads the backend URL from `VITE_API_BASE_URL` (default `http://localhost:8000`). To change it, copy
 `frontend/.env.example` to `frontend/.env.local` and edit it.
 
-## How the fit score is calculated
+## How the scores are calculated
 
-The main score ([backend/app/services/scoring.py](backend/app/services/scoring.py)) adds up points from five
-categories. Each category earns between 0% and 100% of its points, so the total can never pass 100. The response's
+The app reports two separate scores. They measure different things and never feed into each other.
+
+### Fit score: how well the resume matches this job
+
+The main score ([backend/app/services/scoring.py](backend/app/services/scoring.py)) adds up points from four
+categories. The weights 35 : 25 : 20 : 10 are relative, so they are shared out as 38.9 / 27.8 / 22.2 / 11.1 of 100
+points. Each category earns between 0% and 100% of its points, so the total can never pass 100. The response's
 `breakdown` lists every category's points, and they add up to `fit.score`.
 
-| Category | Points | Rule |
+| Category | Weight | Rule |
 | --- | --- | --- |
 | Required technical skills | 35 | JD skills the resume has anywhere, weighted required 3 / no cue 2 / preferred 1. Exact name or alias = full credit, a skill built on it = 0.75, an alternative = 0.40. Repeats and skills the JD doesn't ask for add nothing. |
 | Experience and project evidence | 25 | The same skills, but only when an Experience or Projects bullet shows them. A skill that is only listed gets nothing here. |
-| Job responsibilities | 20 | Each JD duty against its most similar resume bullet (sentence embeddings, or shared words without the model). |
-| Education and qualifications | 10 | Degree level, years of experience (from dated roles, and only roles involving the skills named) and certifications: met 1, in progress 0.5, not met or not stated 0. |
-| Resume completeness and readability | 10 | The ATS check score (below). |
+| Job responsibilities | 20 | Each JD duty against its most similar resume bullet (sentence embeddings, or shared words without the model). Similarity at or below `RESP_SIM_FLOOR` earns 0, at or above `RESP_SIM_FULL` full credit, linear between. |
+| Education and qualifications | 10 | Degree level, years of experience (from dated roles, only counting roles in the skill or field named) and certifications: met 1, in progress 0.5, not met or not stated 0. |
 
-**ATS check score** ([backend/app/services/ats.py](backend/app/services/ats.py)) reads only the resume PDF, never
-the job description. So it stays the same when only the JD changes, and moves when the resume's formatting or
-structure changes. Each of the 10 checks earns a credit from 0 to 1: pass 1, fail 0. A warning earns the share that
-is right wherever that can be measured (3 of 5 standard headings = 0.6, email but no phone = 0.5, two columns on 1
-of 2 pages = 0.75), and 0.5 otherwise. The score is `round(100 × sum of credits / 10)`.
+If the JD gives a category nothing to measure (for example, no degree or years), that category is left out and the
+others share its points.
 
-If the JD gives a category nothing to measure (for example, no degree or years), that category is left out. Its
-points go to the other job-match categories, and readability always stays at 10. The TF-IDF and embedding scores
-are still computed and shown, for the method comparison and Objectives 2–3.
+The duty cut-offs are not hand-picked. [backend/eval/calibrate.py](backend/eval/calibrate.py) derives them from the
+eval corpus (results in `eval/calibration.json`):
+- the floor is the 95th percentile of duty similarities against resumes from a different field (p13–p16);
+- full credit is the median duty similarity in same-role pairs (p01–p08).
+
+The corpus is synthetic and small, so rerun the script when it grows or real hand labels exist.
+
+The raw numbers are always returned next to the score: `fit.tfidf_cosine` (TF-IDF vectors), `fit.embedding_coverage`
+(mean best cosine per JD chunk, model `all-MiniLM-L6-v2` pinned to revision `1110a243…`) and
+`skills.coverage_percent`. `fit.tfidf_score` and `fit.embedding_score` are the same numbers scaled by
+`TFIDF_CEILING` / `EMBED_CEILING` (spec starting values, not yet tuned on hand labels), for the method comparison
+and Objectives 2–3.
+
+### ATS formatting score: can resume parsers read this PDF?
+
+[backend/app/services/ats.py](backend/app/services/ats.py) runs 10 checks on the resume PDF only, never on the
+job description:
+- text extraction, including unreadable glyphs;
+- columns, tables and images;
+- standard headings;
+- contact details, and whether they sit near the top;
+- page count, fonts, symbols and bullets.
+
+Each check is pass (1), warn (0.5) or fail (0), as in spec Section 10.5.6. A check whose evidence is missing (no
+font data, no bulleted lists) is shown as **not checked** and left out of the score, rather than counted as a pass.
+
+`score = round(100 × (passed + 0.5 × warned) / applicable checks)`
+
+This is not Workday's, Greenhouse's, Taleo's or any other vendor's score. Online "ATS checkers" often also grade
+content: numbers in bullets, action verbs, word count, keywords. So their totals can differ from this one
+legitimately. To compare scores before and after a change on the same fixed inputs:
+- `python eval/snapshot.py out.json` writes a snapshot;
+- `python eval/snapshot.py --compare eval/snapshots/before.json eval/snapshots/after.json` compares two.
 
 ## Environment variables (backend)
 
@@ -185,11 +216,13 @@ All of these are optional. Defaults are in [backend/app/config.py](backend/app/c
 | `MAX_PDF_PAGES` | 5 | Reject longer PDFs |
 | `MIN_JD_CHARS` / `MAX_JD_CHARS` | 50 / 10000 | Job description length limits |
 | `EMBEDDING_MODEL` | sentence-transformers/all-MiniLM-L6-v2 | Embedding model |
+| `EMBEDDING_REVISION` | 1110a243fdf4706b3f48f1d95db1a4f5529b4d41 | Exact model commit, so an upstream update can't change scores |
 | `PRIMARY_METHOD` | weighted | Main fit score: `weighted` (see below), `tfidf` or `embeddings` |
-| `WEIGHT_SKILLS` / `WEIGHT_EVIDENCE` / `WEIGHT_RESPONSIBILITIES` / `WEIGHT_QUALIFICATIONS` / `WEIGHT_READABILITY` | 35 / 25 / 20 / 10 / 10 | Points per category of the weighted score |
+| `WEIGHT_SKILLS` / `WEIGHT_EVIDENCE` / `WEIGHT_RESPONSIBILITIES` / `WEIGHT_QUALIFICATIONS` | 35 / 25 / 20 / 10 | Relative weights of the fit-score categories |
 | `IMPORTANCE_WEIGHT_HIGH` / `_MEDIUM` / `_LOW` | 3 / 2 / 1 | How much a JD skill counts: required / no cue / preferred |
 | `IMPLIED_SKILL_CREDIT` / `RELATED_SKILL_CREDIT` | 0.75 / 0.40 | Partial credit for a skill built on the one asked for (Django → Python) / an alternative (MySQL → PostgreSQL) |
-| `RESP_SIM_FLOOR` / `RESP_SIM_FULL` | 0.30 / 0.65 | Similarity of a JD duty to a resume bullet that earns 0 / full credit |
+| `RESP_SIM_FLOOR` / `RESP_SIM_FULL` | 0.381 / 0.456 | Similarity of a JD duty to a resume bullet that earns 0 / full credit (from `eval/calibrate.py`) |
+| `RESP_OVERLAP_FLOOR` / `RESP_OVERLAP_FULL` | 0.143 / 0.167 | The same for the word-overlap fallback without the model |
 | `TFIDF_CEILING` | 0.60 | Raw TF-IDF cosine mapped to 100% |
 | `EMBED_CEILING` | 0.80 | Same, for embeddings |
 | `LABEL_GOOD_MIN` / `LABEL_AVG_MIN` | 65 / 40 | Good / Average / Low fit thresholds |

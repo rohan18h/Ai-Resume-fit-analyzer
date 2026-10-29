@@ -35,6 +35,8 @@ MIN_EXTRACTED_CHARS: int = _int("MIN_EXTRACTED_CHARS", 200)  # below this the PD
 
 # Matching
 EMBEDDING_MODEL: str = _str("EMBEDDING_MODEL", "sentence-transformers/all-MiniLM-L6-v2")
+# Exact Hugging Face commit of the model, so an upstream update can't silently change every score.
+EMBEDDING_REVISION: str = _str("EMBEDDING_REVISION", "1110a243fdf4706b3f48f1d95db1a4f5529b4d41")
 # Load the model on the first request instead of at startup (Section 15 fallback for small free instances).
 LAZY_MODEL_LOAD: bool = _str("LAZY_MODEL_LOAD", "false").lower() in ("1", "true", "yes")
 # Which score is the main fit score: "weighted" (the category model in services/scoring.py), "embeddings" or "tfidf".
@@ -55,13 +57,13 @@ TFIDF_MODEL_PATH: Path = EVAL_DIR / "tfidf_vectorizer.joblib"
 EVAL_REPORT_PATH: Path = BACKEND_DIR / _str("EVAL_REPORT_PATH", "eval/report.json")
 OBJECTIVE_3_TARGET_PERCENT: float = 70.0  # embeddings must agree with hand labels on at least this share of pairs
 
-# Weighted fit score (services/scoring.py). Category weights are points out of 100; a category that doesn't apply to
-# a JD (e.g. it states no degree or years) is left out and its points are shared among the others in proportion.
+# Weighted fit score (services/scoring.py): resume-job match only; the ATS formatting score is reported separately.
+# Category weights are relative (35:25:20:10 is shared out as 38.9 / 27.8 / 22.2 / 11.1 of 100 points); a category
+# that doesn't apply to a JD (e.g. it states no degree or years) is left out and the others share its points.
 WEIGHT_SKILLS: float = _float("WEIGHT_SKILLS", 35)  # JD skills the resume has (claimed anywhere)
 WEIGHT_EVIDENCE: float = _float("WEIGHT_EVIDENCE", 25)  # JD skills shown in Experience / Projects
 WEIGHT_RESPONSIBILITIES: float = _float("WEIGHT_RESPONSIBILITIES", 20)  # JD duties matched by resume bullets
 WEIGHT_QUALIFICATIONS: float = _float("WEIGHT_QUALIFICATIONS", 10)  # degree, years, certifications
-WEIGHT_READABILITY: float = _float("WEIGHT_READABILITY", 10)  # the ATS checks
 # How much each JD skill counts: high = "required"/"must" or 3+ mentions, medium = no cue, low = "preferred"/"bonus".
 IMPORTANCE_WEIGHT_HIGH: float = _float("IMPORTANCE_WEIGHT_HIGH", 3)
 IMPORTANCE_WEIGHT_MEDIUM: float = _float("IMPORTANCE_WEIGHT_MEDIUM", 2)
@@ -70,12 +72,14 @@ IMPORTANCE_WEIGHT_LOW: float = _float("IMPORTANCE_WEIGHT_LOW", 1)
 IMPLIED_SKILL_CREDIT: float = _float("IMPLIED_SKILL_CREDIT", 0.75)  # it builds on the asked skill: Django -> Python
 RELATED_SKILL_CREDIT: float = _float("RELATED_SKILL_CREDIT", 0.40)  # an alternative to it: MySQL -> PostgreSQL
 # Responsibility match: best cosine similarity between a JD duty and any resume bullet, mapped linearly so that
-# FLOOR (what unrelated sentences reach with this model) earns 0 and FULL (a clear paraphrase) earns full credit.
-RESP_SIM_FLOOR: float = _float("RESP_SIM_FLOOR", 0.30)
-RESP_SIM_FULL: float = _float("RESP_SIM_FULL", 0.65)
-# Same idea without the model: share of the duty's content words found in the best resume bullet.
-RESP_OVERLAP_FLOOR: float = _float("RESP_OVERLAP_FLOOR", 0.15)
-RESP_OVERLAP_FULL: float = _float("RESP_OVERLAP_FULL", 0.50)
+# FLOOR earns 0 and FULL earns full credit. Derived by eval/calibrate.py (results in eval/calibration.json), not
+# picked: FLOOR = 95th percentile of duty similarities against resumes from a different field (p13-p16),
+# FULL = median duty similarity in same-role pairs (p01-p08). Synthetic and small; rerun when the corpus grows.
+RESP_SIM_FLOOR: float = _float("RESP_SIM_FLOOR", 0.381)
+RESP_SIM_FULL: float = _float("RESP_SIM_FULL", 0.456)
+# Same idea without the model: share of the duty's content words found in the best resume bullet (same derivation).
+RESP_OVERLAP_FLOOR: float = _float("RESP_OVERLAP_FLOOR", 0.143)
+RESP_OVERLAP_FULL: float = _float("RESP_OVERLAP_FULL", 0.167)
 MAX_RESPONSIBILITIES: int = _int("MAX_RESPONSIBILITIES", 15)  # JD duties compared, in order
 
 # Fit labels (starting values)

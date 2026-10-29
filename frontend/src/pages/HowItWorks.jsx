@@ -15,7 +15,7 @@ const STEPS = [
   },
   {
     title: 'Compute match score',
-    text: 'The fit score adds up points from five categories: required skills (35), skills shown in experience or projects (25), job duties matched by your bullets (20), degree, years and certifications (10) and ATS formatting (10). TF-IDF and embedding cosine scores are shown alongside for comparison.',
+    text: 'The fit score adds up points from four categories (weights 35 : 25 : 20 : 10): required skills, skills shown in experience or projects, job duties matched by your bullets, and degree, years and certifications. TF-IDF and embedding cosine scores are shown alongside. ATS formatting is a separate score.',
   },
   {
     title: 'Analyze gap & show results',

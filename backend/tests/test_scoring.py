@@ -87,10 +87,10 @@ def model() -> None:
         pytest.skip("embedding model not available")
 
 
-def score(resume: str, extractor: SkillExtractor, jd: str = JD, ats: float = 100, embeddings: bool = True) -> WeightedResult:
+def score(resume: str, extractor: SkillExtractor, jd: str = JD, embeddings: bool = True) -> WeightedResult:
     resume_light, jd_light = clean_text_light(resume), clean_text_light(jd)
     return weighted_score(
-        resume_light, jd_light, extractor.jd_skills(jd_light), extractor.hits(resume_light), ats,
+        resume_light, jd_light, extractor.jd_skills(jd_light), extractor.hits(resume_light),
         extractor=extractor, use_embeddings=embeddings, today=TODAY,
     )  # fmt: skip
 
@@ -106,13 +106,12 @@ def status(result: WeightedResult, name: str) -> str:
 def assert_consistent(result: WeightedResult) -> None:
     """Score in range, never above a category's maximum, and the total equals the shown category points.
 
-    The maximums add up to 100, except when the JD gives nothing to match (no skills, duties or qualifications):
-    then only readability is scored, at its own 10 points, rather than inflating it to 100.
+    The maximums add up to 100, or to 0 when the JD gives nothing to match (no skills, duties or qualifications).
     """
     assert 0 <= result.score <= 100
     assert all(0 <= c.points <= c.max_points for c in result.categories)
-    applicable = {c.id for c in result.categories if c.applicable}
-    expected_max = 10 if applicable == {"readability"} else 100
+    assert {c.id for c in result.categories} == {"skills", "evidence", "responsibilities", "qualifications"}
+    expected_max = 100 if any(c.applicable for c in result.categories) else 0
     assert sum(c.max_points for c in result.categories) == pytest.approx(expected_max)
     assert result.score == round(sum(c.points for c in result.categories), 1)
 
@@ -285,23 +284,22 @@ def test_deterministic(extractor: SkillExtractor) -> None:
     ("@@@ ### !!!\n\n\t", "Python, Docker, Git."),
 ])  # fmt: skip
 def test_degenerate_inputs_stay_in_range(extractor: SkillExtractor, resume: str, jd: str) -> None:
-    result = score(resume, extractor, jd=jd, ats=0)
+    result = score(resume, extractor, jd=jd)
     assert_consistent(result)
 
 
 def test_empty_resume_scores_zero(extractor: SkillExtractor) -> None:
-    result = score("", extractor, ats=0)
+    result = score("", extractor)
     assert result.score == 0 and len(result.missing_required) >= 6
 
 
-def test_jd_without_known_skills_is_not_inflated_by_formatting(extractor: SkillExtractor) -> None:
+def test_unrelated_job_scores_low(extractor: SkillExtractor) -> None:
     nurse = (
         "Responsibilities:\n- Provide direct patient care to children in a 30-bed ward.\n"
         "- Administer medications and monitor vital signs.\nRequirements:\n"
         "- Valid state nursing license is required.\n- 2+ years of clinical experience in a hospital."
     )
-    result = score(STRONG, extractor, jd=nurse, ats=100)
+    result = score(STRONG, extractor, jd=nurse)
     assert_consistent(result)
     assert not next(c for c in result.categories if c.id == "skills").applicable
-    assert category(result, "readability") == 10  # formatting keeps its own 10 points, no more
-    assert result.score < 30
+    assert result.score < 10  # a well-formatted backend resume earns nothing for a nursing job

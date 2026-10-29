@@ -35,7 +35,6 @@ sys.path.insert(0, str(BACKEND_DIR))
 from scipy.stats import spearmanr  # noqa: E402
 
 from app import config  # noqa: E402
-from app.services.ats import check_ats  # noqa: E402
 from app.services.matcher_embed import embedding_score  # noqa: E402
 from app.services.matcher_tfidf import get_vectorizer, tfidf_score  # noqa: E402
 from app.services.parser import clean_text, clean_text_light, extract_text, strip_name_header  # noqa: E402
@@ -56,7 +55,6 @@ class PairTexts:
     jd_clean: str
     resume_light: str  # casing and lines kept, for sentence embeddings (Step 6)
     jd_light: str
-    resume_pdf: bytes  # for the ATS checks in the weighted score
 
 
 def _score_tfidf(texts: PairTexts) -> float:
@@ -68,9 +66,8 @@ def _score_embeddings(texts: PairTexts) -> float:
 
 
 def _score_weighted(texts: PairTexts) -> float:
-    ats = check_ats(texts.resume_pdf, extract_text(texts.resume_pdf)).score
     return weighted_score(
-        texts.resume_light, texts.jd_light, rank_jd_skills(texts.jd_light), extract_skills(texts.resume_light), ats
+        texts.resume_light, texts.jd_light, rank_jd_skills(texts.jd_light), extract_skills(texts.resume_light)
     ).score
 
 
@@ -100,10 +97,9 @@ def load_pairs(eval_dir: Path) -> list[dict]:
 
 
 def pair_texts(pair: dict, eval_dir: Path) -> PairTexts:
-    pdf = (eval_dir / pair["resume_file"]).read_bytes()
-    resume = strip_name_header(extract_text(pdf).text)
+    resume = strip_name_header(extract_text((eval_dir / pair["resume_file"]).read_bytes()).text)
     jd = (eval_dir / pair["jd_file"]).read_text(encoding="utf-8")
-    return PairTexts(clean_text(resume), clean_text(jd), clean_text_light(resume), clean_text_light(jd), pdf)
+    return PairTexts(clean_text(resume), clean_text(jd), clean_text_light(resume), clean_text_light(jd))
 
 
 def score_pairs(pairs: list[dict], eval_dir: Path, methods: list[str]) -> list[dict]:

@@ -1,11 +1,14 @@
-"""Weighted fit score: an explainable 0-100 score built from five categories of evidence.
+"""Weighted fit score: an explainable 0-100 resume-job match built from four categories of evidence.
 
 Main function:
-    weighted_score(resume_light, jd_light, jd_skills, resume_skills, ats_score) -> WeightedResult
+    weighted_score(resume_light, jd_light, jd_skills, resume_skills) -> WeightedResult
+
+It measures the match with this job only. Formatting is the ATS check's job (ats.py), reported separately and never
+mixed in here, so changing the ATS rules cannot move this score.
 
 Both texts are lightly cleaned (parser.clean_text_light; the resume also passed through strip_name_header).
 
-Categories (points from config, out of 100):
+Categories (relative weights from config, shared out to 100 points):
   skills            JD skills the resume has anywhere. Each JD skill counts by importance (required 3, no cue 2,
                     preferred 1). Exact skill or alias = 1; a skill it builds on (Django for Python) = 0.75;
                     an alternative (MySQL for PostgreSQL) = 0.40. Repeats and skills the JD doesn't ask for add nothing.
@@ -16,7 +19,6 @@ Categories (points from config, out of 100):
                     most similar resume bullet from Experience/Projects: similarity FLOOR -> 0, FULL -> 1, linear.
   qualifications    Degree, years of experience and certifications from qualifications.py: met 1, in progress 0.5,
                     not met or not stated 0. Required ones count 3, preferred 1.
-  readability       The ATS check score (ats.py) / 100.
 
 Each category's credit is 0-1, so it can never give more than its points. A category the JD gives nothing to
 measure (no skills, no duties, no qualifications) is "not applicable": its points are shared among the others in
@@ -53,7 +55,6 @@ CATEGORY_TITLES = {
     "evidence": "Experience and project evidence",
     "responsibilities": "Job responsibilities",
     "qualifications": "Education and qualifications",
-    "readability": "Resume completeness and readability",
 }
 
 # Skills that build on another one: having the key shows some of the value (have -> wanted).
@@ -153,12 +154,11 @@ def weighted_score(
     jd_light: str,
     jd_skills: list[JdSkill],
     resume_skills: list[SkillHit],
-    ats_score: float | None,
     extractor: SkillExtractor | None = None,
     use_embeddings: bool | None = None,
     today: date | None = None,
 ) -> WeightedResult:
-    """Score the resume against the JD in five categories and explain every point."""
+    """Score the resume against the JD in four categories and explain every point."""
     extractor = extractor or get_extractor()
     if use_embeddings is None:
         use_embeddings = matcher_embed.is_model_loaded()
@@ -175,7 +175,6 @@ def weighted_score(
         _evidence_category(skills),
         _responsibilities_category(responsibilities, use_embeddings),
         _qualifications_category(qualifications),
-        _readability_category(ats_score),
     ]
     scored = _allocate(categories)
     total = round(min(100.0, max(0.0, sum(c.points for c in scored))), 1)
@@ -194,7 +193,7 @@ def weighted_score(
             for q in qualifications
         ],
         recommendations=recommendations(
-            skills, responsibilities, qualifications, resume, ats_score, stuffed_keywords(resume, extractor)
+            skills, responsibilities, qualifications, resume, stuffed_keywords(resume, extractor)
         ),
         similarity_method="embeddings" if use_embeddings else "word overlap",
         matched_required=names("required", "demonstrated", "listed"),
@@ -407,27 +406,47 @@ def _responsibilities_category(matches: list[ResponsibilityMatch], use_embedding
 
 
 # ---------------------------------------------------------------------------
-# Qualifications and readability
+# Qualifications
 # ---------------------------------------------------------------------------
 
 
 def relevant_years(
     results: list[QualificationResult], resume: list[Line], extractor: SkillExtractor
 ) -> list[QualificationResult]:
-    """'2+ years with Python' is only met if the dated roles involve Python (or a skill built on it, like FastAPI).
+    """'2+ years with Python' is only met if the dated roles involve Python (or a skill built on it, like FastAPI),
+    and '2+ years of clinical experience in a hospital' only if they mention clinical or hospital work.
 
-    Years from unrelated jobs still count when the JD names no skill on that line ("3+ years of experience").
+    Years from any job count when the line names no skill or field ("3+ years of professional experience").
     """
     checked = []
     for result in results:
-        asked = {hit.name for hit in extractor.hits(result.requirement.text)}
-        if result.requirement.kind == "experience_years" and result.status == "met" and asked:
+        if result.requirement.kind == "experience_years" and result.status == "met":
             roles = [line.text for line in resume if line.section == "experience"]
-            if not asked & implied_skills(skills_shown(roles, extractor)):
+            asked = {hit.name for hit in extractor.hits(result.requirement.text)}
+            if asked and not asked & implied_skills(skills_shown(roles, extractor)):
                 names = _join([extractor.skills[name].display_name for name in sorted(asked)], "or")
                 result = replace(result, status="not_met", detail=f"{result.detail} None of those roles mention {names}.")
+            elif not asked and (field := _field_words(result.requirement.text)):
+                role_words = _content_words(" ".join(roles))
+                if not any(word in role_words for word in field):
+                    result = replace(result, status="not_met",
+                                     detail=f"{result.detail} None of those roles mention {_join(sorted(field), 'or')}.")
         checked.append(result)
     return checked
+
+
+# Words that describe any experience rather than a field ("2+ years of relevant professional experience").
+_GENERIC_EXPERIENCE_WORDS = {
+    "year", "yrs", "experience", "professional", "industry", "work", "working", "relevant", "hand", "hands-on",
+    "strong", "minimum", "least", "plus", "required", "preferred", "must", "solid", "proven", "total", "overall",
+    "related", "similar", "field", "role", "full-time", "prior", "previou", "demonstrated",
+}  # fmt: skip
+
+
+def _field_words(text: str) -> set[str]:
+    """Content words naming the field of a years requirement: 'clinical experience in a hospital' -> clinical,
+    hospital. Empty for a field-free line such as '3+ years of experience'."""
+    return {w for w in _content_words(text) if w not in _GENERIC_EXPERIENCE_WORDS and not w[:1].isdigit()}
 
 
 def _qualifications_category(results: list[QualificationResult]) -> _Category:
@@ -442,41 +461,21 @@ def _qualifications_category(results: list[QualificationResult]) -> _Category:
                      f"{met} of {len(results)} stated qualifications are clearly met.")
 
 
-def _readability_category(ats_score: float | None) -> _Category:
-    if ats_score is None:
-        return _Category("readability", config.WEIGHT_READABILITY, None, "The ATS checks did not run.")
-    return _Category("readability", config.WEIGHT_READABILITY, max(0.0, min(1.0, ats_score / 100)),
-                     f"ATS formatting checks: {round(ats_score)}/100.")
-
-
 # ---------------------------------------------------------------------------
 # Points
 # ---------------------------------------------------------------------------
 
 
 def _allocate(categories: list[_Category]) -> list[CategoryScore]:
-    """Share 100 points among the applicable categories (to 0.1, summing to exactly 100), then award each its
-    credit x points.
-
-    Readability keeps its own share: when a job-match category doesn't apply, only the other job-match categories
-    absorb its points, so a well-formatted resume can't score highly against an unrelated job.
-    """
-    total_weight = sum(c.weight for c in categories)
+    """Share 100 points among the applicable categories by weight (to 0.1, summing to exactly 100), then award each
+    its credit x points. With no applicable category (the JD gives nothing to compare), every maximum is 0."""
     applicable = [c for c in categories if c.credit is not None and c.weight > 0]
-    match = [c for c in applicable if c.id != "readability"]
-    exact: dict[str, float] = {}
-    if match:
-        fixed = {c.id: c.weight / total_weight * 1000 for c in applicable if c.id == "readability"}
-        match_weight = sum(c.weight for c in match)
-        exact = {**fixed, **{c.id: c.weight / match_weight * (1000 - sum(fixed.values())) for c in match}}
-    elif applicable:  # nothing in the JD to match against: readability alone, at its own share
-        exact = {c.id: c.weight / total_weight * 1000 for c in applicable}
-    tenths: dict[str, int] = {}
-    if exact:
-        tenths = {key: int(value) for key, value in exact.items()}
-        leftover = round(sum(exact.values())) - sum(tenths.values())  # largest remainder: totals stay exact
-        for key in sorted(exact, key=lambda k: exact[k] - tenths[k], reverse=True)[:leftover]:
-            tenths[key] += 1
+    total_weight = sum(c.weight for c in applicable)
+    exact = {c.id: c.weight / total_weight * 1000 for c in applicable} if total_weight else {}
+    tenths = {key: int(value) for key, value in exact.items()}
+    leftover = round(sum(exact.values())) - sum(tenths.values())  # largest remainder: totals stay exact
+    for key in sorted(exact, key=lambda k: exact[k] - tenths[k], reverse=True)[:leftover]:
+        tenths[key] += 1
     scored = []
     for c in categories:
         max_points = tenths.get(c.id, 0) / 10
@@ -509,7 +508,6 @@ def recommendations(
     responsibilities: list[ResponsibilityMatch],
     qualifications: list[QualificationResult],
     resume: list[Line],
-    ats_score: float | None,
     stuffed: list[str] | None = None,
 ) -> list[str]:
     """Specific, honest next steps, most valuable first. Never suggests claiming something the candidate lacks."""
@@ -556,8 +554,6 @@ def recommendations(
     for match in weak:
         tips.append(f"No bullet clearly matches the duty \"{_snippet(match.requirement.rstrip('.'), 120)}\". If you have done "
                     "similar work, describe it in a bullet using concrete actions and results.")
-    if ats_score is not None and ats_score < 100:
-        tips.append("Fix the warnings in the ATS check below so automated systems can read your resume reliably.")
     return tips
 
 

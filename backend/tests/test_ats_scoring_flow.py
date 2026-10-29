@@ -1,8 +1,8 @@
 """The ATS score end to end: which function computes it, what it reads, and what does (and doesn't) change it.
 
 The ATS score (ats.check_ats) checks only the resume PDF: formatting, parsing and structure. It must move when that
-evidence changes and stay the same when only the job description or unrelated wording changes. The weighted fit
-score takes it as its readability category, so the two must agree.
+evidence changes and stay the same when only the job description or unrelated wording changes. The fit score is a
+separate metric: a formatting change that moves the ATS score must not move the fit score.
 """
 
 from __future__ import annotations
@@ -68,12 +68,12 @@ def ats_score(pdf: bytes) -> int:
 # ---------------------------------------------------------------------------
 
 
-def test_each_missing_heading_lowers_the_score() -> None:
-    """Before the fix, 1 missing heading and 5 missing headings both scored 95."""
+def test_missing_headings_lower_the_score() -> None:
+    """Spec formula (pass 1, warn 0.5, fail 0): all 5 headings pass, 1-2 missing warn, 3 or more missing fail.
+    Before, 1 missing heading and 5 missing headings both scored 95."""
     names = tuple(BODY)
-    scores = [ats_score(make_pdf(headings=names[:count])) for count in range(len(names), -1, -1)]
-    assert scores == sorted(scores, reverse=True) and len(set(scores)) == len(scores)
-    assert scores[0] == 100 and scores[-1] == 90  # all 5 found / none found (the check fails)
+    scores = [ats_score(make_pdf(headings=names[: len(names) - missing])) for missing in range(len(names) + 1)]
+    assert scores == [100, 95, 95, 90, 90, 90]
 
 
 def test_contact_details_change_the_score() -> None:
@@ -126,11 +126,13 @@ def test_unrelated_wording_does_not_change_the_ats_score() -> None:
 # ---------------------------------------------------------------------------
 
 
-def test_fit_readability_category_is_the_ats_score(model: None) -> None:
-    for headings in (tuple(BODY), ("Experience",), ()):
-        result = pipeline.analyze(make_pdf(headings=headings), JD)
-        readability = next(c for c in result.breakdown.categories if c.id == "readability")
-        assert readability.points == round(result.ats.score / 100 * readability.max_points, 1)
+def test_formatting_change_moves_ats_but_not_the_fit_score(model: None) -> None:
+    """Dropping the phone number is a formatting/contact problem: the ATS score drops, the job match does not."""
+    with_phone, without = pipeline.analyze(make_pdf(), JD), pipeline.analyze(make_pdf(contact=("email",)), JD)
+    assert without.ats.score < with_phone.ats.score
+    assert without.fit.score == with_phone.fit.score
+    assert {c.id for c in with_phone.breakdown.categories} == {"skills", "evidence", "responsibilities",
+                                                                 "qualifications"}
 
 
 def test_api_returns_the_new_ats_calculation(model: None, caplog: pytest.LogCaptureFixture) -> None:
@@ -143,7 +145,7 @@ def test_api_returns_the_new_ats_calculation(model: None, caplog: pytest.LogCapt
     ats = response.json()["ats"]
     assert ats["score"] == expected.score < 100
     headings = next(c for c in ats["checks"] if c["id"] == "section_headings")
-    assert headings["credit"] == pytest.approx(0.4) and "Found 2 of 5" in headings["detail"]
+    assert headings["status"] == "fail" and headings["credit"] == 0 and "Found 2 of 5" in headings["detail"]
     # Diagnostics: check_ats ran on this PDF (1 page) with these credits, and the request log shows both scores.
     messages = [r.getMessage() for r in caplog.records]
     assert any(m.startswith("check_ats pages=1 ") and f"score={expected.score}" in m for m in messages)

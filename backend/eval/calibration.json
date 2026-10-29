@@ -1,0 +1,60 @@
+{
+  "model": "sentence-transformers/all-MiniLM-L6-v2",
+  "same_role_pairs": [
+    "p01",
+    "p02",
+    "p03",
+    "p04",
+    "p05",
+    "p06",
+    "p07",
+    "p08"
+  ],
+  "cross_field_pairs": [
+    "p13",
+    "p14",
+    "p15",
+    "p16"
+  ],
+  "rule": "floor = P95 of cross-field duty similarities; full = P50 of same-role",
+  "resp_sim": {
+    "same_role_duties": 41,
+    "cross_field_duties": 21,
+    "same_role": {
+      "5": 0.28,
+      "25": 0.378,
+      "50": 0.456,
+      "75": 0.597,
+      "95": 0.756
+    },
+    "cross_field": {
+      "5": 0.152,
+      "25": 0.2,
+      "50": 0.24,
+      "75": 0.271,
+      "95": 0.381
+    }
+  },
+  "RESP_SIM_FLOOR": 0.381,
+  "RESP_SIM_FULL": 0.456,
+  "resp_overlap": {
+    "same_role_duties": 41,
+    "cross_field_duties": 21,
+    "same_role": {
+      "5": 0.0,
+      "25": 0.125,
+      "50": 0.167,
+      "75": 0.3,
+      "95": 0.5
+    },
+    "cross_field": {
+      "5": 0.0,
+      "25": 0.0,
+      "50": 0.0,
+      "75": 0.0,
+      "95": 0.143
+    }
+  },
+  "RESP_OVERLAP_FLOOR": 0.143,
+  "RESP_OVERLAP_FULL": 0.167
+}

@@ -102,15 +102,13 @@ def analyze(pdf_bytes: bytes, jd_text: str, method: Method = "both") -> Analysis
     if len(jd_text.strip()) < config.SHORT_JD_WARNING_CHARS:
         warnings.append("The job description is very short, so the score may be unreliable.")
 
-    ats, timings["ats"] = ats_future.result()
+    # The match score never reads the ATS result: formatting and job match are separate metrics.
     started = perf_counter()
-    weighted = weighted_score(
-        clean_text_light(resume_text), clean_text_light(jd_text), jd_skills, resume_skills, ats.score
-    )
+    weighted = weighted_score(clean_text_light(resume_text), clean_text_light(jd_text), jd_skills, resume_skills)
     lap("weighted", started)
-    if not any(c.applicable for c in weighted.categories if c.id != "readability"):
-        warnings.append("The job description has no skills, duties or qualifications we could compare, so only the "
-                        "resume's formatting was scored. Paste the full job posting for a fit score.")
+    if not any(c.applicable for c in weighted.categories):
+        warnings.append("The job description has no skills, duties or qualifications we could compare, so the fit "
+                        "score is 0. Paste the full job posting.")
 
     scores = {
         "weighted": weighted.score,
@@ -124,6 +122,8 @@ def analyze(pdf_bytes: bytes, jd_text: str, method: Method = "both") -> Analysis
         label=fit_label(scores[primary]),
         tfidf_score=scores["tfidf"],
         embedding_score=scores["embeddings"],
+        tfidf_cosine=tfidf.cosine if tfidf else None,
+        embedding_coverage=embedding.coverage if embedding else None,
     )
     skills = SkillsResult(
         resume=[hit.name for hit in resume_skills],
@@ -151,9 +151,10 @@ def analyze(pdf_bytes: bytes, jd_text: str, method: Method = "both") -> Analysis
                 for m in embedding.weak_spots
             ],
         )
+    ats, timings["ats"] = ats_future.result()
     ats_out = AtsResultOut(
         score=ats.score, passed=ats.passed, total=ats.total,
-        checks=[AtsCheckOut(**vars(check)) for check in ats.checks],
+        checks=[AtsCheckOut(**vars(check), credit=check.credit) for check in ats.checks],
     )
     breakdown = ScoreBreakdown.model_validate(asdict(weighted))
     return AnalysisResult(fit=fit, skills=skills, explanation=explanation, ats=ats_out, breakdown=breakdown,

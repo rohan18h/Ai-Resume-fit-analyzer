@@ -13,6 +13,9 @@ class FitResult(BaseModel):
     label: str
     tfidf_score: float | None
     embedding_score: float | None
+    # The raw numbers behind those two scores (before the TFIDF_CEILING / EMBED_CEILING display scaling).
+    tfidf_cosine: float | None = None  # cosine of the TF-IDF vectors, 0-1
+    embedding_coverage: float | None = None  # mean best cosine per JD chunk, 0-1
 
 
 class Resource(BaseModel):
@@ -75,21 +78,21 @@ class Explanation(BaseModel):
 class AtsCheckOut(BaseModel):
     id: str
     title: str
-    status: Literal["pass", "warn", "fail"]
+    status: Literal["pass", "warn", "fail", "na"]  # "na": the evidence is missing, so it was not checked
     detail: str
     fix: str | None
-    credit: float  # 0-1 this check adds to the score (pass 1, fail 0, warn: the measured share that is right)
+    credit: float | None  # points towards the score: pass 1, warn 0.5, fail 0; None when not checked
 
 
 class AtsResultOut(BaseModel):
-    score: int  # round(100 * sum(check credits) / total)
+    score: int  # round(100 * (passed + 0.5 * warned) / total)
     passed: int
-    total: int
+    total: int  # checks that could be applied; "na" checks are left out
     checks: list[AtsCheckOut]
 
 
 class CategoryScoreOut(BaseModel):
-    id: Literal["skills", "evidence", "responsibilities", "qualifications", "readability"]
+    id: Literal["skills", "evidence", "responsibilities", "qualifications"]
     title: str
     points: float
     max_points: float  # 0 when the category does not apply to this JD

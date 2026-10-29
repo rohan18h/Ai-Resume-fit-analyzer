@@ -137,3 +137,25 @@ def test_ceiling_scales_the_score(monkeypatch: pytest.MonkeyPatch) -> None:
 def test_model_is_loaded_once() -> None:
     assert matcher_embed.get_model() is matcher_embed.get_model()
     assert matcher_embed.is_model_loaded()
+
+
+def test_pinned_model_identity() -> None:
+    model = matcher_embed.get_model()
+    assert config.EMBEDDING_MODEL == "sentence-transformers/all-MiniLM-L6-v2"
+    assert len(config.EMBEDDING_REVISION) == 40  # a full commit hash, not a branch name that can move
+    assert model.get_sentence_embedding_dimension() == 384
+
+
+def test_no_chunk_of_the_eval_corpus_is_truncated() -> None:
+    """The model reads at most max_seq_length word pieces; anything longer is silently cut off."""
+    from pathlib import Path
+
+    from app.services.parser import clean_text_light, extract_text, strip_name_header
+
+    model = matcher_embed.get_model()
+    eval_dir = Path(__file__).resolve().parent.parent / "eval"
+    texts = [clean_text_light(strip_name_header(extract_text(p.read_bytes()).text))
+             for p in sorted((eval_dir / "resumes").glob("*.pdf"))]
+    texts += [clean_text_light(p.read_text(encoding="utf-8")) for p in sorted((eval_dir / "jds").glob("*.txt"))]
+    longest = max(len(model.tokenizer(chunk)["input_ids"]) for text in texts for chunk in make_chunks(text))
+    assert longest <= model.max_seq_length

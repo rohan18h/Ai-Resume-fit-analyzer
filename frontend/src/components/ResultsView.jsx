@@ -106,11 +106,19 @@ const ResultsView = forwardRef(function ResultsView({ result, onAnalyzeAnother, 
             <div className="fit__side">
               {fit.primary_method === 'weighted' && (
                 <p className="small fit__basis">
-                  Weighted score from skills, evidence, job duties, qualifications and formatting. See the score
-                  breakdown.
+                  Match with this job from skills, evidence, job duties and qualifications. Formatting is scored
+                  separately in the ATS check. See the score breakdown.
                 </p>
               )}
               <MethodChips fit={fit} />
+              {(fit.tfidf_cosine != null || fit.embedding_coverage != null) && (
+                <p className="muted small">
+                  Raw values:{fit.tfidf_cosine != null && ` TF-IDF cosine ${fit.tfidf_cosine.toFixed(3)}`}
+                  {fit.tfidf_cosine != null && fit.embedding_coverage != null && ' ·'}
+                  {fit.embedding_coverage != null && ` embedding coverage ${fit.embedding_coverage.toFixed(3)}`}
+                  {` · skill coverage ${Math.round(skills.coverage_percent)}%`}
+                </p>
+              )}
               <p className="muted small">Analyzed in {formatSeconds(result.processing_ms)}</p>
             </div>
           </div>
@@ -163,7 +171,7 @@ const ResultsView = forwardRef(function ResultsView({ result, onAnalyzeAnother, 
       </Section>
 
       <div className="results__grid">
-        <Section title="ATS check">
+        <Section title="ATS formatting check">
           <AtsPanel ats={ats} />
         </Section>
 

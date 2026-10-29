@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-29T14:42:58Z",
+  "generated_at": "2026-10-29T16:19:00Z",
   "pairs": 16,
   "labelled_pairs": 0,
   "label_order": [
@@ -46,7 +46,7 @@
       "tfidf_pred": "poor",
       "embeddings_score": 82.1,
       "embeddings_pred": "good",
-      "weighted_score": 74.4,
+      "weighted_score": 73.5,
       "weighted_pred": "good"
     },
     {
@@ -56,7 +56,7 @@
       "tfidf_pred": "poor",
       "embeddings_score": 74.5,
       "embeddings_pred": "good",
-      "weighted_score": 62.4,
+      "weighted_score": 62.7,
       "weighted_pred": "average"
     },
     {
@@ -66,7 +66,7 @@
       "tfidf_pred": "poor",
       "embeddings_score": 76.4,
       "embeddings_pred": "good",
-      "weighted_score": 75.2,
+      "weighted_score": 76.4,
       "weighted_pred": "good"
     },
     {
@@ -76,7 +76,7 @@
       "tfidf_pred": "poor",
       "embeddings_score": 67.9,
       "embeddings_pred": "good",
-      "weighted_score": 56.2,
+      "weighted_score": 54.2,
       "weighted_pred": "average"
     },
     {
@@ -86,7 +86,7 @@
       "tfidf_pred": "average",
       "embeddings_score": 76.9,
       "embeddings_pred": "good",
-      "weighted_score": 81.6,
+      "weighted_score": 80.4,
       "weighted_pred": "good"
     },
     {
@@ -96,7 +96,7 @@
       "tfidf_pred": "average",
       "embeddings_score": 77.6,
       "embeddings_pred": "good",
-      "weighted_score": 75.9,
+      "weighted_score": 74.3,
       "weighted_pred": "good"
     },
     {
@@ -106,7 +106,7 @@
       "tfidf_pred": "average",
       "embeddings_score": 67.5,
       "embeddings_pred": "good",
-      "weighted_score": 59.3,
+      "weighted_score": 62.9,
       "weighted_pred": "average"
     },
     {
@@ -116,7 +116,7 @@
       "tfidf_pred": "poor",
       "embeddings_score": 70.0,
       "embeddings_pred": "good",
-      "weighted_score": 78.9,
+      "weighted_score": 79.7,
       "weighted_pred": "good"
     },
     {
@@ -126,8 +126,8 @@
       "tfidf_pred": "poor",
       "embeddings_score": 61.7,
       "embeddings_pred": "average",
-      "weighted_score": 43.7,
-      "weighted_pred": "average"
+      "weighted_score": 39.2,
+      "weighted_pred": "poor"
     },
     {
       "id": "p10",
@@ -136,7 +136,7 @@
       "tfidf_pred": "poor",
       "embeddings_score": 54.5,
       "embeddings_pred": "average",
-      "weighted_score": 21.1,
+      "weighted_score": 13.9,
       "weighted_pred": "poor"
     },
     {
@@ -146,7 +146,7 @@
       "tfidf_pred": "poor",
       "embeddings_score": 41.0,
       "embeddings_pred": "average",
-      "weighted_score": 16.3,
+      "weighted_score": 9.2,
       "weighted_pred": "poor"
     },
     {
@@ -156,7 +156,7 @@
       "tfidf_pred": "poor",
       "embeddings_score": 54.7,
       "embeddings_pred": "average",
-      "weighted_score": 36.5,
+      "weighted_score": 32.8,
       "weighted_pred": "poor"
     },
     {
@@ -166,7 +166,7 @@
       "tfidf_pred": "poor",
       "embeddings_score": 21.9,
       "embeddings_pred": "poor",
-      "weighted_score": 10.6,
+      "weighted_score": 0.0,
       "weighted_pred": "poor"
     },
     {
@@ -176,7 +176,7 @@
       "tfidf_pred": "poor",
       "embeddings_score": 36.6,
       "embeddings_pred": "poor",
-      "weighted_score": 12.0,
+      "weighted_score": 3.0,
       "weighted_pred": "poor"
     },
     {
@@ -186,7 +186,7 @@
       "tfidf_pred": "poor",
       "embeddings_score": 29.4,
       "embeddings_pred": "poor",
-      "weighted_score": 9.9,
+      "weighted_score": 0.0,
       "weighted_pred": "poor"
     },
     {
@@ -196,7 +196,7 @@
       "tfidf_pred": "poor",
       "embeddings_score": 39.1,
       "embeddings_pred": "poor",
-      "weighted_score": 9.5,
+      "weighted_score": 0.0,
       "weighted_pred": "poor"
     }
   ]
