@@ -53,8 +53,13 @@ def test_happy_path_matches_schema(client: TestClient) -> None:
     assert body.fit.score == body.fit.embedding_score
     assert body.fit.label in {"Good fit", "Average fit", "Low fit"}
     assert {"python", "fastapi", "postgresql", "docker"} <= set(body.skills.resume)
-    jd_skills = {s.name: s.importance for s in body.skills.job_description}
-    assert jd_skills["python"] == "high" and jd_skills["aws"] == "low"
+    assert {"python", "fastapi", "postgresql", "docker"} <= {s.name for s in body.skills.matched}
+    missing = {s.name: s for s in body.skills.missing}
+    assert missing["aws"].importance == "low" and missing["aws"].resources  # AWS is only a nice-to-have here
+    assert not set(missing) & set(body.skills.resume)
+    total = len(body.skills.matched) + len(body.skills.missing)
+    assert body.skills.coverage_percent == round(100 * len(body.skills.matched) / total, 1)
+    assert sum(c.required for c in body.skills.by_category) == total
     assert body.explanation is not None and body.explanation.strong_matches
     assert not any("embedding" in w.lower() for w in body.warnings)
 

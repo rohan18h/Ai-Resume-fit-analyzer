@@ -176,7 +176,7 @@ Built step by step following Section 17 of the spec.
 - [x] Step 4 — TF-IDF matcher + `POST /api/analyze` v0 (scores for 16 pairs; labels still to be filled in by the team)
 - [x] Step 5 — Evaluation dataset + `evaluate.py` (report.json generated; agreement figures wait for hand labels)
 - [x] Step 6 — Embedding matcher + explanations (both methods in report.json; agreement waits for hand labels)
-- [ ] Step 7 — Gap analysis + roadmap
+- [x] Step 7 — Gap analysis + roadmap (missing skills with up to 3 links, coverage %, by-category counts)
 - [ ] Step 8 — ATS checks
 - [ ] Step 9 — Analyzer page
 - [ ] Step 10 — How it works, Evaluation, About pages

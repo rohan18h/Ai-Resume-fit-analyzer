@@ -10,8 +10,19 @@ from time import perf_counter
 from typing import Literal
 
 from app import config
-from app.schemas import Explanation, FitResult, JdSkillOut, SkillsResult, StrongMatch, WeakSpot
+from app.schemas import (
+    CategoryCount,
+    Explanation,
+    FitResult,
+    MatchedSkill,
+    MissingSkill,
+    Resource,
+    SkillsResult,
+    StrongMatch,
+    WeakSpot,
+)
 from app.services import matcher_embed
+from app.services.gap import analyze_gap
 from app.services.matcher_tfidf import tfidf_score
 from app.services.parser import clean_text, clean_text_light, extract_text, strip_name_header
 from app.services.skills import extract_skills, rank_jd_skills
@@ -55,6 +66,10 @@ def analyze(pdf_bytes: bytes, jd_text: str, method: Method = "both") -> Analysis
     jd_skills = rank_jd_skills(jd_text)
     started = lap("skills", started)
 
+    gap = analyze_gap(resume_skills, jd_skills)
+    warnings.extend(gap.warnings)
+    started = lap("gap", started)
+
     tfidf = None
     if method in ("tfidf", "both"):
         tfidf = tfidf_score(clean_text(resume_text), clean_text(jd_text))
@@ -72,10 +87,6 @@ def analyze(pdf_bytes: bytes, jd_text: str, method: Method = "both") -> Analysis
 
     if len(jd_text.strip()) < config.SHORT_JD_WARNING_CHARS:
         warnings.append("The job description is very short, so the score may be unreliable.")
-    if not jd_skills:
-        warnings.append(
-            "No known skills were found in the job description. It may be too short or use skills outside our list."
-        )
 
     scores = {"tfidf": tfidf.score if tfidf else None, "embeddings": embedding.score if embedding else None}
     primary = config.PRIMARY_METHOD if scores.get(config.PRIMARY_METHOD) is not None else (
@@ -90,11 +101,17 @@ def analyze(pdf_bytes: bytes, jd_text: str, method: Method = "both") -> Analysis
     )
     skills = SkillsResult(
         resume=[hit.name for hit in resume_skills],
-        job_description=[
-            JdSkillOut(name=s.name, display_name=s.display_name, category=s.category, importance=s.importance,
-                       mentions=s.mentions)
-            for s in jd_skills
+        matched=[MatchedSkill(name=s.name, display_name=s.display_name, category=s.category) for s in gap.matched],
+        missing=[
+            MissingSkill(
+                name=m.skill.name, display_name=m.skill.display_name, category=m.skill.category,
+                importance=m.skill.importance, mentions=m.skill.mentions,
+                resources=[Resource(**vars(link)) for link in m.resources],
+            )
+            for m in gap.missing
         ],
+        coverage_percent=gap.coverage_percent,
+        by_category=[CategoryCount(**vars(c)) for c in gap.by_category],
     )
     explanation = None
     if embedding:

@@ -15,19 +15,42 @@ class FitResult(BaseModel):
     embedding_score: float | None
 
 
-class JdSkillOut(BaseModel):
+class Resource(BaseModel):
+    title: str
+    url: str
+    provider: str
+    resource_type: Literal["docs", "course", "video", "tutorial", "book"]
+    level: Literal["beginner", "intermediate", "advanced"]
+    is_free: bool
+
+
+class MatchedSkill(BaseModel):
+    name: str
+    display_name: str  # not in the spec's example; added so the UI can show "Node.js" instead of "node.js"
+    category: str
+
+
+class MissingSkill(BaseModel):
     name: str
     display_name: str
     category: str
     importance: Literal["high", "medium", "low"]
     mentions: int
+    resources: list[Resource]
+
+
+class CategoryCount(BaseModel):
+    category: str
+    required: int
+    matched: int
 
 
 class SkillsResult(BaseModel):
-    """v0 (Step 4): skills found in each text. Step 7 adds matched / missing / coverage via gap.py."""
-
     resume: list[str]
-    job_description: list[JdSkillOut]
+    matched: list[MatchedSkill]
+    missing: list[MissingSkill]  # high importance first, then most mentioned
+    coverage_percent: float
+    by_category: list[CategoryCount]
 
 
 class StrongMatch(BaseModel):
