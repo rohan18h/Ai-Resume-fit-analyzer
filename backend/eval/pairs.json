@@ -1,0 +1,114 @@
+[
+  {
+    "id": "p01",
+    "resume_file": "resumes/r01.pdf",
+    "jd_file": "jds/j01.txt",
+    "label": null,
+    "notes": "Python backend resume vs Python backend JD"
+  },
+  {
+    "id": "p02",
+    "resume_file": "resumes/r02.pdf",
+    "jd_file": "jds/j02.txt",
+    "label": null,
+    "notes": "React frontend resume vs React frontend JD"
+  },
+  {
+    "id": "p03",
+    "resume_file": "resumes/r03.pdf",
+    "jd_file": "jds/j03.txt",
+    "label": null,
+    "notes": "Data analyst resume vs data analyst JD"
+  },
+  {
+    "id": "p04",
+    "resume_file": "resumes/r04.pdf",
+    "jd_file": "jds/j04.txt",
+    "label": null,
+    "notes": "ML student resume vs ML engineer JD"
+  },
+  {
+    "id": "p05",
+    "resume_file": "resumes/r05.pdf",
+    "jd_file": "jds/j05.txt",
+    "label": null,
+    "notes": "DevOps resume vs DevOps JD"
+  },
+  {
+    "id": "p06",
+    "resume_file": "resumes/r06.pdf",
+    "jd_file": "jds/j06.txt",
+    "label": null,
+    "notes": "Java backend resume vs Java backend JD"
+  },
+  {
+    "id": "p07",
+    "resume_file": "resumes/r09.pdf",
+    "jd_file": "jds/j07.txt",
+    "label": null,
+    "notes": "QA resume vs QA automation JD"
+  },
+  {
+    "id": "p08",
+    "resume_file": "resumes/r07.pdf",
+    "jd_file": "jds/j08.txt",
+    "label": null,
+    "notes": "Android resume vs Android JD"
+  },
+  {
+    "id": "p09",
+    "resume_file": "resumes/r10.pdf",
+    "jd_file": "jds/j02.txt",
+    "label": null,
+    "notes": "MERN full stack resume vs React frontend JD"
+  },
+  {
+    "id": "p10",
+    "resume_file": "resumes/r10.pdf",
+    "jd_file": "jds/j01.txt",
+    "label": null,
+    "notes": "MERN full stack resume vs Python backend JD"
+  },
+  {
+    "id": "p11",
+    "resume_file": "resumes/r04.pdf",
+    "jd_file": "jds/j03.txt",
+    "label": null,
+    "notes": "ML student resume vs data analyst JD"
+  },
+  {
+    "id": "p12",
+    "resume_file": "resumes/r06.pdf",
+    "jd_file": "jds/j01.txt",
+    "label": null,
+    "notes": "Java backend resume vs Python backend JD"
+  },
+  {
+    "id": "p13",
+    "resume_file": "resumes/r08.pdf",
+    "jd_file": "jds/j01.txt",
+    "label": null,
+    "notes": "Mechanical engineering resume vs Python backend JD"
+  },
+  {
+    "id": "p14",
+    "resume_file": "resumes/r08.pdf",
+    "jd_file": "jds/j04.txt",
+    "label": null,
+    "notes": "Mechanical engineering resume vs ML engineer JD"
+  },
+  {
+    "id": "p15",
+    "resume_file": "resumes/r03.pdf",
+    "jd_file": "jds/j05.txt",
+    "label": null,
+    "notes": "Data analyst resume vs DevOps JD"
+  },
+  {
+    "id": "p16",
+    "resume_file": "resumes/r02.pdf",
+    "jd_file": "jds/j05.txt",
+    "label": null,
+    "notes": "React frontend resume vs DevOps JD"
+  }
+]

@@ -1,0 +1,17 @@
+Java Backend Developer
+
+We are hiring a Java developer to build microservices for our logistics platform.
+
+Responsibilities:
+- Build and maintain Spring Boot microservices.
+- Design REST APIs and database schemas.
+- Write unit tests and take part in code review.
+
+Requirements:
+- 3+ years of Java.
+- Strong Spring Boot and microservices experience.
+- Good SQL skills with MySQL or PostgreSQL.
+- Unit testing with JUnit.
+
+Nice to have:
+- Docker and Kubernetes.

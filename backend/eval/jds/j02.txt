@@ -1,0 +1,17 @@
+Frontend React Developer
+
+Join our product team to build fast and accessible web interfaces.
+
+Responsibilities:
+- Build user interfaces in React with reusable components.
+- Work closely with designers to deliver responsive design.
+- Write unit tests for components.
+
+Requirements:
+- Strong JavaScript and TypeScript skills.
+- 2+ years with React and Redux.
+- Solid HTML and CSS, including accessibility.
+
+Nice to have:
+- Next.js experience.
+- Testing with Jest.

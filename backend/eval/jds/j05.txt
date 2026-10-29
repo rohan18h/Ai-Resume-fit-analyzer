@@ -1,0 +1,19 @@
+DevOps Engineer
+
+Help us run reliable infrastructure for a growing SaaS product.
+
+Responsibilities:
+- Operate Kubernetes clusters and container workloads.
+- Automate infrastructure as code.
+- Build and maintain CI/CD pipelines.
+
+Requirements:
+- Strong Linux and Bash skills.
+- Production experience with Docker and Kubernetes.
+- Terraform for infrastructure as code.
+- Experience with AWS.
+- CI/CD with Jenkins or GitHub Actions.
+
+Nice to have:
+- Ansible.
+- Monitoring and alerting experience.

@@ -1,0 +1,18 @@
+Machine Learning Engineer
+
+We are building machine learning features for our customer support platform.
+
+Responsibilities:
+- Train, evaluate and deploy machine learning models.
+- Work on NLP problems such as text classification and search.
+- Turn experiments into reliable services.
+
+Requirements:
+- Strong Python skills.
+- Experience with scikit-learn and PyTorch or TensorFlow.
+- Hands-on NLP experience.
+- Good knowledge of statistics and machine learning fundamentals.
+
+Nice to have:
+- Hugging Face transformers.
+- Docker and AWS for deployment.

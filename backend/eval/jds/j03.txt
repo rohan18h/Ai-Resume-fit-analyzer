@@ -1,0 +1,17 @@
+Data Analyst
+
+We need a data analyst to help our business teams make decisions with data.
+
+Responsibilities:
+- Write SQL queries to answer business questions.
+- Build dashboards and reports for managers.
+- Present insights clearly to non-technical teams.
+
+Requirements:
+- Excellent SQL skills.
+- Advanced Excel.
+- Experience with Tableau or Power BI.
+- Good understanding of statistics.
+
+Good to have:
+- Python with Pandas for data analysis.

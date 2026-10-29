@@ -1,0 +1,18 @@
+Backend Python Developer
+
+We are looking for a backend developer to build and maintain the APIs behind our products.
+
+Responsibilities:
+- Design and build REST APIs in Python.
+- Model data in PostgreSQL and keep queries fast.
+- Write automated tests and review teammates' code.
+
+Requirements:
+- 2+ years of professional experience with Python.
+- Experience with FastAPI or Django.
+- Strong SQL and PostgreSQL skills.
+- Experience with Docker and Git.
+
+Nice to have:
+- AWS experience.
+- Redis or another caching layer.

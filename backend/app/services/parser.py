@@ -117,6 +117,17 @@ def extract_text(pdf_bytes: bytes) -> ParsedResume:
     return ParsedResume(text=text, pages=page_count, lines=lines, fonts=_font_families(lines))
 
 
+def count_pages(pdf_bytes: bytes) -> int:
+    """Number of pages, without extracting text. Raises InvalidPdf / UnreadablePdf like extract_text."""
+    if not pdf_bytes.lstrip()[:5].startswith(b"%PDF"):
+        raise InvalidPdf("The file is not a PDF.")
+    try:
+        with pdfplumber.open(io.BytesIO(pdf_bytes)) as pdf:
+            return len(pdf.pages)
+    except (PdfminerException, PDFSyntaxError, PSException, ValueError, KeyError, TypeError) as exc:
+        raise UnreadablePdf("The PDF could not be opened.") from exc
+
+
 def _page_lines(page: pdfplumber.page.Page, number: int) -> list[TextLine]:
     """Return the lines of one page in reading order (column by column)."""
     words = page.extract_words(extra_attrs=["fontname", "size"], keep_blank_chars=False)
@@ -390,16 +401,14 @@ def _looks_like_name(line: str) -> bool:
 
 
 @lru_cache(maxsize=1)
-def _stopwords() -> frozenset[str]:
+def english_stopwords() -> frozenset[str]:
+    """NLTK's English stopword list. Needs the one-time download: python -c "import nltk; nltk.download('stopwords')"."""
     from nltk.corpus import stopwords
 
     return frozenset(stopwords.words("english"))
 
 
 def remove_stopwords(text: str) -> str:
-    """Remove NLTK English stopwords from already-cleaned (lowercase, single-spaced) text.
-
-    Needs the one-time download: python -c "import nltk; nltk.download('stopwords')".
-    """
-    stop = _stopwords()
+    """Remove NLTK English stopwords from already-cleaned (lowercase, single-spaced) text."""
+    stop = english_stopwords()
     return " ".join(token for token in text.split() if token not in stop)

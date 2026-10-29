@@ -39,9 +39,15 @@ PRIMARY_METHOD: str = _str("PRIMARY_METHOD", "embeddings")  # "tfidf" or "embedd
 TFIDF_CEILING: float = _float("TFIDF_CEILING", 0.60)  # starting value
 EMBED_CEILING: float = _float("EMBED_CEILING", 0.80)  # starting value
 
+EVAL_DIR: Path = BACKEND_DIR / "eval"  # TF-IDF reference corpus: eval/resumes/*.pdf and eval/jds/*.txt
+TFIDF_MODEL_PATH: Path = EVAL_DIR / "tfidf_vectorizer.joblib"
+
 # Fit labels (starting values)
 LABEL_GOOD_MIN: float = _float("LABEL_GOOD_MIN", 65)
 LABEL_AVG_MIN: float = _float("LABEL_AVG_MIN", 40)
+
+# Warnings
+SHORT_JD_WARNING_CHARS: int = _int("SHORT_JD_WARNING_CHARS", 300)  # warn that the score may be unreliable (starting value)
 
 # Server
 ALLOWED_ORIGINS: list[str] = _list("ALLOWED_ORIGINS", "http://localhost:5173")

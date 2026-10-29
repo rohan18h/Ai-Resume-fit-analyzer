@@ -1,0 +1,18 @@
+Android Developer
+
+Build our customer app used by thousands of people every day.
+
+Responsibilities:
+- Develop new features for our Android app.
+- Integrate with REST APIs and handle offline data.
+- Fix bugs and improve performance.
+
+Requirements:
+- Strong Kotlin skills.
+- 2+ years of Android development.
+- Experience consuming REST APIs.
+- Firebase experience.
+
+Nice to have:
+- Java.
+- Unit testing.
