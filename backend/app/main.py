@@ -14,6 +14,7 @@ from starlette.exceptions import HTTPException as StarletteHTTPException
 
 from app import config
 from app.routers import health
+from app.services.skills import get_extractor
 
 logger = logging.getLogger("resume_fit")
 
@@ -22,6 +23,10 @@ logger = logging.getLogger("resume_fit")
 async def lifespan(app: FastAPI) -> AsyncIterator[None]:
     """Load models once at startup. The embedding model is added in Step 6."""
     app.state.model_loaded = False
+    try:
+        get_extractor()  # skills list + spaCy matcher, cached for every request
+    except RuntimeError as exc:
+        logger.warning("%s", exc)
     yield
 
 

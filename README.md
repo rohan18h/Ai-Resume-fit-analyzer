@@ -125,7 +125,7 @@ Built step by step following Section 17 of the spec.
 - [x] Step 0 — Repo scaffold (FastAPI + `/api/health`, Vite + routes + header/footer + design tokens)
 - [x] Step 1 — Parser (10 of 10 fixture PDFs extract correctly; scanned PDF raises `unreadable_pdf`)
 - [x] Step 2 — SQLite schema, skills seed, link checker (133 skills, 176 links, all links pass)
-- [ ] Step 3 — Skills extraction
+- [x] Step 3 — Skills extraction (aliases, multi-word skills, ambiguous C / R / Go, JD importance)
 - [ ] Step 4 — TF-IDF matcher + `POST /api/analyze` v0
 - [ ] Step 5 — Evaluation dataset + `evaluate.py`
 - [ ] Step 6 — Embedding matcher + explanations
