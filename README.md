@@ -86,6 +86,7 @@ To rebuild the fixtures (Windows, uses fonts from `C:\Windows\Fonts`): `python t
 | Endpoint | What it does |
 | --- | --- |
 | `GET /api/health` | `{"status": "ok", "model_loaded": ..., "version": "1.0.0"}` |
+| `GET /api/evaluation` | contents of `eval/report.json`, or 404 `no_report` |
 | `POST /api/analyze` | multipart form: `resume` (PDF, max 5 MB), `job_description` (50-10,000 characters), optional `method` (`embeddings`, `tfidf` or `both`) |
 
 Try it from `backend/` with the sample files:
@@ -107,6 +108,22 @@ Errors always look like `{"error": {"code": "...", "message": "..."}}` with the 
 - `pairs.json` lists which resume goes with which job description. **The `label` field must be filled in by the team**
   (`good`, `average` or `poor`). Two members should label independently, then agree on disagreements.
 - Rerunning `make_dataset.py` keeps labels that are already filled in.
+- Optionally add `label_a` and `label_b` (each labeller's own answer) next to the agreed `label`; the report then
+  counts how many pairs the two labellers disagreed on.
+
+Run the evaluation (from `backend/`) after labelling or changing a matcher:
+
+```powershell
+python eval/evaluate.py
+```
+
+It scores every pair with each method, compares the predicted label (from the `LABEL_GOOD_MIN` / `LABEL_AVG_MIN`
+thresholds) with the hand label, and writes `eval/report.json`: agreement %, confusion matrix, Spearman correlation
+and mean score per label. `GET /api/evaluation` serves that file to the Evaluation page. Pairs without a label are
+scored but left out of the metrics, so the report never shows agreement figures for unlabelled data.
+
+Honesty rule (Section 12): report results with the default thresholds first. If you tune thresholds or ceilings on
+these same pairs, say so; the report lists any overridden settings automatically.
 
 ## Run the frontend
 
@@ -154,7 +171,7 @@ Built step by step following Section 17 of the spec.
 - [x] Step 2 — SQLite schema, skills seed, link checker (133 skills, 176 links, all links pass)
 - [x] Step 3 — Skills extraction (aliases, multi-word skills, ambiguous C / R / Go, JD importance)
 - [x] Step 4 — TF-IDF matcher + `POST /api/analyze` v0 (scores for 16 pairs; labels still to be filled in by the team)
-- [ ] Step 5 — Evaluation dataset + `evaluate.py`
+- [x] Step 5 — Evaluation dataset + `evaluate.py` (report.json generated; agreement figures wait for hand labels)
 - [ ] Step 6 — Embedding matcher + explanations
 - [ ] Step 7 — Gap analysis + roadmap
 - [ ] Step 8 — ATS checks

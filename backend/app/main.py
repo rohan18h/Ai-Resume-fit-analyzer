@@ -15,7 +15,7 @@ from starlette.formparsers import MultiPartParser
 
 from app import config
 from app.errors import ApiError
-from app.routers import analyze, health
+from app.routers import analyze, evaluation, health
 from app.services.matcher_tfidf import get_vectorizer
 from app.services.skills import get_extractor
 
@@ -91,3 +91,4 @@ async def internal_error_handler(_: Request, exc: Exception) -> JSONResponse:
 
 app.include_router(health.router, prefix="/api")
 app.include_router(analyze.router, prefix="/api")
+app.include_router(evaluation.router, prefix="/api")

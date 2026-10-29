@@ -41,6 +41,8 @@ EMBED_CEILING: float = _float("EMBED_CEILING", 0.80)  # starting value
 
 EVAL_DIR: Path = BACKEND_DIR / "eval"  # TF-IDF reference corpus: eval/resumes/*.pdf and eval/jds/*.txt
 TFIDF_MODEL_PATH: Path = EVAL_DIR / "tfidf_vectorizer.joblib"
+EVAL_REPORT_PATH: Path = EVAL_DIR / "report.json"  # written by eval/evaluate.py, served by GET /api/evaluation
+OBJECTIVE_3_TARGET_PERCENT: float = 70.0  # embeddings must agree with hand labels on at least this share of pairs
 
 # Fit labels (starting values)
 LABEL_GOOD_MIN: float = _float("LABEL_GOOD_MIN", 65)

@@ -1,0 +1,131 @@
+{
+  "generated_at": "2026-10-29T12:08:27Z",
+  "pairs": 16,
+  "labelled_pairs": 0,
+  "label_order": [
+    "poor",
+    "average",
+    "good"
+  ],
+  "thresholds": {
+    "good_min": 65.0,
+    "average_min": 40.0
+  },
+  "ceilings": {
+    "tfidf": 0.6,
+    "embeddings": 0.8
+  },
+  "tuned_settings": [],
+  "labeller_disagreements": null,
+  "methods": {
+    "tfidf": null
+  },
+  "objective_3": {
+    "target_percent": 70.0,
+    "agreement_percent": null,
+    "met": null
+  },
+  "notes": [
+    "No pair has a hand label yet.",
+    "Results use the default thresholds and ceilings from config.py (no tuning).",
+    "16 of 16 pairs have no hand label yet and are left out of the metrics."
+  ],
+  "rows": [
+    {
+      "id": "p01",
+      "label": null,
+      "tfidf_score": 25.7,
+      "tfidf_pred": "poor"
+    },
+    {
+      "id": "p02",
+      "label": null,
+      "tfidf_score": 37.7,
+      "tfidf_pred": "poor"
+    },
+    {
+      "id": "p03",
+      "label": null,
+      "tfidf_score": 43.4,
+      "tfidf_pred": "average"
+    },
+    {
+      "id": "p04",
+      "label": null,
+      "tfidf_score": 30.9,
+      "tfidf_pred": "poor"
+    },
+    {
+      "id": "p05",
+      "label": null,
+      "tfidf_score": 47.4,
+      "tfidf_pred": "average"
+    },
+    {
+      "id": "p06",
+      "label": null,
+      "tfidf_score": 41.5,
+      "tfidf_pred": "average"
+    },
+    {
+      "id": "p07",
+      "label": null,
+      "tfidf_score": 45.9,
+      "tfidf_pred": "average"
+    },
+    {
+      "id": "p08",
+      "label": null,
+      "tfidf_score": 28.5,
+      "tfidf_pred": "poor"
+    },
+    {
+      "id": "p09",
+      "label": null,
+      "tfidf_score": 12.2,
+      "tfidf_pred": "poor"
+    },
+    {
+      "id": "p10",
+      "label": null,
+      "tfidf_score": 5.4,
+      "tfidf_pred": "poor"
+    },
+    {
+      "id": "p11",
+      "label": null,
+      "tfidf_score": 3.3,
+      "tfidf_pred": "poor"
+    },
+    {
+      "id": "p12",
+      "label": null,
+      "tfidf_score": 10.7,
+      "tfidf_pred": "poor"
+    },
+    {
+      "id": "p13",
+      "label": null,
+      "tfidf_score": 2.1,
+      "tfidf_pred": "poor"
+    },
+    {
+      "id": "p14",
+      "label": null,
+      "tfidf_score": 1.0,
+      "tfidf_pred": "poor"
+    },
+    {
+      "id": "p15",
+      "label": null,
+      "tfidf_score": 0.5,
+      "tfidf_pred": "poor"
+    },
+    {
+      "id": "p16",
+      "label": null,
+      "tfidf_score": 0.5,
+      "tfidf_pred": "poor"
+    }
+  ]
+}
