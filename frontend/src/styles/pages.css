@@ -80,7 +80,7 @@
 }
 
 .example__result--high {
-  color: var(--success);
+  color: var(--success-text);
 }
 
 .architecture img {

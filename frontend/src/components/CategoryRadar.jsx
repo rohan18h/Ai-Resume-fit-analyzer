@@ -31,6 +31,7 @@ export default function CategoryRadar({ byCategory }) {
     return (
       <div className="chart chart--bar-h" role="img" aria-label={`Skill coverage by category. ${summary}`}>
         <Bar
+          aria-hidden="true"
           data={{ labels, datasets: [{ data: values, backgroundColor: c.teal, borderRadius: 4, maxBarThickness: 28 }] }}
           options={{
             indexAxis: 'y',
@@ -46,6 +47,7 @@ export default function CategoryRadar({ byCategory }) {
   return (
     <div className="chart chart--radar" role="img" aria-label={`Skill coverage by category. ${summary}`}>
       <Radar
+        aria-hidden="true"
         data={{
           labels,
           datasets: [

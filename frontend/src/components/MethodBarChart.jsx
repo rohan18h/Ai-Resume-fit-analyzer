@@ -15,6 +15,7 @@ export default function MethodBarChart({ fit }) {
         aria-label={`Method comparison: TF-IDF ${tfidf} percent, embeddings ${embeddings} percent.`}
       >
         <Bar
+          aria-hidden="true"
           data={{
             labels: ['TF-IDF', 'Embeddings'],
             datasets: [{ data: [tfidf, embeddings], backgroundColor: [c.mint, c.primary], borderRadius: 4, maxBarThickness: 56 }],

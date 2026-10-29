@@ -11,6 +11,7 @@ import ScoreGauge from './ScoreGauge.jsx';
 import SkillChips from './SkillChips.jsx';
 import { scoreColor } from './charts.js';
 import { formatSeconds } from '../utils/format.js';
+import { copyText } from '../utils/clipboard.js';
 import { roadmapText } from '../utils/roadmap.js';
 import { loadDone, saveDone } from '../utils/storage.js';
 
@@ -34,12 +35,12 @@ function Roadmap({ missing, jdHasSkills }) {
   }
 
   async function copy() {
-    try {
-      await navigator.clipboard.writeText(roadmapText(missing, done));
-      setCopyStatus('Roadmap copied to the clipboard.');
-    } catch {
-      setCopyStatus('Copying is blocked in this browser. Select the text and copy it instead.');
-    }
+    const copied = await copyText(roadmapText(missing, done));
+    setCopyStatus(
+      copied
+        ? 'Roadmap copied to the clipboard.'
+        : 'Copying is blocked in this browser. Use Print / Save as PDF, or select the text and copy it instead.',
+    );
   }
 
   if (!jdHasSkills) {

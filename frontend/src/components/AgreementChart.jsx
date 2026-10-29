@@ -11,6 +11,7 @@ export default function AgreementChart({ tfidf, embeddings, target }) {
       aria-label={`Agreement with hand labels: TF-IDF ${tfidf} percent, embeddings ${embeddings} percent, target ${target} percent.`}
     >
       <Chart
+        aria-hidden="true"
         type="bar"
         data={{
           labels: ['TF-IDF', 'Embeddings'],

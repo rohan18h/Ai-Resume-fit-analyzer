@@ -22,6 +22,7 @@ Unreadable fixtures:
 
 ATS fixtures (Step 8):
     ats_good_resume.pdf  passes all 10 checks (embedded Arial, so bullets are real Unicode characters)
+    two_page_resume.pdf  realistic 2-page resume for the performance test (Step 11)
     ats_bad_resume.pdf   two columns, a table, icons and star ratings, many fonts (the demo's "bad resume")
     image_page.pdf       page 1 is text, page 2 is only an image of text
     many_fonts.pdf       five font families
@@ -477,6 +478,66 @@ def ats_good_resume() -> None:
     c.save()
 
 
+def two_page_resume() -> None:
+    """A realistic 2-page resume for the performance test (Section 11: 2-page resume, ~400-word JD, <= 5 s)."""
+    arial, arial_bold = register_ttf("ArialTTF", "arial.ttf"), register_ttf("ArialBoldTTF", "arialbd.ttf")
+    c = new_canvas("two_page_resume.pdf")
+    jobs = [
+        ("Senior Software Engineer, Example Payments (2022 - present)", [
+            "Led a team of four building REST APIs in Python and FastAPI for invoicing and payouts.",
+            "Designed PostgreSQL schemas and tuned queries, cutting p95 latency from 900 ms to 180 ms.",
+            "Moved services to Docker on AWS ECS with GitHub Actions CI/CD and blue-green deploys.",
+            "Added Redis caching and background workers for report generation.",
+            "Introduced code review guidelines and PyTest coverage targets for the team.",
+        ]),
+        ("Software Engineer, Example Logistics (2020 - 2022)", [
+            "Built Django services for shipment tracking used by 300 warehouse staff.",
+            "Wrote ETL jobs in Python that load partner data into PostgreSQL every hour.",
+            "Set up monitoring dashboards and on-call alerts for the tracking pipeline.",
+            "Mentored two interns on Git workflows, testing and debugging.",
+        ]),
+        ("Junior Developer, Example Studio (2019 - 2020)", [
+            "Maintained JavaScript and React pages for client websites.",
+            "Wrote SQL reports for the sales team and automated them with Python scripts.",
+        ]),
+    ]
+    projects = [
+        "Open-source contributor to a FastAPI authentication plugin (JWT and OAuth support).",
+        "Built a personal finance tracker with Django, PostgreSQL and Chart.js.",
+        "Wrote a command-line log analyser in Python with unit tests and type hints.",
+    ]
+    x, y = 56, HEIGHT - 60
+    c.setFont(arial_bold, 18)
+    c.drawString(x, y, "Kiran Bhosale")
+    y = write_lines(c, x, y - 18, ["kiran.bhosale@example.com | +91 98111 44556 | Pune"], font=arial, size=9) - 10
+
+    def section(title: str, lines: list[str], y: float) -> float:
+        c.setFont(arial_bold, 12)
+        c.drawString(x, y, title)
+        return write_lines(c, x, y - 18, lines, font=arial, size=10) - 10
+
+    y = section("SUMMARY", ["Backend engineer with five years of experience building Python APIs, data pipelines and",
+                            "cloud deployments. Comfortable owning services from design to production support."], y)
+    y = section("SKILLS", ["Python, FastAPI, Django, PostgreSQL, Redis, Docker, AWS, GitHub Actions, CI/CD, Git,",
+                           "REST API, JWT, OAuth, PyTest, Linux, SQL, ETL, Monitoring, JavaScript, React"], y)
+    c.setFont(arial_bold, 12)
+    c.drawString(x, y, "EXPERIENCE")
+    y -= 18
+    for title, bullets in jobs:
+        if y < 140:
+            c.showPage()
+            y = HEIGHT - 60
+        c.setFont(arial_bold, 10.5)
+        c.drawString(x, y, title)
+        y = write_lines(c, x, y - 15, [f"• {b}" for b in bullets], font=arial, size=10) - 8
+    c.showPage()
+    y = HEIGHT - 60
+    y = section("PROJECTS", [f"• {p}" for p in projects], y)
+    y = section("EDUCATION", ["B.E. Computer Engineering, Example Institute of Technology (2015 - 2019)"], y)
+    section("CERTIFICATIONS", ["AWS Certified Developer - Associate (2023)"], y)
+    c.save()
+
+
 def ats_bad_resume() -> None:
     symbols = register_ttf("SegoeSymbol", "seguisym.ttf")
     georgia, verdana = register_ttf("GeorgiaTTF", "georgia.ttf"), register_ttf("VerdanaTTF", "verdana.ttf")
@@ -584,7 +645,7 @@ def decorative() -> None:
 def main() -> None:
     for build in (sample_resume_backend, sample_resume_frontend, sidebar_layout, with_table, with_image, six_pages,
                   header_footer, special_tokens, multi_font, data_analyst_resume, scanned, blank, truncated, corrupt,
-                  ats_good_resume, ats_bad_resume, image_page, many_fonts, decorative):
+                  ats_good_resume, ats_bad_resume, image_page, many_fonts, decorative, two_page_resume):
         build()
     print("Fixtures written to", OUT)
 

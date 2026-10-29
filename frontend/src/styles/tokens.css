@@ -6,6 +6,7 @@
   --mint: #5fb9c9;
   --coral: #c65b3c;
   --success: #2f855a;
+  --success-text: #276749; /* darker green for text on light green backgrounds (WCAG AA 4.5:1) */
   --warning: #b7791f;
   --bg: #f3f7fa;
   --surface: #ffffff;

@@ -108,7 +108,7 @@
 
 .chip--matched {
   background: #e6f4ec;
-  color: var(--success);
+  color: var(--success-text);
   border: 1px solid #b7dcc6;
 }
 
@@ -635,7 +635,7 @@
   padding: 12px var(--space-2);
   border-radius: 8px;
   background: #e6f4ec;
-  color: var(--success);
+  color: var(--success-text);
   font-weight: 600;
 }
 
@@ -741,7 +741,7 @@
   padding: 0 6px;
   border-radius: 4px;
   background: #e6f4ec;
-  color: var(--success);
+  color: var(--success-text);
   font-weight: 600;
 }
 

@@ -190,5 +190,5 @@ Built step by step following Section 17 of the spec.
 - [x] Step 8 — ATS checks (10 checks, each with a pass and a fail fixture)
 - [x] Step 9 — Analyzer page (all result sections, loading stages, error banners, print view, mobile layout)
 - [x] Step 10 — How it works, Evaluation, About pages (Evaluation renders report.json, labelled or not)
-- [ ] Step 11 — Integration, performance, accessibility
+- [x] Step 11 — Integration, performance, accessibility (see [docs/manual-test-checklist.md](docs/manual-test-checklist.md))
 - [ ] Step 12 — Deploy
